@@ -1,10 +1,14 @@
 package Main;
 
+import carte.*;
+
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		//Prova mazzo
+		Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte().mescola().build();
+		mazzo.getCarte().forEach(System.out::println);
 	}
 
 }
