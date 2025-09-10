@@ -2,7 +2,7 @@ package Main;
 
 import carte.*;
 
-public class Main {
+public class JTressette {
 
 	public static void main(String[] args) {
 		
