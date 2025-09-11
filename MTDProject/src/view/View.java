@@ -1,7 +1,5 @@
-package JTressette.view;
+package view;
 
-
-import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JFrame;

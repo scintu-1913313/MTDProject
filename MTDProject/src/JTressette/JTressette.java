@@ -1,8 +1,8 @@
 package JTressette;
 
-import JTressette.controller.Controller;
-import JTressette.model.GiocoJTressette;
-import JTressette.view.View;
+import controller.Controller;
+import model.GiocoJTressette;
+import view.View;
 
 public class JTressette {
 

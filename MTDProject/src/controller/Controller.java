@@ -1,8 +1,8 @@
-package JTressette.controller;
+package controller;
 
 
-import JTressette.model.GiocoJTressette;
-import JTressette.view.View;
+import model.GiocoJTressette;
+import view.View;
 
 
 @SuppressWarnings("deprecation")
