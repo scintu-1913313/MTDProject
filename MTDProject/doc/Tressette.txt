@@ -1,0 +1,81 @@
+Regole del gioco Tressette
+
+0. CARTE:
+Si utilizzano 40 carte italiane suddivise in 4 semi (denari, coppe, spade, bastoni).
+
+
+1. SCOPO DEL GIOCO:
+Totalizzare il maggior numero di punti possibile tramite le prese effettuate durante le mani.
+Una partita puo' quindi essere giocata con piu' mani di gioco.
+Il numero totale di punti da dover raggiungere deve essere concordato ad inizio partita tra i seguenti punteggi:
+- 11
+- 21
+- 31
+- 41
+Il giocatore o la squadra che raggiunge per prima il punteggio concordato vince la partita.
+
+
+2. VALORE DELLE CARTE:
+- 3: 3 punti
+- 2: 2 punti
+- Asso: 1 punto
+- Re, Cavallo, Fante: 1/3 di punto ciascuno
+- 7, 6, 5, 4: nessun punto
+
+
+3. GIOCATORI:
+Il Tressette si può giocare in 2, 3 o 4 giocatori:
+- 2 giocatori: partita uno contro uno, ciascuno riceve 10 carte.
+- 3 giocatori: partita a due squadre: due giocatori formano una coppia e il terzo gioca con un giocatore fittizzio detto "morto";
+               ciascuno riceve 10 carte, e il giocatore che gioca con il morto deve vedere le sue carte e giocare al suo posto.
+- 4 giocatori: partita a due squadre: si gioca a coppie (2 contro 2), ciascuno riceve 10 carte.
+Tutti i giocatori giocano in modo alternato con gli avversari.
+
+
+4. DISTRIBUZIONE:
+- 2 giocatori: 10 carte ciascuno. Il restante delle carte va messo sul tavolo di gioco.
+- 3 giocatori: 10 carte ciascuno, compreso il "morto". Non restano carte da distribuire.
+- 4 giocatori: 10 carte ciascuno. Non restano carte da distribuire.
+Il mazziere distribuisce le carte in senso antiorario. 
+La distrubuzione avviene dando 5 carte alla volta per ogni giocatore fino al raggiungimento delle 10 carte totali per giocatore.
+
+
+5. SVOLGIMENTO:
+Il giocatore che inizia la mano e' quello che possiede il 4 di denara. Il resto dei giocatori gioca le carte in senso antiorario.
+Ad ogni turno della mano, il primo giocatore che mette la carta sul tavolo viene chiamato "palo".
+Il seme di questa prima carta "comanda" su quel turno.
+Gli altri giocatori, a turno, sono obbligati a giocare una carta dello stesso seme che "comanda".
+Se un giocatore non ha carte di quel seme, allora puo' giocare un seme diverso(si dice che si sta giocando "piombo").
+Chi gioca la carta più alta del seme che "comanda" vince la presa.
+Il giocatore che vince la presa inizia il turno successivo.
+
+Il gioco termina quando tutti i giocatori hanno esaurito le carte.
+Il giocatore che ha effettuato l' ultima presa acquisisce 1 punto in piu'.
+
+6. DICHIARAZIONI SPECIALI: ACCUSA
+Ad inizio partita i giocatori devono scegliere se utilizzare l'accusa obbligatoria o a scelta.
+L' accusa deve essere chiamata da ogni giocatore solo nel primo giro di ogni mano, durante il proprio turno.
+
+Accusa obbligatoria: tutti i giocatori sono obbligati a chiamare l'accusa.
+Accusa facoltativa: e' a discrezione di un giocatore chiamare l'accusa.
+
+Tipi di accusa e punteggi:
+- "Napoli": avere asso, due e tre dello stesso seme. Vale 3 punti da aggiungere a fine partita
+- "Buon gioco": avere almeno tre carte dello stesso valore (assi, due, tre). Vale 3 punti da aggiungere a fine partita
+- "Super Buon gioco": avere quattro carte dello stesso valore (assi, due, tre). Vale 4 punti da aggiungere a fine partita
+
+Un giocatore puo' dichiarare piu' tipi di accuse contemporaneamente.
+Se una squadra non raggiunge nemmeno un punto in una mano, i punti extra derivanti dalle accuse che possiede vengono persi, 
+anche se la dichiarazione è avvenuta.
+
+
+7. PUNTEGGI:
+Alla fine di ogni mano si sommano i punti delle carte prese.
+Il punteggio finale ottenuto nella mano viene sommato al punteggio totale della partita.
+
+Ogni mano ha in totale 11 punti (10 dalle carte + 1 "ultimo" per chi fa l’ultima presa).
+Il calcolo dei punti e' dato dal valore delle carte(paragrafo 2).
+Ogni 3 carte che valgono 1/3 fanno ottenere 1 punto.
+Se nel punteggio totale c'e' un eccesso di 1\3 o 2\3, questo eccesso viene scartato.
+
+Se una squadra non guadagna nemmenno un punto si verifica il "cappotto" e la squadra avversaria colleziona 17 punti
