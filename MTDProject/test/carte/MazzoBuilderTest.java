@@ -7,7 +7,7 @@ public class MazzoBuilderTest {
 
     @Test
     public void testGeneraCarte() {
-    Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte().build();
+    Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte(TipoMazzo.NAPOLETANTE).build();
     assertNotNull(mazzo.getCarte(), "Le carte non dovrebbero essere nulle");
     assertEquals(40, mazzo.getCarte().size(), "Il mazzo dovrebbe contenere 40 carte");
     // Verifica che tutte le carte siano diverse
@@ -17,8 +17,8 @@ public class MazzoBuilderTest {
 
     @Test
     public void testMescola() {
-        Mazzo mazzo1 = new Mazzo.MazzoBuilder().generaCarte().build();
-        Mazzo mazzo2 = new Mazzo.MazzoBuilder().generaCarte().mescola().build();
+        Mazzo mazzo1 = new Mazzo.MazzoBuilder().generaCarte(TipoMazzo.NAPOLETANTE).build();
+        Mazzo mazzo2 = new Mazzo.MazzoBuilder().generaCarte(TipoMazzo.NAPOLETANTE).mescola().build();
         assertEquals(mazzo1.getCarte().size(), mazzo2.getCarte().size(), "Entrambi i mazzi dovrebbero avere 40 carte");
         // Non si può garantire che l'ordine sia diverso, ma si può verificare che non sia sempre uguale
         boolean uguali = true;

@@ -1,10 +1,10 @@
 package carte;
 
 public enum Seme {
-	COPPE("COPPE"),
-	DENARA("DENARA"),
-	SPADE("SPADE"),
-	BASTONI("BASTONI");
+	COPPE("coppe"),
+	DENARI("denari"),
+	SPADE("spade"),
+	BASTONI("bastroni");
 
 	private final String nomeSeme;
 	

@@ -16,18 +16,20 @@ public class Mazzo {
 	
 	public static class MazzoBuilder {
 		private final List<Carta> carte = new ArrayList<>();
+		
 
-		public MazzoBuilder generaCarte() {
+		public MazzoBuilder generaCarte(TipoMazzo nomeTipoMazzo) {
 			for(Seme seme: Seme.values()) {
 				for(Valore valore: Valore.values()){
-					carte.add(new Carta(seme,valore,getPath(seme,valore)));
+					carte.add(new Carta(seme,valore,getPath(seme,valore,nomeTipoMazzo)));
 				}
 			}
 			return this;
 		}
 		
-		public String getPath(Seme seme, Valore valore) {
-			return "img/" + valore + "_" + seme + ".png";
+		public String getPath(Seme seme, Valore valore, TipoMazzo nomeTipoMazzo ) {
+			
+			return "img/" + nomeTipoMazzo +"/" + valore + "_" + seme + ".png";
 		}
 		
 		public MazzoBuilder mescola() {
