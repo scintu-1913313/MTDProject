@@ -25,9 +25,10 @@ public class PannelloRegole extends Pannello{
 	        
 	        // Bottone in alto a sinistra
 	        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        topPanel.setBackground(ARANCIONE);
-	        JButton bottoneEsci = new JButton("Esci");
-	        topPanel.add(bottoneEsci);
+	        topPanel.setBackground(TRASPARENTE);
+	        MioBottone bottoneRitornoMenu = new MioBottone("Menu'");
+
+	        topPanel.add(bottoneRitornoMenu);
 	        add(topPanel, BorderLayout.NORTH);
 	        
 	        Path path = Paths.get("MTDProject/doc/Tressette.txt");

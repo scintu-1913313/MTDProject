@@ -6,16 +6,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import com.formdev.flatlaf.FlatLightLaf;
 
 @SuppressWarnings("deprecation")
 public class View extends JFrame implements Observer {
     
     public View() {
         super("JTressette");
-
+        FlatLightLaf.setup();
+        
         try {
             Image image = ImageIO.read(getClass().getResource("/img/logo.png"));
             setIconImage(image);
