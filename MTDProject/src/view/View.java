@@ -17,7 +17,6 @@ public class View extends JFrame implements Observer {
     public View() {
         super("JTressette");
         FlatLightLaf.setup();
-        
         try {
             Image image = ImageIO.read(getClass().getResource("/img/logo.png"));
             setIconImage(image);
@@ -26,7 +25,7 @@ public class View extends JFrame implements Observer {
         }
 		setLocationRelativeTo(null);
 
-        setSize(300, 200);
+        setSize(800, 600);
 
         
         PannelloRegole pannello = new PannelloRegole();

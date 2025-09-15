@@ -14,7 +14,7 @@ public abstract class Pannello extends JPanel implements Observer {
 	
 	public Pannello(LayoutManager layout) {
 		super(layout);
-		setBorder(new EmptyBorder(10, 20, 10, 20));
+		setBorder(new EmptyBorder(20, 80, 20, 80));
 	}
 	
     
