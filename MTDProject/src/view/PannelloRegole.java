@@ -50,10 +50,15 @@ public class PannelloRegole extends Pannello{
         areaTesto.setEditable(false);
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
-        areaTesto.setOpaque(false);
-        areaTesto.setBackground(new Color(0, 0, 0, 0));
-        areaTesto.setForeground(Color.WHITE);
-        areaTesto.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        //areaTesto.setOpaque(false);
+        //areaTesto.setBackground(new Color(0, 0, 0, 0));
+        //MODIFICA SFONDO AREA TESTO
+        areaTesto.setOpaque(true);
+        areaTesto.setBackground(new Color(0, 128, 0)); // VERDE chiaro
+        areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità
+        
+        //areaTesto.setForeground(Color.WHITE);
+        areaTesto.setFont(new Font("SansSerif", Font.BOLD, 14));
 
         // ScrollPane con solo scrollbar verticale visibile
         JScrollPane scrollPane = new JScrollPane(areaTesto);
@@ -64,9 +69,14 @@ public class PannelloRegole extends Pannello{
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        
 
         add(scrollPane, BorderLayout.CENTER);
         setVisible(true);
+        
+        
+        
+
 	}
 
 	@Override
