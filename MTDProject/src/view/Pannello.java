@@ -6,12 +6,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Pannello extends JPanel implements Observer {
 
-	public static final Color TRASPARENTE = new Color(0, 0, 0, 0);
-	public static final Color ARANCIONE = Color.decode("#f08c00");
-	
+	protected static final Color TRASPARENTE = new Color(0, 0, 0, 0);
+	protected static final Color VERDE_HOVER = new Color(0, 128, 0);
+	protected BufferedImage sfondo;
+
 	public Pannello(LayoutManager layout) {
 		super(layout);
 		setBorder(new EmptyBorder(20, 80, 20, 80));

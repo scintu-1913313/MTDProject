@@ -28,8 +28,11 @@ public class View extends JFrame implements Observer {
         setSize(800, 600);
 
         
-        PannelloRegole pannello = new PannelloRegole();
-        add(pannello);
+        //PannelloRegole pannelloRegole = new PannelloRegole();
+        //add(pannelloRegole);
+        
+        PannelloMenu pannelloMenu = new PannelloMenu();
+        add(pannelloMenu);
 
 		setVisible(true);
     }

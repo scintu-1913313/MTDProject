@@ -10,10 +10,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class PannelloRegole extends Pannello{
-	private BufferedImage sfondo;
-	
-	private static final long serialVersionUID = 1L;
-
 	
 	public PannelloRegole() {
 		super(new BorderLayout());
@@ -30,7 +26,7 @@ public class PannelloRegole extends Pannello{
 		add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.WEST);
 		add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.EAST);
 
-		// Bottone in alto a sinistra
+		// Bottone in basso a destra
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		topPanel.setBackground(TRASPARENTE);
 		MioBottone bottoneRitornoMenu = new MioBottone("Menu'");
@@ -46,7 +42,7 @@ public class PannelloRegole extends Pannello{
 			System.out.println("Errore nella lettura del file: " + e.getMessage());
 		}
 	        
-		 JTextArea areaTesto = new JTextArea(contenuto);
+		JTextArea areaTesto = new JTextArea(contenuto);
         areaTesto.setEditable(false);
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
@@ -86,4 +82,4 @@ public class PannelloRegole extends Pannello{
 			g.drawImage(sfondo, 0, 0, getWidth(), getHeight(), this);
 		}
 	}
-	}
+}
