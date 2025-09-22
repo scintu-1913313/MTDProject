@@ -9,19 +9,11 @@ import javax.imageio.ImageIO;
 
 public class PannelloMenu extends Pannello {
 
-    public PannelloMenu() {
+    public PannelloMenu(View view) {
         super(new BorderLayout());
-        setBounds(50, 50, 600, 400);
-
-        // Carica lo sfondo
-        try {
-            sfondo = ImageIO.read(getClass().getResource("/img/sfondo.png"));
-        } catch (IOException | IllegalArgumentException e) {
-            sfondo = null;
-        }
-
-        add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.WEST);
-        add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.EAST);
+        setSize(new Dimension(Pannello.LARGHEZZA-400, Pannello.ALTEZZA-300));
+        setBackground(VERDE_HOVER);
+		setOpaque(false);
 
         JPanel pannelloInternoMenu = new JPanel();
         pannelloInternoMenu.setBackground(VERDE_HOVER);
@@ -29,17 +21,19 @@ public class PannelloMenu extends Pannello {
         pannelloInternoMenu.setLayout(new BoxLayout(pannelloInternoMenu, BoxLayout.Y_AXIS));
         
         //150px di spazio dall'inizio del pannelloInternoMenu, inizia ad insrire dal 151px qualsiasi oggetto
-        pannelloInternoMenu.add(Box.createVerticalStrut(150));
+        //pannelloInternoMenu.add(Box.createVerticalStrut(150));
         
         MioBottone bottoneStart = new MioBottone("Inizio Partita");
         bottoneStart.setAlignmentX(Component.CENTER_ALIGNMENT);
         bottoneStart.setPreferredSize(new Dimension(200, 40));
         bottoneStart.setMaximumSize(new Dimension(200, 40));
         bottoneStart.setMargin(new Insets(10, 10, 10, 10));
+        bottoneStart.addActionListener(e -> view.showPannelloGioco());
+
         pannelloInternoMenu.add(bottoneStart);
         
         //dopo il primo bottone aggiunge 50px
-        pannelloInternoMenu.add(Box.createVerticalStrut(50));
+        pannelloInternoMenu.add(Box.createVerticalStrut(20));
 
         //JPanel pannelloGiocatori = new JPanel();
         //pannelloGiocatori.setLayout(new BoxLayout(pannelloGiocatori, BoxLayout.Y_AXIS));
@@ -55,6 +49,8 @@ public class PannelloMenu extends Pannello {
         labelGiocatori.setPreferredSize(new Dimension(200, 40));
         labelGiocatori.setMaximumSize(new Dimension(200, 40));
         labelGiocatori.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        
+        pannelloInternoMenu.add(Box.createVerticalStrut(50));
 
         MioSpinner mioSpinner = new MioSpinner();
         mioSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -66,18 +62,18 @@ public class PannelloMenu extends Pannello {
         pannelloInternoMenu.add(mioSpinner);
         
         add(pannelloInternoMenu);
-    }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (sfondo != null) {
-            g.drawImage(sfondo, 0, 0, getWidth(), getHeight(), this);
-        }
+        MioBottone bottoneRegole = new MioBottone("Regole");
+        bottoneRegole.setAlignmentX(Component.CENTER_ALIGNMENT);
+        bottoneRegole.setPreferredSize(new Dimension(200, 40));
+        bottoneRegole.setMaximumSize(new Dimension(200, 40));
+        bottoneRegole.setMargin(new Insets(10, 10, 10, 10));
+        bottoneRegole.addActionListener(e -> view.showPannelloRegole());
+        pannelloInternoMenu.setVisible(true);
+        add(bottoneRegole, BorderLayout.SOUTH);
     }
-
+    
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("pannelloMenu aggiornato con: " + arg);
     }
 }

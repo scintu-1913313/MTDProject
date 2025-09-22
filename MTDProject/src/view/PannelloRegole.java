@@ -11,25 +11,18 @@ import javax.swing.*;
 
 public class PannelloRegole extends Pannello{
 	
-	public PannelloRegole() {
+	public PannelloRegole(View view) {
 		super(new BorderLayout());
-		setBounds(50, 50, 600, 400);
-		setBackground(Color.WHITE);
-		
-		// Carica lo sfondo
-		try {
-			sfondo = ImageIO.read(getClass().getResource("/img/sfondo.png"));
-		} catch (IOException | IllegalArgumentException e) {
-			sfondo = null;
-		}
-
-		add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.WEST);
-		add(Box.createRigidArea(new Dimension(100, 0)), BorderLayout.EAST);
+		//setBounds(50, 50, 600, 400);
+		setBackground(Pannello.VERDE_HOVER);
+		setOpaque(false);
 
 		// Bottone in basso a destra
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		topPanel.setBackground(TRASPARENTE);
+		
 		MioBottone bottoneRitornoMenu = new MioBottone("Menu'");
+		bottoneRitornoMenu.addActionListener(e -> view.showPannelloMenu());
 
 		topPanel.add(bottoneRitornoMenu);
 		add(topPanel, BorderLayout.SOUTH);
@@ -46,11 +39,8 @@ public class PannelloRegole extends Pannello{
         areaTesto.setEditable(false);
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
-        //areaTesto.setOpaque(false);
-        //areaTesto.setBackground(new Color(0, 0, 0, 0));
-        //MODIFICA SFONDO AREA TESTO
         areaTesto.setOpaque(true);
-        areaTesto.setBackground(new Color(0, 128, 0)); // VERDE chiaro
+        areaTesto.setBackground(Pannello.VERDE_HOVER); // VERDE chiaro
         areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità
         
         //areaTesto.setForeground(Color.WHITE);
@@ -65,21 +55,7 @@ public class PannelloRegole extends Pannello{
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        
 
         add(scrollPane, BorderLayout.CENTER);
-        setVisible(true);
-        
-        
-        
-
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		if (sfondo != null) {
-			g.drawImage(sfondo, 0, 0, getWidth(), getHeight(), this);
-		}
 	}
 }
