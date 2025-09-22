@@ -22,7 +22,6 @@ public class PannelloPrincipale extends Pannello {
             sfondo = null;
         }
 		setPreferredSize(new Dimension(Pannello.LARGHEZZA, Pannello.ALTEZZA));
-        //setLayout(new GridBagLayout());
 
 		layoutPannelloNascosto = new CardLayout();
         pannelloNascosto = new JPanel(layoutPannelloNascosto);

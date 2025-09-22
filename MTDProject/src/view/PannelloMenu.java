@@ -12,11 +12,11 @@ public class PannelloMenu extends Pannello {
     public PannelloMenu(View view) {
         super(new BorderLayout());
         setSize(new Dimension(Pannello.LARGHEZZA-400, Pannello.ALTEZZA-300));
-        setBackground(VERDE_HOVER);
+        setBackground(VERDE_PANNELLO);
 		setOpaque(false);
 
         JPanel pannelloInternoMenu = new JPanel();
-        pannelloInternoMenu.setBackground(VERDE_HOVER);
+        pannelloInternoMenu.setBackground(VERDE_PANNELLO);
         pannelloInternoMenu.setOpaque(true);
         pannelloInternoMenu.setLayout(new BoxLayout(pannelloInternoMenu, BoxLayout.Y_AXIS));
         
@@ -35,29 +35,12 @@ public class PannelloMenu extends Pannello {
         //dopo il primo bottone aggiunge 50px
         pannelloInternoMenu.add(Box.createVerticalStrut(20));
 
-        //JPanel pannelloGiocatori = new JPanel();
-        //pannelloGiocatori.setLayout(new BoxLayout(pannelloGiocatori, BoxLayout.Y_AXIS));
-        //pannelloGiocatori.setOpaque(false);
-        //pannelloGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel labelGiocatori = new JLabel("Giocatori", SwingConstants.CENTER);
-        labelGiocatori.setFont(new Font("SansSerif", Font.BOLD, 14));
-        labelGiocatori.setForeground(Color.BLACK);
-        labelGiocatori.setOpaque(true);
-        labelGiocatori.setBackground(VERDE_HOVER);
-        labelGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelGiocatori.setPreferredSize(new Dimension(200, 40));
-        labelGiocatori.setMaximumSize(new Dimension(200, 40));
-        labelGiocatori.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        
-        pannelloInternoMenu.add(Box.createVerticalStrut(50));
-
-        MioIntSpinner spinnerNumeroGiocatori = new MioIntSpinner(1,1,4,1);
+        MioIntSpinner spinnerNumeroGiocatori = new MioIntSpinner("Giocatori",1,1,4,1);
         spinnerNumeroGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
         spinnerNumeroGiocatori.setPreferredSize(new Dimension(140, 40));
         spinnerNumeroGiocatori.setMaximumSize(new Dimension(140, 40));
-
-        pannelloInternoMenu.add(labelGiocatori);
+        //spinnerNumeroGiocatori.add(labelGiocatori,BorderLayout.NORTH);
+        
         pannelloInternoMenu.add(Box.createVerticalStrut(10));
         pannelloInternoMenu.add(spinnerNumeroGiocatori);
         

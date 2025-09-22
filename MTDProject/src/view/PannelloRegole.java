@@ -14,7 +14,7 @@ public class PannelloRegole extends Pannello{
 	public PannelloRegole(View view) {
 		super(new BorderLayout());
 		//setBounds(50, 50, 600, 400);
-		setBackground(Pannello.VERDE_HOVER);
+		setBackground(Pannello.VERDE_PANNELLO);
 		setOpaque(false);
 
 		// Bottone in basso a destra
@@ -42,7 +42,7 @@ public class PannelloRegole extends Pannello{
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
         areaTesto.setOpaque(true);
-        areaTesto.setBackground(Pannello.VERDE_HOVER); // VERDE chiaro
+        areaTesto.setBackground(Pannello.VERDE_PANNELLO); // VERDE chiaro
         areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità
         
         //areaTesto.setForeground(Color.WHITE);

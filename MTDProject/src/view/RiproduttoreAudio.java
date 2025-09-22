@@ -11,6 +11,7 @@ public class RiproduttoreAudio {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundURL);
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
+            clip.setFramePosition(0); // Riavvia da inizio
             clip.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();

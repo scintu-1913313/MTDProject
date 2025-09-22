@@ -9,8 +9,9 @@ public abstract class MioSpinner extends JPanel {
     // Editor personalizzato con frecce orizzontali
 	public final MioBottone leftButton;
 	public final JButton rightButton;
-    
-    public MioSpinner(){
+	public final JLabel intestazione;
+
+    public MioSpinner(String titolo){
         setLayout(new BorderLayout(5, 0));
         setBackground(new Color(0, 0, 0, 0));
 
@@ -26,6 +27,15 @@ public abstract class MioSpinner extends JPanel {
 
         add(leftButton, BorderLayout.WEST);
         add(rightButton, BorderLayout.EAST);
+        
+        intestazione = new JLabel(titolo, SwingConstants.CENTER);
+
+        intestazione.setFont(new Font("SansSerif", Font.BOLD, 14));
+        intestazione.setForeground(Color.BLACK);
+        intestazione.setOpaque(true);
+        intestazione.setBackground(Pannello.VERDE_PANNELLO);
+        add(intestazione, BorderLayout.NORTH);
+
     }
 }
 

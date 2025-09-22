@@ -17,7 +17,8 @@ public class MioIntSpinner extends MioSpinner {
     private int massimo;
     private int step;
 
-public MioIntSpinner(int init, int min, int max, int step){
+public MioIntSpinner(String titolo, int init, int min, int max, int step){
+		super(titolo);
 		this.valoreCorrente = init;
 		this.minimo = min;
 		this.massimo = max;
@@ -41,7 +42,7 @@ public MioIntSpinner(int init, int min, int max, int step){
 		rightButton.setEnabled(true);
 		if(valoreCorrente > minimo)
 		{
-			valoreCorrente--;
+			valoreCorrente-=step;
 			textField.setText(String.valueOf(this.valoreCorrente));
 		}
 		if(valoreCorrente == minimo)
@@ -55,7 +56,7 @@ public MioIntSpinner(int init, int min, int max, int step){
 
 		if(valoreCorrente < massimo)
 		{
-			valoreCorrente++;
+			valoreCorrente+=step;
 			textField.setText(String.valueOf(this.valoreCorrente));
 		}
 		if(valoreCorrente == massimo)
