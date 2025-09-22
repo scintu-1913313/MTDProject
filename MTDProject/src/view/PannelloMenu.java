@@ -25,8 +25,8 @@ public class PannelloMenu extends Pannello {
         
         MioBottone bottoneStart = new MioBottone("Inizio Partita");
         bottoneStart.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bottoneStart.setPreferredSize(new Dimension(200, 40));
-        bottoneStart.setMaximumSize(new Dimension(200, 40));
+        bottoneStart.setPreferredSize(new Dimension(140, 40));
+        bottoneStart.setMaximumSize(new Dimension(140, 40));
         bottoneStart.setMargin(new Insets(10, 10, 10, 10));
         bottoneStart.addActionListener(e -> view.showPannelloGioco());
 
@@ -52,21 +52,21 @@ public class PannelloMenu extends Pannello {
         
         pannelloInternoMenu.add(Box.createVerticalStrut(50));
 
-        MioSpinner mioSpinner = new MioSpinner();
-        mioSpinner.setAlignmentX(Component.CENTER_ALIGNMENT);
-        mioSpinner.setPreferredSize(new Dimension(200, 40));
-        mioSpinner.setMaximumSize(new Dimension(200, 40));
+        MioIntSpinner spinnerNumeroGiocatori = new MioIntSpinner(1,1,4,1);
+        spinnerNumeroGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
+        spinnerNumeroGiocatori.setPreferredSize(new Dimension(140, 40));
+        spinnerNumeroGiocatori.setMaximumSize(new Dimension(140, 40));
 
         pannelloInternoMenu.add(labelGiocatori);
         pannelloInternoMenu.add(Box.createVerticalStrut(10));
-        pannelloInternoMenu.add(mioSpinner);
+        pannelloInternoMenu.add(spinnerNumeroGiocatori);
         
         add(pannelloInternoMenu);
 
         MioBottone bottoneRegole = new MioBottone("Regole");
         bottoneRegole.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bottoneRegole.setPreferredSize(new Dimension(200, 40));
-        bottoneRegole.setMaximumSize(new Dimension(200, 40));
+        bottoneRegole.setPreferredSize(new Dimension(140, 40));
+        bottoneRegole.setMaximumSize(new Dimension(140, 40));
         bottoneRegole.setMargin(new Insets(10, 10, 10, 10));
         bottoneRegole.addActionListener(e -> view.showPannelloRegole());
         pannelloInternoMenu.setVisible(true);

@@ -4,34 +4,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class MioSpinner extends JPanel {
+public abstract class MioSpinner extends JPanel {
 
     // Editor personalizzato con frecce orizzontali
-	private final JButton leftButton;
-    private final JButton rightButton;
-    private final JTextField textField;
+	public final MioBottone leftButton;
+	public final JButton rightButton;
     
     public MioSpinner(){
-    		
-            setLayout(new BorderLayout(5, 0));
-            setBackground(new Color(0, 0, 0, 0));
+        setLayout(new BorderLayout(5, 0));
+        setBackground(new Color(0, 0, 0, 0));
 
-            textField = new JTextField("1", 4);
-            textField.setHorizontalAlignment(JTextField.CENTER);
-            textField.setFont(new Font("SansSerif", Font.BOLD, 14));
-            textField.setBackground(new Color(240, 240, 255));
-            textField.setBorder(null);
-            textField.setEditable(false);
+        ImageIcon iconaOriginaleSx = new ImageIcon(getClass().getResource("/img/frecciaSx.png"));
+        Image iconaRidottaSx = iconaOriginaleSx.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        leftButton = new MioBottone(new ImageIcon(iconaRidottaSx));
+        leftButton.setPreferredSize(new Dimension(40, 30));
 
-            leftButton = new JButton("<");
-            rightButton = new JButton(">");
+        ImageIcon iconaOriginaleDx = new ImageIcon(getClass().getResource("/img/frecciaDx.png"));
+        Image iconaRidottaDx = iconaOriginaleDx.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        rightButton = new MioBottone(new ImageIcon(iconaRidottaDx));
+        rightButton.setPreferredSize(new Dimension(40, 30));
 
-            leftButton.addActionListener((ActionEvent e) -> textField.setText("ciao"));
-            rightButton.addActionListener((ActionEvent e) -> textField.setText("no ciao"));
-
-            add(leftButton, BorderLayout.WEST);
-            add(textField, BorderLayout.CENTER);
-            add(rightButton, BorderLayout.EAST);
-        }
+        add(leftButton, BorderLayout.WEST);
+        add(rightButton, BorderLayout.EAST);
     }
+}
 

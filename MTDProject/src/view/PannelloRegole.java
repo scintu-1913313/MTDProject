@@ -22,6 +22,8 @@ public class PannelloRegole extends Pannello{
 		topPanel.setBackground(TRASPARENTE);
 		
 		MioBottone bottoneRitornoMenu = new MioBottone("Menu'");
+		bottoneRitornoMenu.setPreferredSize(new Dimension(140, 40));
+		bottoneRitornoMenu.setMaximumSize(new Dimension(140, 40));
 		bottoneRitornoMenu.addActionListener(e -> view.showPannelloMenu());
 
 		topPanel.add(bottoneRitornoMenu);

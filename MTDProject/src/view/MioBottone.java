@@ -27,7 +27,16 @@ public class MioBottone extends JButton {
 
     public MioBottone(String text) {
         super(text);
-        setFocusPainted(false);
+        initBottone();
+    }
+    
+    public MioBottone(Icon icon) {
+        super(icon);
+        initBottone();
+    }
+    
+    private void initBottone() {
+    	setFocusPainted(false);
         setOpaque(false);
         setContentAreaFilled(false);
         setBackground(VERDE_TAVOLO);
@@ -35,14 +44,17 @@ public class MioBottone extends JButton {
         setBorder(BorderFactory.createLineBorder(BORDO_CHIARO, 2));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setFont(FONT_GIOCO);
-        setPreferredSize(new Dimension(90, 30));
+        setPreferredSize(new Dimension(30, 30));
         setMargin(new Insets(5,5,5,5));
 
      // Effetto hover
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                setBackground(VERDE_HOVER);
+            	if(isEnabled())
+            	{
+            		setBackground(VERDE_HOVER);
+            	}
             }
 
             @Override
@@ -50,8 +62,8 @@ public class MioBottone extends JButton {
                 setBackground(VERDE_TAVOLO);
             }
         });
+        addActionListener(e -> RiproduttoreAudio.play("/sounds/button.wav"));
     }
-    
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
