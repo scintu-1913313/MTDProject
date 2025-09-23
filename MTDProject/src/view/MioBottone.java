@@ -1,25 +1,22 @@
 package view;
 
 import javax.swing.*;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MioBottone extends JButton {
-	/*public static final Color TRASPARENTE = new Color(0, 0, 0, 0);
-	public static final Color ARANCIONE = Color.decode("#f08c00");
 	
-    static {
-    	UIManager.put("Button.arc", 20);
-	}
-    public MioBottone(String text) {
-        super(text);
-    }*/
 	
 	public static final Color VERDE_TAVOLO = new Color(2, 86, 14);
     public static final Color VERDE_HOVER = new Color(70, 180, 70);
     public static final Color BORDO_CHIARO = new Color(255, 255, 255);
     public static final Font FONT_GIOCO = new Font("Georgia", Font.BOLD, 14);
+    
+   
     
     static {
         UIManager.put("Button.arc", 20); // se usi FlatLaf o Look&Feel moderno
@@ -34,6 +31,7 @@ public class MioBottone extends JButton {
         super(icon);
         initBottone();
     }
+    
     
     private void initBottone() {
     	setFocusPainted(false);
@@ -83,5 +81,6 @@ public class MioBottone extends JButton {
         g2.drawRoundRect(0, 0, getWidth()-1, getHeight()-1, 30,30);
         g2.dispose();
     }
+
 }
 
