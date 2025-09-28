@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Insets;
@@ -27,24 +28,26 @@ public class MioBottoneSelezione extends JButton{
         
         setIcon(new ImageIcon(iconaVuotaRidotta));
         
-        addActionListener(e -> cambioImmagine());
+        setOpaque(false);
+        setContentAreaFilled(false);
+        setBorderPainted(false);
+        setFocusPainted(false);
         
+        addActionListener(e -> cambioImmagine());
         addActionListener(e -> RiproduttoreAudio.play("/sounds/button.wav"));
 	}
 	
 	private void cambioImmagine()
 	{
+		cliccato = !cliccato;
 		if (cliccato)
 		{
-			cliccato = false;
-			setIcon(immagineVuota);
+			setIcon(immagineSelezione);
 			
 		}
 		else
 		{
-			cliccato = true;
-			setIcon(immagineSelezione);
-			
+			setIcon(immagineVuota);			
 		}
 	
 	}

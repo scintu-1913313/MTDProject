@@ -29,7 +29,7 @@ public class Mazzo {
 		
 		public String getPath(Seme seme, Valore valore, TipoMazzo nomeTipoMazzo ) {
 			
-			return "img/" + nomeTipoMazzo +"/" + valore + "_" + seme + ".png";
+			return "/img/" + nomeTipoMazzo +"/" + valore + "_" + seme + ".jpg";
 		}
 		
 		public MazzoBuilder mescola() {

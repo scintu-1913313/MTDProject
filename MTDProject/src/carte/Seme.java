@@ -4,7 +4,7 @@ public enum Seme {
 	COPPE("coppe"),
 	DENARI("denari"),
 	SPADE("spade"),
-	BASTONI("bastroni");
+	BASTONI("bastoni");
 
 	private final String nomeSeme;
 	

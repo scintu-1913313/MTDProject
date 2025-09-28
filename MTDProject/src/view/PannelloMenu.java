@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Observable;
 import javax.imageio.ImageIO;
+import carte.*;
 
 public class PannelloMenu extends Pannello {
 
@@ -32,53 +34,48 @@ public class PannelloMenu extends Pannello {
 
         pannelloInternoMenu.add(bottoneStart);
         
-        //dopo il primo bottone aggiunge 50px
-        pannelloInternoMenu.add(Box.createVerticalStrut(20));
+        //dopo il primo bottone aggiunge 20px
+        pannelloInternoMenu.add(Box.createVerticalStrut(50));
 
         MioIntSpinner spinnerNumeroGiocatori = new MioIntSpinner("Giocatori",1,1,4,1);
         spinnerNumeroGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
         spinnerNumeroGiocatori.setPreferredSize(new Dimension(140, 40));
-        spinnerNumeroGiocatori.setMaximumSize(new Dimension(140, 40));
-        //spinnerNumeroGiocatori.add(labelGiocatori,BorderLayout.NORTH);
-        
-        pannelloInternoMenu.add(Box.createVerticalStrut(10));
+        spinnerNumeroGiocatori.setMaximumSize(new Dimension(140, 40));     
         pannelloInternoMenu.add(spinnerNumeroGiocatori);
-        
-        MioIntSpinner spinnerTipoCarte = new MioIntSpinner("Tipo Carte",1,1,4,1);
-        spinnerNumeroGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
-        spinnerNumeroGiocatori.setPreferredSize(new Dimension(140, 40));
-        spinnerNumeroGiocatori.setMaximumSize(new Dimension(140, 40));
-        
-        
-        add(pannelloInternoMenu);
-        
-        /*MioBottoneSelezione bottoneSelezione = new MioBottoneSelezione("",pannelloInternoMenu, "/src/img/frecciaSx.png");
-        bottoneSelezione.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        bottoneSelezione.setPreferredSize(new Dimension(70, 40));
-        bottoneSelezione.setMaximumSize(new Dimension(70, 40));
-        bottoneSelezione.setMargin(new Insets(10, 10, 10, 10));
-        pannelloInternoMenu.setVisible(true);
-        */
-        
-        /*ImageIcon icon = new ImageIcon(getClass().getResource("/img/spunta.png"));
-        Image iconaRidottaSx = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 
-        System.out.println("Icon width: " + icon.getIconWidth()); // Debug
-        MioBottone bottone = new MioBottone(new ImageIcon(iconaRidottaSx));
-        //bottone.setIcon(icon);        */
+        pannelloInternoMenu.add(Box.createVerticalStrut(20));
         
-        MioBottoneSelezione bottoneSpunta = new MioBottoneSelezione();
+        MioIntSpinner spinnerPunteggio = new MioIntSpinner("Punteggio",11,11,41,10);
+        spinnerPunteggio.setAlignmentX(Component.CENTER_ALIGNMENT);
+        spinnerPunteggio.setPreferredSize(new Dimension(140, 40));
+        spinnerPunteggio.setMaximumSize(new Dimension(140, 40));
+        pannelloInternoMenu.add(spinnerPunteggio);
+
+        pannelloInternoMenu.add(Box.createVerticalStrut(20));
+        
+        Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte(TipoMazzo.NAPOLETANTE).build();
+        ArrayList<Carta> arrayListCarte = new ArrayList<>(mazzo.getCarte());
+        
+        MioImgSpinner spinnerTipoCarte = new MioImgSpinner("Tipo Carte",arrayListCarte);
+        spinnerTipoCarte.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        pannelloInternoMenu.add(spinnerTipoCarte);
+
+        pannelloInternoMenu.add(Box.createVerticalStrut(20));
+
+        MioLabel intestazioneBottoneAccusa = new MioLabel("Accusa");
+        intestazioneBottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pannelloInternoMenu.add(intestazioneBottoneAccusa);
+
+        MioBottoneSelezione bottoneAccusa = new MioBottoneSelezione();
+        bottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pannelloInternoMenu.add(bottoneAccusa);
+
+        add(pannelloInternoMenu);
         
         pannelloInternoMenu.setVisible(true);
 
         pannelloInternoMenu.add(Box.createVerticalStrut(20));
-
-
-        pannelloInternoMenu.add(bottoneSpunta);
-
-
-               
-
 
         MioBottone bottoneRegole = new MioBottone("Regole");
         bottoneRegole.setAlignmentX(Component.CENTER_ALIGNMENT);
