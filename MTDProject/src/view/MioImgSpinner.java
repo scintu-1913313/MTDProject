@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 import carte.*;
 
@@ -35,6 +34,8 @@ public class MioImgSpinner extends MioSpinner {
         rightButton.addActionListener((ActionEvent e) -> incrementaValore());
         
         leftButton.setEnabled(false);
+        setPreferredSize(new Dimension(180, 150));
+        setMaximumSize(new Dimension(180,150));
 	}
 	
 	private void decrementaValore() {
