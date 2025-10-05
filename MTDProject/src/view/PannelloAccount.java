@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JPanel;
 
@@ -26,6 +28,11 @@ public class PannelloAccount extends Pannello{
 		topPanel.add(bottoneRitornoMenu);
 		add(topPanel, BorderLayout.SOUTH);
 
-
 	}
+	
+    @Override
+    public void update(Observable o, Object arg) {
+        // TODO
+    	//QUI DEVO GESTIRE LE INFORMAZIONI DELLE STATISTICHE E DELL'ACCOUNT CHE MI ARRIVANO DAL MODELLO
+    }
 }

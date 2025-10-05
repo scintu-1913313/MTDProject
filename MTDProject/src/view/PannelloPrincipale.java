@@ -60,4 +60,8 @@ public class PannelloPrincipale extends Pannello {
     public PannelloMenu getPannelloMenu() {
         return pannelloMenu;
     }
+    
+    public PannelloAccount getPannelloAccount() {
+        return pannelloAccount;
+    }
 }

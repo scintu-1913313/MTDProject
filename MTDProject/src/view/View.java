@@ -79,7 +79,9 @@ public class View extends JFrame implements Observer {
     }
     
     
-    
+    public Observer getPannelloAccount() {
+    	return pannelloPrincipale.getPannelloAccount();
+    }
     
     @Override
     public void update(Observable o, Object arg) {
