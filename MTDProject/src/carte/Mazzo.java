@@ -26,7 +26,14 @@ public class Mazzo {
 			}
 			return this;
 		}
-		
+		public MazzoBuilder generaAssoDeiMazzi() {
+			for(TipoMazzo nomeTipoMazzo: TipoMazzo.values()) {
+					carte.add(new Carta(Seme.COPPE,Valore.ASSO,getPath(Seme.COPPE,Valore.ASSO,nomeTipoMazzo)));
+			}
+			
+			return this;
+
+		}	
 		public String getPath(Seme seme, Valore valore, TipoMazzo nomeTipoMazzo ) {
 			
 			return "/img/" + nomeTipoMazzo +"/" + valore + "_" + seme + ".jpg";

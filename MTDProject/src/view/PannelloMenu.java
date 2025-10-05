@@ -24,18 +24,40 @@ public class PannelloMenu extends Pannello {
         
         //150px di spazio dall'inizio del pannelloInternoMenu, inizia ad insrire dal 151px qualsiasi oggetto
         
+     // Pannello superiore con layout personalizzato
+        JPanel pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pannelloInAlto.setBackground(VERDE_PANNELLO);
+        pannelloInAlto.setOpaque(true);
+        
         MioBottone bottoneStart = new MioBottone("Inizio Partita");
-        bottoneStart.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //bottoneStart.setAlignmentX(Component.CENTER_ALIGNMENT);
         bottoneStart.setPreferredSize(new Dimension(140, 40));
         bottoneStart.setMaximumSize(new Dimension(140, 40));
         bottoneStart.setMinimumSize(new Dimension(140, 40));
         bottoneStart.setMargin(new Insets(10, 10, 10, 10));
         bottoneStart.addActionListener(e -> view.showPannelloGioco());
+        
+        MioBottoneInfo bottoneAccount= new MioBottoneInfo();
+        //bottoneInfo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        bottoneAccount.setPreferredSize(new Dimension(50, 50));
+        bottoneAccount.setMaximumSize(new Dimension(50, 50));
+        bottoneAccount.setMinimumSize(new Dimension(50, 50));
+        bottoneAccount.setMargin(new Insets(10, 10, 10, 10));
+        bottoneAccount.addActionListener(e -> view.showPannelloAccount());
 
-        pannelloInternoMenu.add(bottoneStart);
+        
+        pannelloInAlto.add(bottoneStart);
+        //UNAA VOLTA SCELTA L'IMMAGINE CREARE LO SPAZIO
+        pannelloInAlto.add(Box.createHorizontalStrut(197));
+        pannelloInAlto.add(bottoneAccount);
+
+
+        pannelloInternoMenu.add(pannelloInAlto, BorderLayout.CENTER);
+           
+        //pannelloInternoMenu.add(Box.createVerticalStrut(15));
         
         //dopo il primo bottone aggiunge 40px
-        pannelloInternoMenu.add(Box.createVerticalStrut(35));
+        pannelloInternoMenu.add(Box.createVerticalStrut(10));
 
         MioIntSpinner spinnerNumeroGiocatori = new MioIntSpinner("Giocatori",1,1,4,1);
         spinnerNumeroGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -53,7 +75,7 @@ public class PannelloMenu extends Pannello {
 
         pannelloInternoMenu.add(Box.createVerticalStrut(15));
         
-        Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte(TipoMazzo.NAPOLETANTE).build();
+        Mazzo mazzo = new Mazzo.MazzoBuilder().generaAssoDeiMazzi().build();
         ArrayList<Carta> arrayListCarte = new ArrayList<>(mazzo.getCarte());
         
         MioImgSpinner spinnerTipoCarte = new MioImgSpinner("Tipo Carte",arrayListCarte);
@@ -61,7 +83,7 @@ public class PannelloMenu extends Pannello {
         
         pannelloInternoMenu.add(spinnerTipoCarte);
 
-        pannelloInternoMenu.add(Box.createVerticalStrut(20));
+        pannelloInternoMenu.add(Box.createVerticalStrut(15));
 
         MioLabel intestazioneBottoneAccusa = new MioLabel("Accusa");
         intestazioneBottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -71,22 +93,27 @@ public class PannelloMenu extends Pannello {
         bottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
         pannelloInternoMenu.add(bottoneAccusa);
         
-        pannelloInternoMenu.add(Box.createVerticalStrut(20));
+        pannelloInternoMenu.add(Box.createVerticalStrut(10));
+        
+        MioBottone bottoneRegole = new MioBottone("Regole");
+        bottoneRegole.setAlignmentX(Component.CENTER_ALIGNMENT);
+        bottoneRegole.setPreferredSize(new Dimension(140, 40));
+        bottoneRegole.setMaximumSize(new Dimension(140, 40));
+        bottoneRegole.setMinimumSize(new Dimension(140, 40));
+        bottoneRegole.setMargin(new Insets(10, 10, 10, 10));
+        bottoneRegole.addActionListener(e -> view.showPannelloRegole());
+        pannelloInternoMenu.setVisible(true);
+        
+        pannelloInternoMenu.add(bottoneRegole);
 
         add(pannelloInternoMenu);
         
         pannelloInternoMenu.setVisible(true);
 
-        pannelloInternoMenu.add(Box.createVerticalStrut(20));
+        pannelloInternoMenu.add(Box.createVerticalStrut(15));
 
-        MioBottone bottoneRegole = new MioBottone("Regole");
-        bottoneRegole.setAlignmentX(Component.CENTER_ALIGNMENT);
-        bottoneRegole.setPreferredSize(new Dimension(8, 40));
-        bottoneRegole.setMaximumSize(new Dimension(140, 40));
-        bottoneRegole.setMargin(new Insets(10, 10, 10, 10));
-        bottoneRegole.addActionListener(e -> view.showPannelloRegole());
-        pannelloInternoMenu.setVisible(true);
-        add(bottoneRegole, BorderLayout.SOUTH);
+
+        //add(bottoneRegole, BorderLayout.SOUTH);
         
         
         

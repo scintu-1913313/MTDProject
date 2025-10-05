@@ -12,6 +12,7 @@ public class PannelloPrincipale extends Pannello {
 	private JPanel pannelloNascosto;
 	private PannelloMenu pannelloMenu;
     private PannelloRegole pannelloRegole;
+    private PannelloAccount pannelloAccount;
 
 	public PannelloPrincipale(View view) {
 		super(new GridBagLayout());
@@ -30,10 +31,13 @@ public class PannelloPrincipale extends Pannello {
 		
 		pannelloMenu = new PannelloMenu(view);
 		pannelloRegole = new PannelloRegole(view);
+		pannelloAccount = new PannelloAccount(view);
 
         pannelloNascosto.add(pannelloRegole,"REGOLE");
         pannelloNascosto.add(pannelloMenu,"MENU");
-		
+        pannelloNascosto.add(pannelloAccount,"ACCOUNT");
+
+        
 		GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;

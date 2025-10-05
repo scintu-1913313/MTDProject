@@ -17,6 +17,7 @@ public class View extends JFrame implements Observer {
     //private PannelloRegole pannelloRegole;
     private PannelloPrincipale pannelloPrincipale;
     private PannelloGioco pannelloGioco;
+    //private PannelloAccount pannelloAccount;
 
     public View() {
         super("JTressette");
@@ -35,6 +36,7 @@ public class View extends JFrame implements Observer {
 
         pannelloPrincipale = new PannelloPrincipale(this);
         pannelloGioco = new PannelloGioco(this);
+        //pannelloAccount = new PannelloAccount(this);
 
         setContentPane(pannelloPrincipale);
         showPannelloMenu();
@@ -62,12 +64,23 @@ public class View extends JFrame implements Observer {
         revalidate();
         repaint();
     }
+    
+    public void showPannelloAccount() {
+    	pannelloPrincipale.showPanel("ACCOUNT");
+        setContentPane(pannelloPrincipale);
+        revalidate();
+        repaint();
+    }
 
     public void showPannelloGioco() {
     	setContentPane(pannelloGioco);
         revalidate();
         repaint();
     }
+    
+    
+    
+    
     @Override
     public void update(Observable o, Object arg) {
         // Implementazione Observer se necessaria
