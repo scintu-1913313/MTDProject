@@ -25,12 +25,11 @@ public class GestoreFile {
 	}
 	
 	//SCRITTURA
-    public void scriviFileJSON(String percorso, JSONObject info) throws IOException {
+    public void scriviFileJSON(String percorso, boolean append, JSONObject info) throws IOException {
     	
-    	FileWriter file = new FileWriter(percorso);
+    	FileWriter file = new FileWriter(percorso,append);
     	file.write(info.toString(4)); // 4 = indentazione leggibile
     	file.close();
-        
    }
     
 	//LETTURA
@@ -41,10 +40,7 @@ public class GestoreFile {
         JSONObject json = new JSONObject(contenuto);
 
         return json;
-        
     }
-	    
-	
 }
 
 
