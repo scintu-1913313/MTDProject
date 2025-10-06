@@ -23,6 +23,7 @@ public class Controller {
 		 * conteggi aggiornati di partite vinte e giocate
 		 */
 		modello.addObserver(vista.getPannelloAccount());
+		//vista.getPannelloAccount().bottoneSalvaModifiche.addActionListener(e -> { ...
     }
 
 }

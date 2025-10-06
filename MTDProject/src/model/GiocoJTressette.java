@@ -5,7 +5,11 @@ import java.util.Observer;
 
 @SuppressWarnings("deprecation")
 public class GiocoJTressette extends Observable implements Observer {
-    public GiocoJTressette() {}
+	private GestoreUtente gestoreUtente;
+    public GiocoJTressette() {
+    	this.gestoreUtente = new GestoreUtente();
+    	notifyObservers(gestoreUtente.getGiocatore());
+    }
 
     @Override
     public void update(Observable o, Object arg) {

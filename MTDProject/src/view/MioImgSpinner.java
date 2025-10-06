@@ -12,22 +12,24 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import carte.*;
+import model.Avatar;
+import model.AvatarEnum;
 
 public class MioImgSpinner extends MioSpinner {
 
     private JLabel labelImmagineCorrente;
-	private ArrayList<Carta> carte;
-	private ArrayList<ImageIcon> immaginiCarte;
+	private ArrayList<Object> oggetti;
+	private ArrayList<ImageIcon> immaginiOggetti;
     private int indiceCorrente;
 
-	public MioImgSpinner(String titolo, ArrayList<Carta> carte){
+	public MioImgSpinner(String titolo, ArrayList<Object> oggetti){
 		super(titolo);
-		this.carte = carte;
+		this.oggetti = oggetti;
 		indiceCorrente = 0;
-		immaginiCarte = new ArrayList<>();
+		immaginiOggetti = new ArrayList<>();
 		
 		costruisciImmaginiCarte();
-        labelImmagineCorrente = new JLabel("", immaginiCarte.get(indiceCorrente), JLabel.CENTER);
+        labelImmagineCorrente = new JLabel("", immaginiOggetti.get(indiceCorrente), JLabel.CENTER);
         add(labelImmagineCorrente, BorderLayout.CENTER);
         
 		leftButton.addActionListener((ActionEvent e) -> decrementaValore());
@@ -43,7 +45,7 @@ public class MioImgSpinner extends MioSpinner {
 		if(indiceCorrente > 0)
 		{
 			indiceCorrente-=1;
-	        labelImmagineCorrente.setIcon(immaginiCarte.get(indiceCorrente));
+	        labelImmagineCorrente.setIcon(immaginiOggetti.get(indiceCorrente));
 		}
 		if(indiceCorrente == 0)
 		{
@@ -55,12 +57,12 @@ public class MioImgSpinner extends MioSpinner {
 	private void incrementaValore() {
 		leftButton.setEnabled(true);
 
-		if(indiceCorrente <= carte.size() - 1)
+		if(indiceCorrente <= oggetti.size() - 1)
 		{
 			indiceCorrente+=1;
-	        labelImmagineCorrente.setIcon(immaginiCarte.get(indiceCorrente));
+	        labelImmagineCorrente.setIcon(immaginiOggetti.get(indiceCorrente));
 		}
-		if(indiceCorrente == carte.size() - 1)
+		if(indiceCorrente == oggetti.size() - 1)
 		{
 			rightButton.setEnabled(false);
 			rightButton.setBackground(MioBottone.VERDE_TAVOLO);
@@ -69,25 +71,45 @@ public class MioImgSpinner extends MioSpinner {
 	
 	private void costruisciImmaginiCarte() {
 		
-		for(Carta c: carte) {
-			String path = c.getPercorsoImmagine();
+		for(Object ogg: oggetti) {
+			String path="";
+			int altezza = 0;
+			int larghezza = 0;
+			if(ogg.getClass() == Carta.class)
+			{
+				Carta c = (Carta) ogg;
+				path = c.getPercorsoImmagine();
+				altezza = 130;
+				larghezza = 90;
+			}
+			else if(ogg.getClass() == Avatar.class)
+			{
+				Avatar avatar = (Avatar) ogg;
+				path = avatar.getPercorsoImmagine();
+				altezza = 90;
+				larghezza = 90;
+			}
+			else
+			{
+				System.out.println("Classe non riconosciuta");
+			}
 			try {
 
 				ImageIcon immagineCorrente = new ImageIcon(getClass().getResource(path));
-		        Image immagineCorrenteRidotta = immagineCorrente.getImage().getScaledInstance(90, 130, Image.SCALE_SMOOTH);
-		        immaginiCarte.addLast(new ImageIcon(immagineCorrenteRidotta));
+		        Image immagineCorrenteRidotta = immagineCorrente.getImage().getScaledInstance(larghezza, altezza, Image.SCALE_SMOOTH);
+		        immaginiOggetti.addLast(new ImageIcon(immagineCorrenteRidotta));
 			} 
 			catch 
 			(Exception e) {
 				System.out.println("Errore nella lettura del file: "+ path+"; Errore: " +e.getMessage());
 			}
 		}
-		if(immaginiCarte.size() != carte.size()) {
+		if(immaginiOggetti.size() != oggetti.size()) {
 			System.out.println("Errore nella costruzione delle immagini");
 		}
 	}
 	
-	public Carta getCartaCorrente() {
-		return carte.get(indiceCorrente);
+	public Object getOggettoCorrente() {
+		return oggetti.get(indiceCorrente);
 	}
 }

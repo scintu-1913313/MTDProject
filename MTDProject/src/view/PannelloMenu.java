@@ -76,7 +76,7 @@ public class PannelloMenu extends Pannello {
         pannelloInternoMenu.add(Box.createVerticalStrut(15));
         
         Mazzo mazzo = new Mazzo.MazzoBuilder().generaAssoDeiMazzi().build();
-        ArrayList<Carta> arrayListCarte = new ArrayList<>(mazzo.getCarte());
+        ArrayList<Object> arrayListCarte = new ArrayList<>(mazzo.getCarte());
         
         MioImgSpinner spinnerTipoCarte = new MioImgSpinner("Tipo Carte",arrayListCarte);
         spinnerTipoCarte.setAlignmentX(Component.CENTER_ALIGNMENT);

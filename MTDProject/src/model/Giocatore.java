@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Giocatore {
-	private Avatar avatar;
+	private AvatarEnum avatar;
 	private String nickname;
     private int livello;
-    private List<Partita> storicoPartite;
+    private List<Partita> storicoPartite = new ArrayList<>();
 
     private static Giocatore istanza;    
     private void Giocatore() {
-    	storicoPartite = new ArrayList<>();
     	resetGiocatore();
     }
     
@@ -23,21 +22,21 @@ public class Giocatore {
     }
     
     public void resetGiocatore() {
-    	this.avatar = Avatar.DEFAULT;
+    	this.avatar = AvatarEnum.DEFAULT;
     	this.nickname = "";
     	this.livello = 0;
     	storicoPartite.clear();
     }
     
     public boolean isRegistrato() {
-        return avatar != Avatar.DEFAULT && !nickname.isEmpty();
+        return avatar != AvatarEnum.DEFAULT && !nickname.isEmpty();
     }
     
-    public void setAvatar(Avatar avatar) {
+    public void setAvatar(AvatarEnum avatar) {
     	this.avatar = avatar;
     }
     
-    public Avatar getAvatar() {
+    public AvatarEnum getAvatar() {
     	return this.avatar;
     }
     

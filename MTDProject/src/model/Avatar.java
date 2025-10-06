@@ -1,45 +1,35 @@
 package model;
 
-public enum Avatar {
-	DEFAULT(0),
-    AVATAR1(1),
-    AVATAR2(2),
-    AVATAR3(3),
-    AVATAR4(4);
-	
-    private final int avatarId;
-    
-	/**
-	 * Costruttore 
-	 * @param avatarId. L'id dell avatar
-	 */
-    Avatar(int avatarId){
-		this.avatarId = avatarId;
+import java.util.Map;
+
+import model.AvatarEnum;
+
+public class Avatar {
+	public static final Map<AvatarEnum, String> mappaFile = Map.of(
+			AvatarEnum.DEFAULT, "/img/avatars/avatarDefault.png",
+			AvatarEnum.AVATAR1, "/img/avatars/avatar1.png",
+			AvatarEnum.AVATAR2, "/img/avatars/avatar2.png",
+			AvatarEnum.AVATAR3, "/img/avatars/avatar3.png",
+			AvatarEnum.AVATAR4, "/img/avatars/avatar3.png"
+	);
+	private final AvatarEnum valore;
+	private final String percorsoImmagine;
+
+	public Avatar(AvatarEnum valore){
+		this.valore = valore;
+		this.percorsoImmagine = mappaFile.get(valore);
 	}
 	
-    public static Avatar fromId(int avatarId) {
-        for (Avatar a : values()) {
-            if (a.avatarId == avatarId) {
-            	return a;
-            }
-        }
-        return DEFAULT;
-    }
-    
-	/**
-	 * 
-	 * @param avatar. L'avatar da convertire in stringa
-	 * @return La stringa associata all'avatar tramite toString()
-	 */
-	public static String getNomeAvatar(Avatar avatar) {
-		return avatar.toString();
+	public AvatarEnum getValore() {
+		return valore;
 	}
 	
-	/**
-	 * @return Il nome in stringa dell' avatar
-	 */
+	public String getPercorsoImmagine() {
+		return percorsoImmagine;
+	}
+
 	@Override
 	public String toString() {
-		return String.valueOf(avatarId);
+		return percorsoImmagine;
 	}
 }

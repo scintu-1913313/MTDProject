@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class GestoreUtente {
 	private final GestoreFile gestoreFile = GestoreFile.getGestoreFile();
-	private final String percorsoFileUtente = "datiGiocatore.json"; //final perche' non deve essere modificato
+	private final String percorsoFileUtente = "MTDProject/utente/fileInformazioniUtente.json"; //final perche' non deve essere modificato
 	private Giocatore giocatore;
 	
 	public GestoreUtente() {
@@ -35,7 +35,7 @@ public class GestoreUtente {
 		aggiornaDati();
 	}
 	
-	private void aggiornaDatiUtente(Avatar avatar,String nickname) {
+	private void aggiornaDatiUtente(AvatarEnum avatar,String nickname) {
 		giocatore.setAvatar(avatar);
 		giocatore.setNickname(nickname);
 		aggiornaDati();
@@ -61,7 +61,7 @@ public class GestoreUtente {
 		try {
 			gestoreFile.scriviFileJSON(percorsoFileUtente,false,datiAggiornati);
 		} catch (IOException e) {
-			System.out.println("impossibile leggere il file Json");
+			System.out.println("impossibile scrivere il file Json");
 			giocatore.resetGiocatore(); // giocatore di default
 		}
 
@@ -74,7 +74,7 @@ public class GestoreUtente {
 
 	
     private void parsaGiocatoreDaJSON(JSONObject obj) {
-    	giocatore.setAvatar(Avatar.fromId(obj.optInt("avatar", 0)));
+    	giocatore.setAvatar(AvatarEnum.fromId(obj.optInt("avatar", 0)));
     	giocatore.setNickname(obj.optString("nickname", ""));
     	giocatore.setLivello(obj.optInt("livello", 0));
 
@@ -85,5 +85,9 @@ public class GestoreUtente {
                 giocatore.aggiungiPartita(Partita.fromJSON(partitaObj));
             }
         }
+    }
+    
+    public Giocatore getGiocatore() {
+    	return this.giocatore;
     }
 }
