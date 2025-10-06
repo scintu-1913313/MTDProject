@@ -36,7 +36,7 @@ public class Giocatore {
     	this.avatar = avatar;
     }
     
-    public AvatarEnum getAvatar() {
+    public AvatarEnum getAvatarEnum() {
     	return this.avatar;
     }
     

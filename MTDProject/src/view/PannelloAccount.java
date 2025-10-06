@@ -11,10 +11,12 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import model.Avatar;
@@ -23,6 +25,11 @@ import model.Giocatore;
 import model.GiocoJTressette;
 
 public class PannelloAccount extends Pannello{
+	JPanel pannelloInternoAccount;
+	private MioImgSpinner spinnerTipoAvatar;
+	JTextField nicknameField;
+	private boolean utenteRegistrato = false;
+	MioLabel livello;
 	
 	public PannelloAccount(View view) {
 		super(new BorderLayout());
@@ -30,7 +37,7 @@ public class PannelloAccount extends Pannello{
 		setBackground(Pannello.VERDE_PANNELLO);
 		setOpaque(false);
 		
-		JPanel pannelloInternoAccount = new JPanel();
+		pannelloInternoAccount = new JPanel();
 		pannelloInternoAccount.setBackground(VERDE_PANNELLO);
 		pannelloInternoAccount.setOpaque(true);
 		pannelloInternoAccount.setLayout(new BoxLayout(pannelloInternoAccount, BoxLayout.Y_AXIS));
@@ -42,18 +49,41 @@ public class PannelloAccount extends Pannello{
         arrayListAvatar.add(new Avatar(AvatarEnum.AVATAR3));
         arrayListAvatar.add(new Avatar(AvatarEnum.AVATAR4));
 
-        MioImgSpinner spinnerTipoAvatar = new MioImgSpinner("Avatar",arrayListAvatar);
+        spinnerTipoAvatar = new MioImgSpinner("Avatar",arrayListAvatar);
         spinnerTipoAvatar.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         pannelloInternoAccount.add(spinnerTipoAvatar);
+        pannelloInternoAccount.add(Box.createVerticalStrut(15));
+
+        nicknameField = new JTextField(20);
+        nicknameField.setText("");
+        nicknameField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        nicknameField.setHorizontalAlignment(JTextField.CENTER);
+        nicknameField.setPreferredSize(new Dimension(140, 40));
+        nicknameField.setMaximumSize(new Dimension(140, 40));
+        nicknameField.setMinimumSize(new Dimension(140, 40));
+        nicknameField.setFont(new Font("SansSerif", Font.BOLD, 14));
+
+        pannelloInternoAccount.add(nicknameField);
+
+        pannelloInternoAccount.add(Box.createVerticalStrut(15));
+
+        livello = new MioLabel("Livello: N/A");
+        livello.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pannelloInternoAccount.add(livello);
         
-		
+        pannelloInternoAccount.add(Box.createVerticalStrut(15));
+
+        MioLabel labelStoricoPartite = new MioLabel("Storico partite");
+        labelStoricoPartite.setAlignmentX(Component.CENTER_ALIGNMENT);
+        pannelloInternoAccount.add(labelStoricoPartite);
+        
 		JTextArea areaTesto = new JTextArea("ciao");
         areaTesto.setEditable(false);
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
         areaTesto.setOpaque(true);
-        areaTesto.setBackground(Pannello.VERDE_PANNELLO); // VERDE chiaro
+        areaTesto.setBackground(Pannello.VERDE_SCURO);
         areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità        
         areaTesto.setFont(new Font("SansSerif", Font.BOLD, 14));
         // ScrollPane con solo scrollbar verticale visibile
@@ -83,16 +113,28 @@ public class PannelloAccount extends Pannello{
 
 	}
 	
+	public boolean registrazioneOk() {
+		return utenteRegistrato;
+	}
+	
     @Override
     public void update(Observable o, Object arg) {
-        // TODO
-		System.out.println("oleeee");
-
-    	//QUI DEVO GESTIRE LE INFORMAZIONI DELLE STATISTICHE E DELL'ACCOUNT CHE MI ARRIVANO DAL MODELLO
     	if (!(o instanceof GiocoJTressette && arg instanceof Giocatore))
     	{
     		System.out.println("oleeee");
             return;
+    	}
+    	Giocatore g = (Giocatore) arg;
+    	nicknameField.setText(g.getNickname());
+    	spinnerTipoAvatar.vaiAdOggettoSpecifico(new Avatar(g.getAvatarEnum()));
+    	utenteRegistrato = g.isRegistrato();
+    	if(g.isRegistrato())
+    	{
+            livello.setText("Livello: " + String.valueOf(g.getLivello()));
+    	}
+    	else
+    	{
+    		livello.setText("Livello: N/A");
     	}
     }
 }

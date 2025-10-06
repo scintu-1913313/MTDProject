@@ -30,4 +30,21 @@ public class Carta {
 	public String toString() {
 		return valore + " di " + seme;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+
+	    Carta other = (Carta) obj;
+	    return seme == other.seme && valore == other.valore;
+	}
+
+	@Override
+	public int hashCode() {
+	    int result = seme != null ? seme.hashCode() : 0;
+	    result = 31 * result + (valore != null ? valore.hashCode() : 0);
+	    return result;
+	}
+
 }

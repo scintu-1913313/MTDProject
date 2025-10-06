@@ -48,7 +48,7 @@ public class GestoreUtente {
 	
 	public void aggiornaDati() {
         JSONObject datiAggiornati = new JSONObject();
-        datiAggiornati.put("avatar", giocatore.getAvatar());
+        datiAggiornati.put("avatar", giocatore.getAvatarEnum());
         datiAggiornati.put("nickname", giocatore.getNickname());
         datiAggiornati.put("livello", giocatore.getLivello());
 

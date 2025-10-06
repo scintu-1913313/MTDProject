@@ -32,4 +32,18 @@ public class Avatar {
 	public String toString() {
 		return percorsoImmagine;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+
+	    Avatar other = (Avatar) obj;
+	    return valore == other.valore;
+	}
+
+	@Override
+	public int hashCode() {
+	    return valore != null ? valore.hashCode() : 0;
+	}
 }

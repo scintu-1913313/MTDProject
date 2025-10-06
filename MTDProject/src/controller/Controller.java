@@ -25,5 +25,9 @@ public class Controller {
 		modello.addObserver(vista.getPannelloAccount());
 		//vista.getPannelloAccount().bottoneSalvaModifiche.addActionListener(e -> { ...
     }
+    
+    public void start() {
+    	modello.init();
+    }
 
 }
