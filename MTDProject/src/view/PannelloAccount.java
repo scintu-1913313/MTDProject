@@ -13,11 +13,14 @@ import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JOptionPane;
+
 
 import model.Avatar;
 import model.AvatarEnum;
@@ -25,11 +28,13 @@ import model.Giocatore;
 import model.GiocoJTressette;
 
 public class PannelloAccount extends Pannello{
-	JPanel pannelloInternoAccount;
+	private JPanel pannelloInternoAccount;
 	private MioImgSpinner spinnerTipoAvatar;
-	JTextField nicknameField;
+	private JTextField nicknameField;
 	private boolean utenteRegistrato = false;
-	MioLabel livello;
+	private MioLabel livello;
+	private MioBottone bottoneSalvataggioDati;
+	
 	
 	public PannelloAccount(View view) {
 		super(new BorderLayout());
@@ -102,12 +107,20 @@ public class PannelloAccount extends Pannello{
 		// Bottone in basso a destra
 		JPanel downPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		downPanel.setBackground(TRASPARENTE);
+		
+		bottoneSalvataggioDati = new MioBottone("Salva");
+		bottoneSalvataggioDati.setPreferredSize(new Dimension(100, 40));
+		bottoneSalvataggioDati.setMaximumSize(new Dimension(100, 40));
+		bottoneSalvataggioDati.addActionListener(e -> controlloDati());
+		
 				
 		MioBottone bottoneRitornoMenu = new MioBottone("Menu'");
-		bottoneRitornoMenu.setPreferredSize(new Dimension(140, 40));
-		bottoneRitornoMenu.setMaximumSize(new Dimension(140, 40));
+		bottoneRitornoMenu.setPreferredSize(new Dimension(100, 40));
+		bottoneRitornoMenu.setMaximumSize(new Dimension(100, 40));
 		bottoneRitornoMenu.addActionListener(e -> view.showPannelloMenu());
 		
+		downPanel.add(bottoneSalvataggioDati);
+		downPanel.add(Box.createHorizontalStrut(160));
 		downPanel.add(bottoneRitornoMenu);
 		add(downPanel, BorderLayout.SOUTH);
 
@@ -117,12 +130,15 @@ public class PannelloAccount extends Pannello{
 		return utenteRegistrato;
 	}
 	
+	public MioBottone getBottoneSalvataggioDati() {
+		return bottoneSalvataggioDati;
+	}
+	
     @Override
     public void update(Observable o, Object arg) {
     	if (!(o instanceof GiocoJTressette && arg instanceof Giocatore))
     	{
-    		System.out.println("oleeee");
-            return;
+             return;
     	}
     	Giocatore g = (Giocatore) arg;
     	nicknameField.setText(g.getNickname());
@@ -137,4 +153,23 @@ public class PannelloAccount extends Pannello{
     		livello.setText("Livello: N/A");
     	}
     }
+    public Avatar getAvatar() {
+    	return  (Avatar) spinnerTipoAvatar.getOggettoCorrente();
+
+    }
+    
+    public String getNickname() {
+    	return nicknameField.getText();
+    }
+    
+    public void controlloDati() {
+    	String nome = nicknameField.getText();
+    	if (nome.isEmpty()) {
+    		JOptionPane.showMessageDialog(null, "Il nickname non puo' essere vuoto", "Warning", JOptionPane.WARNING_MESSAGE);
+    		return;
+    	} 
+    }
+    
+    
+    
 }

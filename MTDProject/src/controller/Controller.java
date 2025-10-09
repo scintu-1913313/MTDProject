@@ -3,6 +3,7 @@ package controller;
 
 import model.GiocoJTressette;
 import view.View;
+import view.PannelloAccount;
 
 
 @SuppressWarnings("deprecation")
@@ -23,7 +24,8 @@ public class Controller {
 		 * conteggi aggiornati di partite vinte e giocate
 		 */
 		modello.addObserver(vista.getPannelloAccount());
-		//vista.getPannelloAccount().bottoneSalvaModifiche.addActionListener(e -> { ...
+		PannelloAccount p = (PannelloAccount) vista.getPannelloAccount(); 
+		p.getBottoneSalvataggioDati().addActionListener(e -> { modello.aggiornaDatiGiocatore(p.getAvatar(), p.getNickname());});
     }
     
     public void start() {
