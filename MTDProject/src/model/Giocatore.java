@@ -29,7 +29,7 @@ public class Giocatore {
     }
     
     public boolean isRegistrato() {
-        return avatar != AvatarEnum.DEFAULT && !nickname.isEmpty();
+        return !nickname.isEmpty();
     }
     
     public void setAvatar(AvatarEnum avatar) {

@@ -26,6 +26,7 @@ public class Controller {
 		modello.addObserver(vista.getPannelloAccount());
 		PannelloAccount p = (PannelloAccount) vista.getPannelloAccount(); 
 		p.getBottoneSalvataggioDati().addActionListener(e -> { modello.aggiornaDatiGiocatore(p.getAvatar(), p.getNickname());});
+		
     }
     
     public void start() {

@@ -26,6 +26,16 @@ public enum AvatarEnum {
         return DEFAULT;
     }
     
+    public static AvatarEnum fromString(String avatarString) {
+        for (AvatarEnum a : values()) {
+            if (a.name().equals(avatarString)){
+            	return a;
+            }
+        }
+        return DEFAULT;
+    }
+    
+    
 	/**
 	 * 
 	 * @param avatar. L'avatar da convertire in stringa

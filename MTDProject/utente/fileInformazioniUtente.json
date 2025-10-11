@@ -1,6 +1,17 @@
 {
-  "avatar": 2,
-  "nickname": "Gaia",
-  "livello": 5,
-  "storicoPartite": []
+    "nickname": "gaia",
+    "storicoPartite": [
+        {
+            "vinta": true,
+            "dataFine": "2025-10-11T12:04",
+            "punteggioOttenuto": 120
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-11T12:04",
+            "punteggioOttenuto": 30
+        }
+    ],
+    "avatar": "AVATAR4",
+    "livello": 0
 }

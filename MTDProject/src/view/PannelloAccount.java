@@ -26,6 +26,7 @@ import model.Avatar;
 import model.AvatarEnum;
 import model.Giocatore;
 import model.GiocoJTressette;
+import model.Partita;
 
 public class PannelloAccount extends Pannello{
 	private JPanel pannelloInternoAccount;
@@ -34,6 +35,7 @@ public class PannelloAccount extends Pannello{
 	private boolean utenteRegistrato = false;
 	private MioLabel livello;
 	private MioBottone bottoneSalvataggioDati;
+	private JTextArea areaTesto;
 	
 	
 	public PannelloAccount(View view) {
@@ -83,7 +85,7 @@ public class PannelloAccount extends Pannello{
         labelStoricoPartite.setAlignmentX(Component.CENTER_ALIGNMENT);
         pannelloInternoAccount.add(labelStoricoPartite);
         
-		JTextArea areaTesto = new JTextArea("ciao");
+		areaTesto = new JTextArea("");
         areaTesto.setEditable(false);
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
@@ -152,6 +154,12 @@ public class PannelloAccount extends Pannello{
     	{
     		livello.setText("Livello: N/A");
     	}
+    	String partite = "";
+    	for (Partita p : g.getPartite()) {
+    		partite += p.toString()+"\n";
+    	}
+    		areaTesto.setText(partite);
+    	
     }
     public Avatar getAvatar() {
     	return  (Avatar) spinnerTipoAvatar.getOggettoCorrente();
@@ -168,6 +176,10 @@ public class PannelloAccount extends Pannello{
     		JOptionPane.showMessageDialog(null, "Il nickname non puo' essere vuoto", "Warning", JOptionPane.WARNING_MESSAGE);
     		return;
     	} 
+    	else
+    	{
+    		JOptionPane.showMessageDialog(null, "Dati salvati correttamente!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
+    	}
     }
     
     

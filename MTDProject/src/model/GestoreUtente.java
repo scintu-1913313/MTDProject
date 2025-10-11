@@ -1,6 +1,8 @@
 package model;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,7 +37,7 @@ public class GestoreUtente {
 		aggiornaDati();
 	}
 	
-	private void aggiornaDatiUtente(AvatarEnum avatar,String nickname) {
+	public void aggiornaDatiUtente(AvatarEnum avatar,String nickname) {
 		giocatore.setAvatar(avatar);
 		giocatore.setNickname(nickname);
 		aggiornaDati();
@@ -47,18 +49,25 @@ public class GestoreUtente {
 	}
 	
 	public void aggiornaDati() {
-        JSONObject datiAggiornati = new JSONObject();
+        /*JSONObject datiAggiornati = new JSONObject();
         datiAggiornati.put("avatar", giocatore.getAvatarEnum());
         datiAggiornati.put("nickname", giocatore.getNickname());
-        datiAggiornati.put("livello", giocatore.getLivello());
+        datiAggiornati.put("livello", giocatore.getLivello());*/
+		
+		Map<String, Object> datiOrdinati = new LinkedHashMap<>();
+		datiOrdinati.put("avatar", giocatore.getAvatarEnum());
+		datiOrdinati.put("nickname", giocatore.getNickname());
+		datiOrdinati.put("livello", giocatore.getLivello());
 
         JSONArray partiteArray = new JSONArray();
         for (Partita p : giocatore.getPartite()) {
             partiteArray.put(p.toJSON());
         }
-        datiAggiornati.put("storicoPartite", partiteArray);
+        datiOrdinati.put("storicoPartite", partiteArray);
         
 		try {
+
+			JSONObject datiAggiornati = new JSONObject(datiOrdinati);
 			gestoreFile.scriviFileJSON(percorsoFileUtente,false,datiAggiornati);
 		} catch (IOException e) {
 			System.out.println("impossibile scrivere il file Json");
@@ -72,9 +81,8 @@ public class GestoreUtente {
 		aggiornaDati();
 	}
 
-	
+	//legge giocatore da JSON
     private void parsaGiocatoreDaJSON(JSONObject obj) {
-    	giocatore.setAvatar(AvatarEnum.fromId(obj.optInt("avatar", 0)));
     	giocatore.setNickname(obj.optString("nickname", ""));
     	giocatore.setLivello(obj.optInt("livello", 0));
 
@@ -85,6 +93,8 @@ public class GestoreUtente {
                 giocatore.aggiungiPartita(Partita.fromJSON(partitaObj));
             }
         }
+    	giocatore.setAvatar(AvatarEnum.fromString(obj.optString("avatar", "DEFAULT")));
+
     }
     
     public Giocatore getGiocatore() {

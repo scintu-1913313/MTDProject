@@ -11,8 +11,11 @@ import carte.*;
 
 public class PannelloMenu extends Pannello {
 
+	private View view;
+	
     public PannelloMenu(View view) {
         super(new BorderLayout());
+    	this.view = view;
         setSize(new Dimension(Pannello.LARGHEZZA-400, Pannello.ALTEZZA-300));
         setBackground(VERDE_PANNELLO);
 		setOpaque(false);
@@ -35,7 +38,8 @@ public class PannelloMenu extends Pannello {
         bottoneStart.setMaximumSize(new Dimension(140, 40));
         bottoneStart.setMinimumSize(new Dimension(140, 40));
         bottoneStart.setMargin(new Insets(10, 10, 10, 10));
-        bottoneStart.addActionListener(e -> view.showPannelloGioco());
+        bottoneStart.addActionListener(e -> iniziaPartita());
+    
         
         MioBottoneInfo bottoneAccount= new MioBottoneInfo();
         //bottoneInfo.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -119,6 +123,20 @@ public class PannelloMenu extends Pannello {
         
     }
     
+	private void iniziaPartita()
+	{
+		PannelloAccount p = (PannelloAccount) view.getPannelloAccount();
+		String nickname = p.getNickname();
+    	if (nickname.isEmpty()) {
+    		JOptionPane.showMessageDialog(null, "utente non registrato, andare nell'account per registrarsi", "Warning", JOptionPane.WARNING_MESSAGE);
+    		return;
+    	} 
+    	else 
+    	{
+    		view.showPannelloGioco();
+    	}
+	}
+	
     @Override
     public void update(Observable o, Object arg) {
     }

@@ -7,7 +7,9 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("deprecation")
 public class GiocoJTressette extends Observable implements Observer {
+	
 	private GestoreUtente gestoreUtente;
+	
     public GiocoJTressette() {
     	this.gestoreUtente = new GestoreUtente();
     }
@@ -27,6 +29,7 @@ public class GiocoJTressette extends Observable implements Observer {
     	if (nickname.isEmpty()) {
     		return;
     	}
+    	gestoreUtente.aggiornaDatiUtente(a.getValore(),nickname);
     	System.out.println("ciao sono giocojtresette");
     }
 }
