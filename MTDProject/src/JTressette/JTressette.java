@@ -1,14 +1,14 @@
 package JTressette;
 
 import controller.Controller;
-import model.GiocoJTressette;
+import model.Model;
 import view.View;
 
 public class JTressette {
 
 	public static void main(String[] args) {
 		System.out.println("MAIN");
-		Controller c = new Controller(new GiocoJTressette(), new View());
+		Controller c = new Controller(new Model(), new View());
 		c.start();
 	}
 	

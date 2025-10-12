@@ -21,14 +21,14 @@ public class Mazzo {
 		public MazzoBuilder generaCarte(TipoMazzo nomeTipoMazzo) {
 			for(Seme seme: Seme.values()) {
 				for(Valore valore: Valore.values()){
-					carte.add(new Carta(seme,valore,getPath(seme,valore,nomeTipoMazzo)));
+					carte.add(new Carta(nomeTipoMazzo,seme,valore,getPath(seme,valore,nomeTipoMazzo)));
 				}
 			}
 			return this;
 		}
 		public MazzoBuilder generaAssoDeiMazzi() {
 			for(TipoMazzo nomeTipoMazzo: TipoMazzo.values()) {
-					carte.add(new Carta(Seme.COPPE,Valore.ASSO,getPath(Seme.COPPE,Valore.ASSO,nomeTipoMazzo)));
+					carte.add(new Carta(nomeTipoMazzo, Seme.COPPE,Valore.ASSO,getPath(Seme.COPPE,Valore.ASSO,nomeTipoMazzo)));
 			}
 			
 			return this;

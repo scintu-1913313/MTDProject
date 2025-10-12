@@ -4,13 +4,19 @@ public class Carta {
 	private final Seme seme;
 	private final Valore valore;
 	private final String percorsoImmagine;
-
-	public Carta(Seme seme, Valore valore, String percorsoImmagine){
+	private final TipoMazzo tipoMazzo;
+	
+	public Carta(TipoMazzo tipoMazzo, Seme seme, Valore valore, String percorsoImmagine){
+		this.tipoMazzo = tipoMazzo;
 		this.seme = seme;
 		this.valore = valore;
 		this.percorsoImmagine = percorsoImmagine;
 	}
 	
+	public TipoMazzo getTipoMazzo() {
+		return tipoMazzo;
+	}
+
 	public Seme getSeme() {
 		return seme;
 	}

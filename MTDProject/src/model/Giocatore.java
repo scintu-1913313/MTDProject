@@ -2,69 +2,25 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import carte.*;
 
 public class Giocatore {
-	private AvatarEnum avatar;
-	private String nickname;
-    private int livello;
-    private List<Partita> storicoPartite = new ArrayList<>();
-
-    private static Giocatore istanza;    
-    private void Giocatore() {
-    	resetGiocatore();
+    private String nome;
+    private List<Carta> carte;
+    private boolean isIA;
+    // altri attributi come punteggio, posizione, ecc.
+    public Giocatore(String nome, boolean isIA) {
+    	this.nome = nome;
+    	this.isIA = isIA;
+    	this.carte = new ArrayList<>();
     }
     
-    public static Giocatore getIstance() {
-    	if(istanza == null) {
-    		istanza = new Giocatore();
-    	}
-    	return istanza;
+    public void aggiungiCarte(List<Carta> nuoveCarte) {
+        this.carte.addAll(nuoveCarte);
     }
     
-    public void resetGiocatore() {
-    	this.avatar = AvatarEnum.DEFAULT;
-    	this.nickname = "";
-    	this.livello = 0;
-    	storicoPartite.clear();
-    }
-    
-    public boolean isRegistrato() {
-        return !nickname.isEmpty();
-    }
-    
-    public void setAvatar(AvatarEnum avatar) {
-    	this.avatar = avatar;
-    }
-    
-    public AvatarEnum getAvatarEnum() {
-    	return this.avatar;
-    }
-    
-    public void setNickname(String nickname) {
-    	this.nickname = nickname;
-    }
-    
-    public String getNickname() {
-    	return this.nickname;
-    }
-    
-    public void setLivello(int livello) {
-    	this.livello = livello;
-    }
-    
-    public int getLivello() {
-    	return this.livello;
-    }
-    
-    public void aggiungiPartita(Partita p) {
-    	this.storicoPartite.add(p);
-    }
-    
-    public void resetPartite() {
-    	this.storicoPartite.clear();
-    }
-    
-    public List<Partita> getPartite() {
-    	return this.storicoPartite;
+    public List<Carta> getCarte(){
+    	return carte;
     }
 }
+

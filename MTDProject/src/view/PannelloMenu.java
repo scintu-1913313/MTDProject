@@ -12,6 +12,11 @@ import carte.*;
 public class PannelloMenu extends Pannello {
 
 	private View view;
+	private MioBottone bottoneStart;
+	private MioIntSpinner spinnerNumeroGiocatori;
+	private MioIntSpinner spinnerPunteggio;
+	private MioImgSpinner spinnerTipoCarte;
+	private MioBottoneSelezione bottoneAccusa;
 	
     public PannelloMenu(View view) {
         super(new BorderLayout());
@@ -32,7 +37,7 @@ public class PannelloMenu extends Pannello {
         pannelloInAlto.setBackground(VERDE_PANNELLO);
         pannelloInAlto.setOpaque(true);
         
-        MioBottone bottoneStart = new MioBottone("Inizio Partita");
+        bottoneStart = new MioBottone("Inizio Partita");
         //bottoneStart.setAlignmentX(Component.CENTER_ALIGNMENT);
         bottoneStart.setPreferredSize(new Dimension(140, 40));
         bottoneStart.setMaximumSize(new Dimension(140, 40));
@@ -63,7 +68,7 @@ public class PannelloMenu extends Pannello {
         //dopo il primo bottone aggiunge 40px
         pannelloInternoMenu.add(Box.createVerticalStrut(10));
 
-        MioIntSpinner spinnerNumeroGiocatori = new MioIntSpinner("Giocatori",1,1,4,1);
+        spinnerNumeroGiocatori = new MioIntSpinner("Giocatori",2,2,4,1);
         spinnerNumeroGiocatori.setAlignmentX(Component.CENTER_ALIGNMENT);
         spinnerNumeroGiocatori.setPreferredSize(new Dimension(140, 40));
         spinnerNumeroGiocatori.setMaximumSize(new Dimension(140, 40));     
@@ -71,7 +76,7 @@ public class PannelloMenu extends Pannello {
 
         pannelloInternoMenu.add(Box.createVerticalStrut(15));
         
-        MioIntSpinner spinnerPunteggio = new MioIntSpinner("Punteggio",11,11,41,10);
+        spinnerPunteggio = new MioIntSpinner("Punteggio",11,11,41,10);
         spinnerPunteggio.setAlignmentX(Component.CENTER_ALIGNMENT);
         spinnerPunteggio.setPreferredSize(new Dimension(140, 40));
         spinnerPunteggio.setMaximumSize(new Dimension(140, 40));
@@ -82,7 +87,7 @@ public class PannelloMenu extends Pannello {
         Mazzo mazzo = new Mazzo.MazzoBuilder().generaAssoDeiMazzi().build();
         ArrayList<Object> arrayListCarte = new ArrayList<>(mazzo.getCarte());
         
-        MioImgSpinner spinnerTipoCarte = new MioImgSpinner("Tipo Carte",arrayListCarte);
+        spinnerTipoCarte = new MioImgSpinner("Tipo Carte",arrayListCarte);
         spinnerTipoCarte.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         pannelloInternoMenu.add(spinnerTipoCarte);
@@ -93,7 +98,7 @@ public class PannelloMenu extends Pannello {
         intestazioneBottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
         pannelloInternoMenu.add(intestazioneBottoneAccusa);
 
-        MioBottoneSelezione bottoneAccusa = new MioBottoneSelezione();
+        bottoneAccusa = new MioBottoneSelezione();
         bottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
         pannelloInternoMenu.add(bottoneAccusa);
         
@@ -135,6 +140,28 @@ public class PannelloMenu extends Pannello {
     	{
     		view.showPannelloGioco();
     	}
+	}
+	
+	public MioBottone getBottoneStart() {
+		return this.bottoneStart;
+	}
+	
+	public int getNumeroGiocatori() {
+		return this.spinnerNumeroGiocatori.getValoreCorrente();
+	}
+	
+	public int getPunteggioStabilito() {
+		return this.spinnerPunteggio.getValoreCorrente();
+	}
+	
+	public TipoMazzo getTipoMazzo() {
+		Carta c = (Carta) this.spinnerTipoCarte.getOggettoCorrente();
+		return c.getTipoMazzo();
+	}
+	
+	public boolean getAccusa()
+	{
+		return  this.bottoneAccusa.getCliccato();
 	}
 	
     @Override

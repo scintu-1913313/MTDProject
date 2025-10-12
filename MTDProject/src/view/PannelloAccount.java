@@ -24,8 +24,8 @@ import javax.swing.JOptionPane;
 
 import model.Avatar;
 import model.AvatarEnum;
-import model.Giocatore;
-import model.GiocoJTressette;
+import model.Utente;
+import model.Model;
 import model.Partita;
 
 public class PannelloAccount extends Pannello{
@@ -138,11 +138,11 @@ public class PannelloAccount extends Pannello{
 	
     @Override
     public void update(Observable o, Object arg) {
-    	if (!(o instanceof GiocoJTressette && arg instanceof Giocatore))
+    	if (!(o instanceof Model && arg instanceof Utente))
     	{
              return;
     	}
-    	Giocatore g = (Giocatore) arg;
+    	Utente g = (Utente) arg;
     	nicknameField.setText(g.getNickname());
     	spinnerTipoAvatar.vaiAdOggettoSpecifico(new Avatar(g.getAvatarEnum()));
     	utenteRegistrato = g.isRegistrato();
