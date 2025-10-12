@@ -37,6 +37,14 @@ public class PannelloMenu extends Pannello {
         pannelloInAlto.setBackground(VERDE_PANNELLO);
         pannelloInAlto.setOpaque(true);
         
+        MioBottone bottoneExit= new MioBottone("Esci");
+        bottoneExit.setPreferredSize(new Dimension(50, 50));
+        bottoneExit.setMaximumSize(new Dimension(50, 50));
+        bottoneExit.setMinimumSize(new Dimension(50, 50));
+        bottoneExit.setMargin(new Insets(10, 10, 10, 10));
+        bottoneExit.addActionListener(e -> {System.exit(0);});
+
+        
         bottoneStart = new MioBottone("Inizio Partita");
         //bottoneStart.setAlignmentX(Component.CENTER_ALIGNMENT);
         bottoneStart.setPreferredSize(new Dimension(140, 40));
@@ -54,7 +62,8 @@ public class PannelloMenu extends Pannello {
         bottoneAccount.setMargin(new Insets(10, 10, 10, 10));
         bottoneAccount.addActionListener(e -> view.showPannelloAccount());
 
-        
+        pannelloInAlto.add(bottoneExit);
+        pannelloInAlto.add(Box.createHorizontalStrut(197));
         pannelloInAlto.add(bottoneStart);
         //UNAA VOLTA SCELTA L'IMMAGINE CREARE LO SPAZIO
         pannelloInAlto.add(Box.createHorizontalStrut(197));
