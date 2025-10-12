@@ -10,7 +10,7 @@ public class Avatar {
 			AvatarEnum.AVATAR1, "/img/avatars/avatar1.png",
 			AvatarEnum.AVATAR2, "/img/avatars/avatar2.png",
 			AvatarEnum.AVATAR3, "/img/avatars/avatar3.png",
-			AvatarEnum.AVATAR4, "/img/avatars/avatar3.png"
+			AvatarEnum.AVATAR4, "/img/avatars/avatar4.png"
 	);
 	private final AvatarEnum valore;
 	private final String percorsoImmagine;

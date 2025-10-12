@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import carte.*;
+import java.util.Random;
 
 public class PartitaTressette {
 
@@ -13,6 +14,8 @@ public class PartitaTressette {
     public final int numGiocatori;
     public final int punteggioStabilito;
     public final boolean accusa;
+    private int turnoGiocatore; //0,1,2,3
+
     List<Giocatore> giocatori;
 
 	/**
@@ -31,6 +34,11 @@ public class PartitaTressette {
         
         inizializzaGiocatori();
         assegnaCarte();
+        
+        // Nelle regole chi ha il 4 denara inizia
+        // Se nessuno ha queste carte, inizia casualmente il giocatore
+        this.turnoGiocatore = determinaPrimoGiocatore();
+        System.out.println(turnoGiocatore);
     }
     
     private void inizializzaGiocatori() {
@@ -77,5 +85,26 @@ public class PartitaTressette {
 	    	}
     	}
     }
-
+    
+    private int determinaPrimoGiocatore() {
+    	int result = 0;
+    	for(int idx=0; idx<giocatori.size(); idx++)
+    	{
+    		List<Carta> carteGiocatore = giocatori.get(idx).getCarte();
+    		for(int i=0; i < NUM_CARTE_PER_GIOCATORE;i++)
+    		{
+    			Carta carta = carteGiocatore.get(i);
+    			if (carta.getSeme() == Seme.DENARI && carta.getValore() == Valore.QUATTRO) {
+    				result = idx;
+    				return result;
+    			}
+    		}
+    	}
+    	
+    	Random rand = new Random();
+    	int min = 0;
+    	int max = giocatori.size();
+    	result = rand.nextInt((max - min) + 1) + min;
+    	return result;
+    }
 }

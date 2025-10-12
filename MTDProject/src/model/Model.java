@@ -15,6 +15,8 @@ public class Model extends Observable implements Observer {
 
     public Model() {
     	this.gestoreUtente = new GestoreUtente();
+        partitaCorrente = Optional.empty();
+
     }
 
     public void init() {
