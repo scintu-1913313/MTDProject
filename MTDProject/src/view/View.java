@@ -78,7 +78,9 @@ public class View extends JFrame implements Observer {
         repaint();
     }
     
-    
+    public PannelloGioco getPannelloGioco() {
+    	return pannelloGioco;
+    }
     public PannelloAccount getPannelloAccount() {
     	return pannelloPrincipale.getPannelloAccount();
     }

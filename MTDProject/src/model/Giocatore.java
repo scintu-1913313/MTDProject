@@ -15,12 +15,20 @@ public class Giocatore {
     	this.carte = new ArrayList<>();
     }
     
+    public String getNome() {
+    	return this.nome;
+    }
+    
     public void aggiungiCarte(List<Carta> nuoveCarte) {
         this.carte.addAll(nuoveCarte);
     }
     
     public List<Carta> getCarte(){
     	return carte;
+    }
+    
+    public boolean getIsIA() {
+    	return isIA;
     }
 }
 

@@ -7,6 +7,7 @@ import carte.TipoMazzo;
 import model.Model;
 import view.View;
 import view.PannelloAccount;
+import view.PannelloGioco;
 import view.PannelloMenu;
 
 
@@ -17,6 +18,7 @@ public class Controller {
 	private View vista;
 	private PannelloMenu pannelloMenu;
 	private PannelloAccount pannelloAccount;
+	private PannelloGioco pannelloGioco;
     /**
      * Class constructor.
      */
@@ -25,12 +27,14 @@ public class Controller {
         this.vista = view;
         this.pannelloMenu = vista.getPannelloMenu();
         this.pannelloAccount = vista.getPannelloAccount(); 
+        this.pannelloGioco = vista.getPannelloGioco();
 
 		/*
 		 * il pannello statistiche deve osservare il modello del gioco per avere
 		 * conteggi aggiornati di partite vinte e giocate
 		 */
 		modello.addObserver((Observer)pannelloAccount);
+		modello.addObserver((Observer)pannelloGioco);
 		pannelloAccount.getBottoneSalvataggioDati().addActionListener(e -> { aggiornaDatiUtente();});
 		vista.getPannelloMenu().getBottoneStart().addActionListener(e -> { iniziaGioco();});
 		

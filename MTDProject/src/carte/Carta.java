@@ -4,13 +4,15 @@ public class Carta {
 	private final Seme seme;
 	private final Valore valore;
 	private final String percorsoImmagine;
+	private final String percorsoImmagineRetro;
 	private final TipoMazzo tipoMazzo;
 	
-	public Carta(TipoMazzo tipoMazzo, Seme seme, Valore valore, String percorsoImmagine){
+	public Carta(TipoMazzo tipoMazzo, Seme seme, Valore valore, String percorsoImmagine, String percorsoImmagineRetro){
 		this.tipoMazzo = tipoMazzo;
 		this.seme = seme;
 		this.valore = valore;
 		this.percorsoImmagine = percorsoImmagine;
+		this.percorsoImmagineRetro = percorsoImmagineRetro;
 	}
 	
 	public TipoMazzo getTipoMazzo() {
@@ -27,6 +29,10 @@ public class Carta {
 	
 	public String getPercorsoImmagine() {
 		return percorsoImmagine;
+	}
+	
+	public String getPercorsoImmagineRetro() {
+		return percorsoImmagineRetro;
 	}
 	
 	/**

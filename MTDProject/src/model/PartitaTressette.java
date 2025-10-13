@@ -107,4 +107,24 @@ public class PartitaTressette {
     	result = rand.nextInt((max - min) + 1) + min;
     	return result;
     }
+    
+    public Giocatore getGiocatoreVero() {
+    	for (Giocatore g : giocatori) {
+    		if(g.getIsIA()!=true) {
+    			return g;
+    		}
+    	}
+    	System.out.println("Giocatore vero inesistente");
+    	return null;
+    }
+    
+    public Giocatore getPc(String nomeGiocatorePc) {
+    	for (Giocatore g : giocatori) {
+    		if(g.getNome().equals(nomeGiocatorePc)) {
+    			return g;
+    		}
+    	}
+    	System.out.println("Giocatore " +nomeGiocatorePc + " inesistente");
+    	return null;
+    }
 }

@@ -21,14 +21,14 @@ public class Mazzo {
 		public MazzoBuilder generaCarte(TipoMazzo nomeTipoMazzo) {
 			for(Seme seme: Seme.values()) {
 				for(Valore valore: Valore.values()){
-					carte.add(new Carta(nomeTipoMazzo,seme,valore,getPath(seme,valore,nomeTipoMazzo)));
+					carte.add(new Carta(nomeTipoMazzo,seme,valore,getPath(seme,valore,nomeTipoMazzo),getPathRetro(nomeTipoMazzo)));
 				}
 			}
 			return this;
 		}
 		public MazzoBuilder generaAssoDeiMazzi() {
 			for(TipoMazzo nomeTipoMazzo: TipoMazzo.values()) {
-					carte.add(new Carta(nomeTipoMazzo, Seme.COPPE,Valore.ASSO,getPath(Seme.COPPE,Valore.ASSO,nomeTipoMazzo)));
+					carte.add(new Carta(nomeTipoMazzo, Seme.COPPE,Valore.ASSO,getPath(Seme.COPPE,Valore.ASSO,nomeTipoMazzo),getPathRetro(nomeTipoMazzo)));
 			}
 			
 			return this;
@@ -39,6 +39,11 @@ public class Mazzo {
 			return "/img/" + nomeTipoMazzo +"/" + valore + "_" + seme + ".jpg";
 		}
 		
+		public String getPathRetro(TipoMazzo nomeTipoMazzo ) {
+			
+			return "/img/" + nomeTipoMazzo +"/retro.jpg";
+		}
+
 		public MazzoBuilder mescola() {
 			java.util.Collections.shuffle(carte);
 			return this;

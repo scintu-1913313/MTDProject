@@ -11,12 +11,10 @@ import carte.*;
 public class Model extends Observable implements Observer {
 	
 	private GestoreUtente gestoreUtente;
-    private Optional<PartitaTressette> partitaCorrente;
+    private PartitaTressette partitaCorrente;
 
     public Model() {
     	this.gestoreUtente = new GestoreUtente();
-        partitaCorrente = Optional.empty();
-
     }
 
     public void init() {
@@ -40,9 +38,9 @@ public class Model extends Observable implements Observer {
     public void iniziaGioco(int numGiocatori, int punteggio, TipoMazzo tipoMazzo, boolean accusa) {
 
         Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte(tipoMazzo).mescola().build();
-        partitaCorrente = Optional.of(new PartitaTressette(this, mazzo,numGiocatori,punteggio,accusa));
+        partitaCorrente = new PartitaTressette(this, mazzo,numGiocatori,punteggio,accusa);
         setChanged();
-        notifyObservers();
+        notifyObservers(partitaCorrente);
     }
     
     public Utente getUtente() {
