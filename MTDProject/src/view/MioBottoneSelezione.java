@@ -9,6 +9,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import model.GestoreAudio;
+
 public class MioBottoneSelezione extends JButton{
 	
 	private boolean cliccato = false;
@@ -34,7 +36,10 @@ public class MioBottoneSelezione extends JButton{
         setFocusPainted(false);
         
         addActionListener(e -> cambioImmagine());
-        addActionListener(e -> RiproduttoreAudio.play("/sounds/button.wav"));
+        addActionListener(e -> {
+        	GestoreAudio audioManager = GestoreAudio.getInstance();
+        	audioManager.playBottone();
+        });
 	}
 	
 	private void cambioImmagine()

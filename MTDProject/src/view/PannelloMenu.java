@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import javax.imageio.ImageIO;
 import carte.*;
+import model.GestoreAudio;
 
 public class PannelloMenu extends Pannello {
 
@@ -17,7 +18,8 @@ public class PannelloMenu extends Pannello {
 	private MioIntSpinner spinnerPunteggio;
 	private MioImgSpinner spinnerTipoCarte;
 	private MioBottoneSelezione bottoneAccusa;
-	
+    private MioBottone bottoneMusica;
+
     public PannelloMenu(View view) {
         super(new BorderLayout());
     	this.view = view;
@@ -42,8 +44,7 @@ public class PannelloMenu extends Pannello {
         bottoneExit.setMaximumSize(new Dimension(50, 50));
         bottoneExit.setMinimumSize(new Dimension(50, 50));
         bottoneExit.setMargin(new Insets(10, 10, 10, 10));
-        bottoneExit.addActionListener(e -> {System.exit(0);});
-
+        bottoneExit.addActionListener(e -> {System.exit(0);});        
         
         bottoneStart = new MioBottone("Inizio Partita");
         bottoneStart.setPreferredSize(new Dimension(140, 40));
@@ -109,6 +110,11 @@ public class PannelloMenu extends Pannello {
         
         pannelloInternoMenu.add(Box.createVerticalStrut(10));
         
+        // Pannello superiore con layout personalizzato
+        JPanel pannelloInBasso= new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        pannelloInBasso.setBackground(VERDE_PANNELLO);
+        pannelloInBasso.setOpaque(true);
+        
         MioBottone bottoneRegole = new MioBottone("Regole");
         bottoneRegole.setAlignmentX(Component.CENTER_ALIGNMENT);
         bottoneRegole.setPreferredSize(new Dimension(140, 40));
@@ -116,9 +122,27 @@ public class PannelloMenu extends Pannello {
         bottoneRegole.setMinimumSize(new Dimension(140, 40));
         bottoneRegole.setMargin(new Insets(10, 10, 10, 10));
         bottoneRegole.addActionListener(e -> view.showPannelloRegole());
-        pannelloInternoMenu.setVisible(true);
         
-        pannelloInternoMenu.add(bottoneRegole);
+        pannelloInBasso.add(bottoneRegole);
+        
+        // Bottone per attivare/disattivare la musica
+        bottoneMusica = new MioBottone(GestoreAudio.getInstance().isMusicaAbilitata() ? "Musica: ON" : "Musica: OFF");
+        bottoneMusica.setAlignmentX(Component.LEFT_ALIGNMENT);
+        bottoneMusica.setPreferredSize(new Dimension(140, 40));
+        bottoneMusica.setMaximumSize(new Dimension(140, 40));
+        bottoneMusica.setMinimumSize(new Dimension(140, 40));
+        bottoneMusica.setMargin(new Insets(10, 10, 10, 10));
+        bottoneMusica.addActionListener(e -> {
+            // Riproduci suono del pulsante
+        	GestoreAudio audioManager = GestoreAudio.getInstance();            
+            // Cambia stato della musica
+            boolean newState = !audioManager.isMusicaAbilitata();
+            audioManager.setMusicEnabled(newState);
+            bottoneMusica.setText(newState ? "Musica: ON" : "Musica: OFF");
+        });
+        pannelloInBasso.add(bottoneMusica);
+
+        pannelloInternoMenu.add(pannelloInBasso);
 
         add(pannelloInternoMenu);
         

@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 
+import model.GestoreAudio;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,7 +64,10 @@ public class MioBottone extends JButton {
             }
         });
 
-        addActionListener(e -> RiproduttoreAudio.play("/sounds/button.wav"));
+        addActionListener(e -> {
+        	GestoreAudio audioManager = GestoreAudio.getInstance();
+        	audioManager.playBottone();
+        });
     }
     
     public void resetToDefault() {

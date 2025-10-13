@@ -34,7 +34,8 @@ public class PannelloGioco extends Pannello {
 	
 	private JPanel pannelloInAlto;
 	private MioBottone bottoneExit;
-	
+	private MioBottone bottoneMusica;
+
 	private JPanel pannelloCarteGiocatoreSotto;
 	private JPanel pannelloCartePc1Sopra;
 	private JPanel pannelloCartePc2Destra;
@@ -63,6 +64,7 @@ public class PannelloGioco extends Pannello {
         cartePc2 = new ArrayList<>();
         cartePc3 = new ArrayList<>();
 		
+        
         //Io sono un BorderLayout. Aggiungo il bottone di uscita a nord
         pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pannelloInAlto.setOpaque(false);
@@ -211,7 +213,6 @@ public class PannelloGioco extends Pannello {
     		CartaView cartaView = new CartaView(carte.get(i),true,true);
     		cartePc2.add(cartaView);
     		pannelloCartePc2Destra.add(cartaView,cartaView.toString());
-    		pannelloCartePc2Destra.add(Box.createVerticalStrut(3));
     	}
     }
     

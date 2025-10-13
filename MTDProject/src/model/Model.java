@@ -22,6 +22,7 @@ public class Model extends Observable implements Observer {
     	//notifico alla vista lo stato iniziale dell'utente per far aggiornare i dati sul pannello utente 
     	setChanged();
     	notifyObservers(gestoreUtente.getUtente());
+    	GestoreAudio.getInstance().setMusicEnabled(true);
     }
     
     @Override

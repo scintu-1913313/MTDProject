@@ -9,6 +9,8 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import model.GestoreAudio;
+
 public class MioBottoneInfo extends MioBottone{
 	
 	private ImageIcon immagineProfilo;
@@ -27,7 +29,10 @@ public class MioBottoneInfo extends MioBottone{
         //setBorderPainted(false);
         setFocusPainted(false);
         
-        addActionListener(e -> RiproduttoreAudio.play("/sounds/button.wav"));
+        addActionListener(e -> {
+        	GestoreAudio audioManager = GestoreAudio.getInstance();
+        	audioManager.playBottone();
+        });
                 
 	}
 }

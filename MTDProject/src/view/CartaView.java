@@ -20,8 +20,10 @@ public class CartaView extends JPanel{
 	
 	private Carta carta;
     private Image immagine;
-    private static int CARTA_LARGHEZZA = 50;
-    private static int CARTA_ALTEZZA = 90;
+    private static int CARTA_LARGHEZZA_PC = 50;
+    private static int CARTA_ALTEZZA_PC = 90;
+    private static int CARTA_LARGHEZZA_UTENTE = 80;
+    private static int CARTA_ALTEZZA_UTENTE = 130;
     private boolean mouseOver = false;
     private boolean coperta;
     private boolean ruotata;
@@ -31,27 +33,36 @@ public class CartaView extends JPanel{
         this.coperta = coperta;
         this.ruotata = ruotata;
 
-        setPreferredSize(new Dimension(CARTA_LARGHEZZA, CARTA_ALTEZZA));
-        setOpaque(false); // Assicura che il pannello sia opaco
-        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // top, left, bottom, right
-        
+        int larghezza;
+        int altezza;
         String path = "";
+        //se la carta e' coperta e di un pc, non del giocatore
     	if(coperta == true){
     		path = carta.getPercorsoImmagineRetro();
+    		larghezza = CARTA_LARGHEZZA_PC;
+            altezza = CARTA_ALTEZZA_PC;
     	}
     	else {
     		path = carta.getPercorsoImmagine();
+    		larghezza = CARTA_LARGHEZZA_UTENTE;
+            altezza = CARTA_ALTEZZA_UTENTE;
 		}
+    	
+        setPreferredSize(new Dimension(larghezza, altezza));
+        setOpaque(false); // Assicura che il pannello sia opaco
+        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // top, left, bottom, right
+        
+
 
     	if (ruotata) {
-            setPreferredSize(new Dimension(CARTA_ALTEZZA, CARTA_LARGHEZZA));
+            setPreferredSize(new Dimension(altezza, larghezza));
         } else {
-            setPreferredSize(new Dimension(CARTA_LARGHEZZA, CARTA_ALTEZZA));
+            setPreferredSize(new Dimension(larghezza, altezza));
         }
         try {
 
 			ImageIcon immagineCorrente = new ImageIcon(getClass().getResource(path));
-	        Image immagineCorrenteRidotta = immagineCorrente.getImage().getScaledInstance(CARTA_LARGHEZZA, CARTA_ALTEZZA, Image.SCALE_SMOOTH);
+	        Image immagineCorrenteRidotta = immagineCorrente.getImage().getScaledInstance(larghezza, altezza, Image.SCALE_SMOOTH);
 	        immagine = immagineCorrenteRidotta;
 		} 
 		catch 
@@ -83,6 +94,17 @@ public class CartaView extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int larghezza;
+        int altezza;
+        if(coperta == true){
+    		larghezza = CARTA_LARGHEZZA_PC;
+            altezza = CARTA_ALTEZZA_PC;
+    	}
+    	else {
+    		larghezza = CARTA_LARGHEZZA_UTENTE;
+            altezza = CARTA_ALTEZZA_UTENTE;
+		}
+        
         if (immagine != null) {
             Graphics2D g2d = (Graphics2D) g.create();
 
@@ -90,7 +112,7 @@ public class CartaView extends JPanel{
                 // Trasla e ruota il contesto grafico
                 g2d.translate(getWidth() / 2, getHeight() / 2);
                 g2d.rotate(Math.toRadians(90));
-                g2d.drawImage(immagine, -CARTA_LARGHEZZA / 2, -CARTA_ALTEZZA / 2, this);
+                g2d.drawImage(immagine, -larghezza / 2, -altezza / 2, this);
             } else {
                 g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
             }
