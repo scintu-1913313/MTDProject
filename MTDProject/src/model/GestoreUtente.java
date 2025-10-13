@@ -32,7 +32,7 @@ public class GestoreUtente {
 		}
 	}
 	
-	private void aggiornaDatiUtente(Partita p) {
+	public void aggiornaDatiUtente(Partita p) {
 		utente.aggiungiPartita(p);
 		aggiornaDati();
 	}
@@ -43,7 +43,7 @@ public class GestoreUtente {
 		aggiornaDati();
 	}
 	
-	private void aggiornaDatiUtente(int livello) {
+	public void aggiornaDatiUtente(int livello) {
 		utente.setLivello(livello);
 		aggiornaDati();
 	}

@@ -36,10 +36,11 @@ public class PannelloAccount extends Pannello{
 	private MioLabel livello;
 	private MioBottone bottoneSalvataggioDati;
 	private JTextArea areaTesto;
-	
+	private View view;
 	
 	public PannelloAccount(View view) {
 		super(new BorderLayout());
+		this.view = view;
 		//setBounds(50, 50, 600, 400);
 		setBackground(Pannello.VERDE_PANNELLO);
 		setOpaque(false);
@@ -179,6 +180,7 @@ public class PannelloAccount extends Pannello{
     	else
     	{
     		JOptionPane.showMessageDialog(null, "Dati salvati correttamente!", "Salvataggio", JOptionPane.INFORMATION_MESSAGE);
+    		view.aggiornaDatiUtente();
     	}
     }
     

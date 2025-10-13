@@ -11,9 +11,9 @@ public class PartitaTressette {
     private Mazzo mazzo;
 
     public static final int NUM_CARTE_PER_GIOCATORE = 10;
-    public final int numGiocatori;
-    public final int punteggioStabilito;
-    public final boolean accusa;
+    private final int numGiocatori;
+    private final int punteggioStabilito;
+    private final boolean accusa;
     private int turnoGiocatore; //0,1,2,3
 
     List<Giocatore> giocatori;
@@ -126,5 +126,9 @@ public class PartitaTressette {
     	}
     	System.out.println("Giocatore " +nomeGiocatorePc + " inesistente");
     	return null;
+    }
+    
+    public int getNumeroGiocatori() {
+    	return this.numGiocatori;
     }
 }

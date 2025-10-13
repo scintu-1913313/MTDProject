@@ -35,24 +35,28 @@ public class Controller {
 		 */
 		modello.addObserver((Observer)pannelloAccount);
 		modello.addObserver((Observer)pannelloGioco);
-		pannelloAccount.getBottoneSalvataggioDati().addActionListener(e -> { aggiornaDatiUtente();});
-		vista.getPannelloMenu().getBottoneStart().addActionListener(e -> { iniziaGioco();});
-		
     }
     
     public void start() {
     	modello.init();
     }
     
-    private void aggiornaDatiUtente() {
+    public void aggiornaDatiUtente() {
     	modello.aggiornaDatiUtente(pannelloAccount.getAvatar(), pannelloAccount.getNickname());
     }
 
-    private void iniziaGioco() {
+    public void iniziaGioco() {
 		int numGiocatori = pannelloMenu.getNumeroGiocatori();
 		int punteggioStabilito = pannelloMenu.getPunteggioStabilito(); 
 		TipoMazzo tipoMazzo = pannelloMenu.getTipoMazzo();
 		boolean accusa = pannelloMenu.getAccusa();
+		pannelloMenu.getBottoneStart().resetToDefault();
     	modello.iniziaGioco(numGiocatori,punteggioStabilito,tipoMazzo,accusa);
     }
+    
+    public void notificaUscitaForzata() {
+    	pannelloGioco.getBottoneUscita().resetToDefault();
+    	modello.terminaParitaUscitaForzata();
+    }
+
 }

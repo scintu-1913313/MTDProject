@@ -18,13 +18,18 @@ public class Partita {
 	    return obj;
 	}
 
+	public Partita(boolean vinta,int punteggioOttenuto,LocalDateTime dataFine) {
+		this.vinta = vinta;
+		this.punteggioOttenuto = punteggioOttenuto;
+		this.dataFine = dataFine;
+	}
+	
     public static Partita fromJSON(JSONObject obj) {
-        Partita p = new Partita();
-        p.vinta = obj.getBoolean("vinta");
-        p.punteggioOttenuto = obj.getInt("punteggioOttenuto");
-        p.dataFine = LocalDateTime.parse(obj.getString("dataFine"));
-
-        return p;
+        
+    	boolean vinta = obj.getBoolean("vinta");
+    	int punteggioOttenuto = obj.getInt("punteggioOttenuto");
+    	LocalDateTime dataFine = LocalDateTime.parse(obj.getString("dataFine"));
+        return new Partita(vinta,punteggioOttenuto,dataFine);
     }
     
     @Override

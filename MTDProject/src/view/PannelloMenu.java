@@ -32,7 +32,7 @@ public class PannelloMenu extends Pannello {
         
         //150px di spazio dall'inizio del pannelloInternoMenu, inizia ad insrire dal 151px qualsiasi oggetto
         
-     // Pannello superiore con layout personalizzato
+        // Pannello superiore con layout personalizzato
         JPanel pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         pannelloInAlto.setBackground(VERDE_PANNELLO);
         pannelloInAlto.setOpaque(true);
@@ -46,7 +46,6 @@ public class PannelloMenu extends Pannello {
 
         
         bottoneStart = new MioBottone("Inizio Partita");
-        //bottoneStart.setAlignmentX(Component.CENTER_ALIGNMENT);
         bottoneStart.setPreferredSize(new Dimension(140, 40));
         bottoneStart.setMaximumSize(new Dimension(140, 40));
         bottoneStart.setMinimumSize(new Dimension(140, 40));
@@ -55,7 +54,6 @@ public class PannelloMenu extends Pannello {
     
         
         MioBottoneInfo bottoneAccount= new MioBottoneInfo();
-        //bottoneInfo.setAlignmentX(Component.RIGHT_ALIGNMENT);
         bottoneAccount.setPreferredSize(new Dimension(50, 50));
         bottoneAccount.setMaximumSize(new Dimension(50, 50));
         bottoneAccount.setMinimumSize(new Dimension(50, 50));
@@ -71,9 +69,7 @@ public class PannelloMenu extends Pannello {
 
 
         pannelloInternoMenu.add(pannelloInAlto, BorderLayout.CENTER);
-           
-        //pannelloInternoMenu.add(Box.createVerticalStrut(15));
-        
+                   
         //dopo il primo bottone aggiunge 40px
         pannelloInternoMenu.add(Box.createVerticalStrut(10));
 
@@ -128,13 +124,7 @@ public class PannelloMenu extends Pannello {
         
         pannelloInternoMenu.setVisible(true);
 
-        pannelloInternoMenu.add(Box.createVerticalStrut(15));
-
-
-        //add(bottoneRegole, BorderLayout.SOUTH);
-        
-        
-        
+        pannelloInternoMenu.add(Box.createVerticalStrut(15));        
     }
     
 	private void iniziaPartita()
@@ -147,6 +137,7 @@ public class PannelloMenu extends Pannello {
     	} 
     	else 
     	{
+    		view.iniziaGioco();
     		view.showPannelloGioco();
     	}
 	}

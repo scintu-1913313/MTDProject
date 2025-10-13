@@ -1,5 +1,5 @@
 {
-    "nickname": "gaia",
+    "nickname": "luca",
     "storicoPartite": [
         {
             "vinta": true,
@@ -10,8 +10,48 @@
             "vinta": false,
             "dataFine": "2025-10-11T12:04",
             "punteggioOttenuto": 30
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:42:12.486072544",
+            "punteggioOttenuto": 0
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:43:43.589523831",
+            "punteggioOttenuto": 0
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:44:04.225406951",
+            "punteggioOttenuto": 0
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:47:26.145590666",
+            "punteggioOttenuto": 0
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:52:07.424423647",
+            "punteggioOttenuto": 0
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:52:11.942856731",
+            "punteggioOttenuto": 0
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:53:56.666034332",
+            "punteggioOttenuto": 0
+        },
+        {
+            "vinta": false,
+            "dataFine": "2025-10-13T19:53:59.473332141",
+            "punteggioOttenuto": 0
         }
     ],
-    "avatar": "AVATAR4",
+    "avatar": "AVATAR1",
     "livello": 0
 }

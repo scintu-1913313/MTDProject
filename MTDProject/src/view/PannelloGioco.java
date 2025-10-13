@@ -18,6 +18,7 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import carte.Carta;
@@ -32,6 +33,8 @@ public class PannelloGioco extends Pannello {
 	private JPanel pannelloPrincipaleDelGioco; 
 	
 	private JPanel pannelloInAlto;
+	private MioBottone bottoneExit;
+	
 	private JPanel pannelloCarteGiocatoreSotto;
 	private JPanel pannelloCartePc1Sopra;
 	private JPanel pannelloCartePc2Destra;
@@ -63,12 +66,12 @@ public class PannelloGioco extends Pannello {
         //Io sono un BorderLayout. Aggiungo il bottone di uscita a nord
         pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pannelloInAlto.setOpaque(false);
-        MioBottone bottoneExit= new MioBottone("Esci");
+        bottoneExit = new MioBottone("Esci");
         bottoneExit.setPreferredSize(new Dimension(50, 50));
         bottoneExit.setMaximumSize(new Dimension(50, 50));
         bottoneExit.setMinimumSize(new Dimension(50, 50));
         bottoneExit.setMargin(new Insets(10, 10, 10, 10));
-        bottoneExit.addActionListener(e -> view.showPannelloMenu());
+        bottoneExit.addActionListener(e -> uscitaForzataDalGiocatore());
         pannelloInAlto.add(bottoneExit);
         add(pannelloInAlto, BorderLayout.NORTH);
         
@@ -113,7 +116,26 @@ public class PannelloGioco extends Pannello {
         }
     }
 	
-	
+	private void uscitaForzataDalGiocatore() {
+		
+		int scelta = JOptionPane.showOptionDialog(
+		        null,
+		        "Sei sicuro di voler uscire?\nLa partita verrà considerata persa.",
+		        "Conferma uscita",
+		        JOptionPane.YES_NO_OPTION,
+		        JOptionPane.WARNING_MESSAGE,
+		        null,
+		        new Object[] {"Sì", "No"},
+		        "No"
+		    );
+
+		    if (scelta == JOptionPane.YES_OPTION) {
+		        // Logica per gestire la sconfitta e chiudere la finestra
+		        System.out.println("Partita persa. Uscita dal gioco.");
+		        view.uscitaForzataDalGiocatore();
+		    }
+	}
+		    
     @Override
     public void update(Observable o, Object arg) {
     	if (!(o instanceof Model && arg instanceof PartitaTressette))
@@ -126,7 +148,7 @@ public class PannelloGioco extends Pannello {
     	resetCartePannelloGioco();
     	
     	aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
-    	if(partitaInCorso.numGiocatori == 2)
+    	if(partitaInCorso.getNumeroGiocatori() == 2)
     	{
     		//carte pc 1
     		aggiornaCartePc1(partitaInCorso.getPc("Pc1").getCarte());
@@ -220,5 +242,9 @@ public class PannelloGioco extends Pannello {
         
         cartePc3.clear();
         pannelloCartePc3Sinistra.removeAll();
+    }
+    
+    public MioBottone getBottoneUscita() {
+    	return bottoneExit;
     }
 }

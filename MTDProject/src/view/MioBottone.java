@@ -37,15 +37,16 @@ public class MioBottone extends JButton {
     	setFocusPainted(false);
         setOpaque(false);
         setContentAreaFilled(false);
-        setBackground(VERDE_TAVOLO);
         setForeground(Color.BLACK);
         setBorder(BorderFactory.createLineBorder(BORDO_CHIARO, 2));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setFont(FONT_GIOCO);
         setPreferredSize(new Dimension(30, 30));
         setMargin(new Insets(5,5,5,5));
-
-     // Effetto hover
+        
+        resetToDefault();
+        
+        // Effetto hover
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -60,8 +61,14 @@ public class MioBottone extends JButton {
                 setBackground(VERDE_TAVOLO);
             }
         });
+
         addActionListener(e -> RiproduttoreAudio.play("/sounds/button.wav"));
     }
+    
+    public void resetToDefault() {
+        setBackground(VERDE_TAVOLO);
+    }
+    
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();

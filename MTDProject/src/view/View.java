@@ -10,18 +10,21 @@ import javax.swing.*;
 import view.Pannello;
 import com.formdev.flatlaf.FlatLightLaf;
 
+import controller.Controller;
+
 @SuppressWarnings("deprecation")
 public class View extends JFrame implements Observer {
     
     //private PannelloMenu pannelloMenu;
     //private PannelloRegole pannelloRegole;
+    private Controller controller;
     private PannelloPrincipale pannelloPrincipale;
     private PannelloGioco pannelloGioco;
     //private PannelloAccount pannelloAccount;
 
     public View() {
         super("JTressette");
-        //FlatLightLaf.setup();
+
         try {
             Image image = ImageIO.read(getClass().getResource("/img/logo.png"));
             setIconImage(image);
@@ -49,6 +52,9 @@ public class View extends JFrame implements Observer {
         setVisible(true);
     }
 
+    public void setController(Controller controller) {
+    	this.controller = controller;
+    }
     public void showPannelloMenu() 
     {
         pannelloPrincipale.showPanel("MENU");
@@ -89,6 +95,20 @@ public class View extends JFrame implements Observer {
     	return pannelloPrincipale.getPannelloMenu();
     }
     
+    public void aggiornaDatiUtente() {
+    	controller.aggiornaDatiUtente();
+    }
+    
+    public void iniziaGioco() {
+    	controller.iniziaGioco();
+    }
+    
+    
+	public void uscitaForzataDalGiocatore() {
+		controller.notificaUscitaForzata();
+		showPannelloMenu();
+	}
+
     @Override
     public void update(Observable o, Object arg) {
         // Implementazione Observer se necessaria
