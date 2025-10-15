@@ -20,8 +20,7 @@ public class Model extends Observable implements Observer {
 
     public void init() {
     	//notifico alla vista lo stato iniziale dell'utente per far aggiornare i dati sul pannello utente 
-    	setChanged();
-    	notifyObservers(gestoreUtente.getUtente());
+    	notificaAgliObserver(gestoreUtente.getUtente());
     	GestoreAudio.getInstance().setMusicEnabled(true);
     }
     
@@ -42,8 +41,7 @@ public class Model extends Observable implements Observer {
     	//costruisco una nuova partita e lo notifico alla vista per far aggiornare i pannelli delle carte
         Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte(tipoMazzo).mescola().build();
         partitaCorrente = new PartitaTressette(this, mazzo,numGiocatori,punteggio,accusa);
-        setChanged();
-        notifyObservers(partitaCorrente);
+        notificaAgliObserver(partitaCorrente);
     }
     
     public void terminaParitaUscitaForzata() {
@@ -56,11 +54,15 @@ public class Model extends Observable implements Observer {
     	LocalDateTime dataFine = LocalDateTime.now();
     	Partita p =new Partita(vinta,punteggioOttenuto,dataFine);
     	gestoreUtente.aggiornaDatiUtente(p);
-    	setChanged();
-    	notifyObservers(gestoreUtente.getUtente());
+    	notificaAgliObserver(gestoreUtente.getUtente());
     }
     
     public Utente getUtente() {
     	return this.gestoreUtente.getUtente();
+    }
+    
+    public void notificaAgliObserver(Object o) {
+		setChanged();
+		notifyObservers(o);
     }
 }

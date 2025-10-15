@@ -49,7 +49,7 @@ public class Carta {
 	    if (obj == null || getClass() != obj.getClass()) return false;
 
 	    Carta other = (Carta) obj;
-	    return seme == other.seme && valore == other.valore;
+	    return seme == other.seme && valore == other.valore && tipoMazzo == other.tipoMazzo;
 	}
 
 	@Override

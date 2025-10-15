@@ -25,6 +25,7 @@ import carte.Carta;
 import carte.Mazzo;
 import model.Model;
 import model.PartitaTressette;
+import model.TipoGiocatore;
 import model.Utente;
 
 public class PannelloGioco extends Pannello {
@@ -49,6 +50,8 @@ public class PannelloGioco extends Pannello {
     private List<CartaView> cartePc3;
 
 	private PartitaTressette partitaInCorso;
+	//private boolean cartaInGioco; //viene usata per vedere se e' il turno del giocatore e se puo selezionare la carta
+	private boolean turnoDelGiocatore; //viene usata per vedere se e' il turno del giocatore e se puo selezionare la carta
 
 	public PannelloGioco(View view) {
 		super(new BorderLayout());
@@ -108,6 +111,8 @@ public class PannelloGioco extends Pannello {
         pannelloPrincipaleDelGioco.add(pannelloCarteBancoCentrale, BorderLayout.CENTER);  
 
         add(pannelloPrincipaleDelGioco,BorderLayout.CENTER);
+        
+        this.turnoDelGiocatore = false;
 	}
 	
 	@Override
@@ -140,11 +145,20 @@ public class PannelloGioco extends Pannello {
 		    
     @Override
     public void update(Observable o, Object arg) {
-    	if (!(o instanceof Model && arg instanceof PartitaTressette))
+    	if (!(o instanceof Model))
     	{
              return;
     	}
 
+    	if(arg instanceof PartitaTressette){
+    		gestisciNuovaPartita(arg);
+    	}
+    	else if (arg instanceof TipoGiocatore) {
+    		gestisciCartaScelta(arg);
+    	}
+    }
+    
+    private void gestisciNuovaPartita(Object arg) {
     	//nuova partita
     	partitaInCorso = (PartitaTressette) arg;
     	resetCartePannelloGioco();
@@ -153,21 +167,76 @@ public class PannelloGioco extends Pannello {
     	if(partitaInCorso.getNumeroGiocatori() == 2)
     	{
     		//carte pc 1
-    		aggiornaCartePc1(partitaInCorso.getPc("Pc1").getCarte());
+    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
     	}
     	else
     	{
     		//carte pc 1,2,3
-    		aggiornaCartePc1(partitaInCorso.getPc("Pc1").getCarte());
-    		aggiornaCartePc2(partitaInCorso.getPc("Pc2").getCarte());
-    		aggiornaCartePc3(partitaInCorso.getPc("Pc3").getCarte());
+    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
+    		aggiornaCartePc2(partitaInCorso.getPc(TipoGiocatore.PC2).getCarte());
+    		aggiornaCartePc3(partitaInCorso.getPc(TipoGiocatore.PC3).getCarte());
     	}
+    	iniziaPartita();
     }
     
+    private void gestisciCartaScelta(Object arg) {
+    	TipoGiocatore giocatoreCheHaGiocatoLaCarta = (TipoGiocatore) arg;
+    	if(giocatoreCheHaGiocatoLaCarta.equals(TipoGiocatore.UTENTE))
+    	{
+			turnoDelGiocatore = false; //il giocatore ha giocato
+			aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
+			if(partitaInCorso.isManoCompletata())
+    		{
+    			
+    		        JOptionPane.showMessageDialog(
+    		            null,                      // finestra padre (null = centrato sullo schermo)
+    		            "mano finita",                // testo del messaggio
+    		            "Informazione",           // titolo della finestra
+    		            JOptionPane.INFORMATION_MESSAGE // tipo di messaggio (icona info)
+    		        );
+    		}
+			else
+			{
+				giocaTurno();
+			}
+    	}
+    	else
+    	{
+    		List<Carta> carte = partitaInCorso.getPc(giocatoreCheHaGiocatoLaCarta).getCarte();
+    		System.out.println("aggiorno le carte del "+ giocatoreCheHaGiocatoLaCarta);
+    		switch (giocatoreCheHaGiocatoLaCarta) {
+	        	case PC1 -> aggiornaCartePc1(carte);
+	        	case PC2 -> aggiornaCartePc2(carte);
+	        	case PC3 -> aggiornaCartePc3(carte);
+	        	default -> throw new IllegalArgumentException("Tipo non gestito: " + giocatoreCheHaGiocatoLaCarta);
+			}
+    		if(partitaInCorso.isManoCompletata())
+    		{
+    			
+    		        JOptionPane.showMessageDialog(
+    		            null,                      // finestra padre (null = centrato sullo schermo)
+    		            "mano finita",                // testo del messaggio
+    		            "Informazione",           // titolo della finestra
+    		            JOptionPane.INFORMATION_MESSAGE // tipo di messaggio (icona info)
+    		        );
+    		}
+    		else
+    		{
+    			if(!partitaInCorso.getTurnoGiocatore().equals(TipoGiocatore.UTENTE))
+    			{
+    				turnoDelGiocatore = false;
+    				giocaTurno();
+    			}
+    			else
+    			{
+    				turnoDelGiocatore = true;
+    			}
+    		}
+    	}
+    	
+    }
+
     private void aggiornaCarteGiocatore(List<Carta> carte) {
-        for (CartaView cartaView : carteGiocatore) {
-            remove(cartaView);
-        }
         carteGiocatore.clear();
         pannelloCarteGiocatoreSotto.removeAll();
         
@@ -179,17 +248,33 @@ public class PannelloGioco extends Pannello {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 	//TODO
+                	if(turnoDelGiocatore)
+                	{
+                		if(partitaInCorso.verificaCartaScelta(cartaView.getCarta()))
+                		{
+                			partitaInCorso.giocaCartaUtente(cartaView.getCarta());// Gioca la carta
+                		}
+                		else
+                		{
+                			JOptionPane.showMessageDialog(
+                		            null,                      
+                		            "La carta selezionata non e' ammissibile. Scegliere una carta con lo stesso seme del palo",             
+                		            "Carta invalida",           
+                		            JOptionPane.INFORMATION_MESSAGE
+                		        );
+                		}
+                	}
                 };
             });
     		carteGiocatore.add(cartaView);
     		pannelloCarteGiocatoreSotto.add(cartaView,cartaView.toString());
     	}
+    	
+    	pannelloCarteGiocatoreSotto.revalidate();
+    	pannelloCarteGiocatoreSotto.repaint();
     }
     
     private void aggiornaCartePc1(List<Carta> carte) {
-        for (CartaView cartaView : cartePc1) {
-            remove(cartaView);
-        }
         cartePc1.clear();
         pannelloCartePc1Sopra.removeAll();
         
@@ -199,12 +284,12 @@ public class PannelloGioco extends Pannello {
     		cartePc1.add(cartaView);
     		pannelloCartePc1Sopra.add(cartaView,cartaView.toString());
     	}
+    	
+    	pannelloCartePc1Sopra.revalidate();
+    	pannelloCartePc1Sopra.repaint();
     }
     
     private void aggiornaCartePc2(List<Carta> carte) {
-        for (CartaView cartaView : cartePc2) {
-            remove(cartaView);
-        }
         cartePc2.clear();
         pannelloCartePc2Destra.removeAll();
         
@@ -214,12 +299,11 @@ public class PannelloGioco extends Pannello {
     		cartePc2.add(cartaView);
     		pannelloCartePc2Destra.add(cartaView,cartaView.toString());
     	}
+    	pannelloCartePc2Destra.revalidate();
+    	pannelloCartePc2Destra.repaint();
     }
     
     private void aggiornaCartePc3(List<Carta> carte) {
-        for (CartaView cartaView : cartePc3) {
-            remove(cartaView);
-        }
         cartePc3.clear();
         pannelloCartePc3Sinistra.removeAll();
         
@@ -229,6 +313,8 @@ public class PannelloGioco extends Pannello {
     		cartePc3.add(cartaView);
     		pannelloCartePc3Sinistra.add(cartaView,cartaView.toString());
     	}
+    	pannelloCartePc2Destra.revalidate();
+    	pannelloCartePc2Destra.repaint();
     }
     
     public void resetCartePannelloGioco() {
@@ -245,6 +331,35 @@ public class PannelloGioco extends Pannello {
         pannelloCartePc3Sinistra.removeAll();
     }
     
+	private void iniziaPartita() {
+		System.out.println("Inizia il "+partitaInCorso.getTurnoGiocatore());
+		giocaTurno();
+	}
+
+	private void giocaTurno() {
+		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
+		System.out.println("Turno del giocatore" + turnoGiocatore);
+		if(turnoGiocatore == TipoGiocatore.UTENTE) //sono il giocatore vero
+		{
+			turnoDelGiocatore = true;
+		}
+		else
+		{
+			turnoDelGiocatore = false;
+			// Simula attesa di 1 secondo (1000 ms)
+	        new javax.swing.Timer(1000, e -> {
+	            ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
+	            giocaTurnoPc(turnoGiocatore);
+	        }).start();
+		}
+	}
+	
+	private void giocaTurnoPc(TipoGiocatore turnoPc) {
+		partitaInCorso.giocaCartaPc(turnoPc);
+//		gestisciCartaScelta(turnoPc);
+	}
+
+	
     public MioBottone getBottoneUscita() {
     	return bottoneExit;
     }
