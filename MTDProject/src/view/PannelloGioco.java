@@ -185,15 +185,14 @@ public class PannelloGioco extends Pannello {
     	{
 			turnoDelGiocatore = false; //il giocatore ha giocato
 			aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
+			// Simula attesa di 1 secondo (1000 ms)
+	        //new javax.swing.Timer(1000, e -> {
+	        //    ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
+	        //}).start();
+	        
 			if(partitaInCorso.isManoCompletata())
     		{
-				partitaInCorso.completamentoManoDiGioco();
-    		        JOptionPane.showMessageDialog(
-    		            null,                      // finestra padre (null = centrato sullo schermo)
-    		            "mano finita",                // testo del messaggio
-    		            "Informazione",           // titolo della finestra
-    		            JOptionPane.INFORMATION_MESSAGE // tipo di messaggio (icona info)
-    		        );
+    		    gestisciFineDellaMano();
     		}
 			else
 			{
@@ -212,14 +211,7 @@ public class PannelloGioco extends Pannello {
 			}
     		if(partitaInCorso.isManoCompletata())
     		{
-				partitaInCorso.completamentoManoDiGioco(); //assegna i dati ai vincitori della mano
-				partitaInCorso.resetManoSuccessiva();
-    		        JOptionPane.showMessageDialog(
-    		            null,                      // finestra padre (null = centrato sullo schermo)
-    		            "mano finita",                // testo del messaggio
-    		            "Informazione",           // titolo della finestra
-    		            JOptionPane.INFORMATION_MESSAGE // tipo di messaggio (icona info)
-    		        );
+    		    gestisciFineDellaMano();
     		}
     		else
     		{
@@ -355,6 +347,31 @@ public class PannelloGioco extends Pannello {
 		}
 	}
 	
+	private void gestisciFineDellaMano() {
+		
+		//True se partita a 3/4 giocatori o se tutte le carte sono state distribuite ai 2 giocatori
+		//False se partita a 2 giocatori ma non tutte le carte sono state distribuite
+		if(!partitaInCorso.completamentoManoDiGioco())
+		{
+			aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
+			aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
+		}
+		partitaInCorso.resetPerManoSuccessiva();
+		if(partitaInCorso.gestioneFineMano())
+		{
+			JOptionPane.showMessageDialog(
+		            null,                      
+		            "Fine turno",             
+		            "Fine turno",           
+		            JOptionPane.INFORMATION_MESSAGE
+		        );
+		}
+		else
+		{
+			giocaTurno();
+		}
+	}
+
 	private void giocaTurnoPc(TipoGiocatore turnoPc) {
 		partitaInCorso.giocaCartaPc(turnoPc);
 	}

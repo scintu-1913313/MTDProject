@@ -85,7 +85,7 @@ public class PartitaTressette {
     	//int ripetizione = 1;
     	//if(numGiocatori == 2)
     	//{
-    		//ripetizione = 2;
+    	//	ripetizione = 2;
     	//}
     	List<Carta> carte= mazzo.getCarte();
 
@@ -200,10 +200,16 @@ public class PartitaTressette {
     public void giocaCartaPc(TipoGiocatore turnoPc) {
         List<Carta> carteDelPc= giocatori.get(turnoPc).getCarte();
         Carta cartaScelta;
-
+        if(carteDelPc.isEmpty())
+        {
+            System.out.println("Numero invalido di carte del " + turnoPc);
+            return;
+        }
     	if(this.cartaPalo == null) //se la prima carta giocata e' quella del pc, allora la carta palo e' nulla e va settata(ne prendo una a caso, la prima 
-    	{
+    	{            
     		cartaScelta = carteDelPc.get(0);
+    		System.out.println("Carta palo Scelta " + cartaScelta);
+
     		this.cartaPalo = cartaScelta;
     	}
     	else //ho gia' il palo, prendo la carta del seme piu' alto o altrimenti una a caso
@@ -218,17 +224,21 @@ public class PartitaTressette {
 
 	        // Se non ci sono carte di quel seme, restituisci una a caso
 	        if (carteDelSeme.isEmpty()) {
-	        	cartaScelta = carteDelPc.isEmpty() ? null : carteDelPc.get(new Random().nextInt(carteDelPc.size()));
-	        }
+	        	int idxCartaRandom = new Random().nextInt(carteDelPc.size());
 
-	        // Trova la carta con il valore massimo
-	        Carta cartaMassima = carteDelSeme.get(0);
-	        for (Carta c : carteDelSeme) {
-	            if (c.getValore().ordinal() > cartaMassima.getValore().ordinal()) {
-	                cartaMassima = c;
-	            }
+	        	cartaScelta = carteDelPc.isEmpty() ? null : carteDelPc.get(idxCartaRandom);
 	        }
-	        cartaScelta = cartaMassima;
+	        else
+	        {
+		        // Trova la carta con il valore massimo
+		        Carta cartaMassima = carteDelSeme.get(0);
+		        for (Carta c : carteDelSeme) {
+		            if (c.getValore().ordinal() > cartaMassima.getValore().ordinal()) {
+		                cartaMassima = c;
+		            }
+		        }
+		        cartaScelta = cartaMassima;
+	        }
     	}
         System.out.println("Carta giocata dal giocatore pc: " + cartaScelta);
         switch (turnoPc) {
@@ -294,7 +304,7 @@ public class PartitaTressette {
     	return true;
     }
     
-	public void completamentoManoDiGioco() {
+	public boolean completamentoManoDiGioco() {
 		//qui vado a determinare chi prende le carte della mano di gioco
 		//una volta trovato il giocatore che vince la mano, vengono inserite le carte nel mazzo personale di carte prese
 		//lo stesso giocatore che ha vinto sara' il giocatore che inizia la mano successiva
@@ -343,6 +353,19 @@ public class PartitaTressette {
 	    }
 	    
 	    this.turnoGiocatore = vincitore;
+	    if(numGiocatori == 2) {
+	    	if(mazzo.getCarte().size()==0)
+	    	{
+	    		//tutte le carte assegnate
+	    		return true;
+	    	}
+	    	assegnaCartaDalMazzo();
+	    	return false;
+	    }
+	    else
+	    {
+	    	return true;
+	    }
 	}
 	
 	private static int confrontaCarte(Carta c1, Carta c2) {
@@ -351,7 +374,71 @@ public class PartitaTressette {
 	    return Integer.compare(p2, p1); // indice più basso = carta più forte
 	}
 	
-	public void resetManoSuccessiva() {
+	private void assegnaCartaDalMazzo() {
+		
+		//se ho assegnato gia' tutte le carte mi fermo
+		
+		if(mazzo.getCarte().size() % 2 != 0) {
+			System.out.println("Errore: nel mazzo c'e' un numero di carte dispari");
+			return;
+		}
+		
+    	List<Carta> carte= mazzo.getCarte();
+    	List<Carta> carteUtente = new ArrayList<>();
+    	List<Carta> cartePc = new ArrayList<>();
+    	if(turnoGiocatore.equals(TipoGiocatore.UTENTE)) {
+        	carteUtente.add(carte.remove(0));
+        	cartePc.add(carte.remove(0));
+    	}
+    	else
+    	{
+        	cartePc.add(carte.remove(0));
+        	carteUtente.add(carte.remove(0));
+    	}
+
+
+		giocatori.get(TipoGiocatore.UTENTE).aggiungiCarte(carteUtente);
+		giocatori.get(TipoGiocatore.PC1).aggiungiCarte(cartePc);
+		
+	}
+	
+	public boolean gestioneFineMano() {
+		//se il turno e' finito il numero di carte tra i due mazzi dei giocatori deve essere 40
+		if(carteUtenteOCarteSquadra1.size() + cartePc1OCarteSquadra2.size() != 40)
+		{
+			return false;
+		}
+		
+		if(mazzo.getCarte().size()!= 0)
+		{
+			System.out.println("Errore: nel mazzo ci sono ancora delle carte ma la partita e' finita");
+			return false;
+		}
+		
+		//controllo effettivamente che tutti i giocatori abbiano finito le carte
+		if(numGiocatori == 2) {
+			if(giocatori.get(TipoGiocatore.UTENTE).getCarte().size() != 0 ||
+					giocatori.get(TipoGiocatore.PC1).getCarte().size() != 0 ) {
+				System.out.println("Errore: uno dei due giocatori ha ancora delle carte ma la partita e' finita");
+				return false;
+			}
+		}
+		else
+		{
+			if( giocatori.get(TipoGiocatore.UTENTE).getCarte().size() != 0 ||
+			    giocatori.get(TipoGiocatore.PC1).getCarte().size() != 0 ||
+			    giocatori.get(TipoGiocatore.PC2).getCarte().size() != 0 ||
+			    giocatori.get(TipoGiocatore.PC3).getCarte().size() != 0) {
+				System.out.println("Errore: uno dei 4 giocatori ha ancora delle carte ma la partita e' finita");
+				return false;
+			}
+		}
+		
+		//se sono qui la giocata della singola partia e' effetivamente finita
+		return true;
+	}
+	
+	public void resetPerManoSuccessiva() {
 		this.cartaPalo = null;
 		this.carteManoDiGiocoOrdinate.clear();
 	}
