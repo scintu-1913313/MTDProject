@@ -10,28 +10,35 @@ import java.util.List;
 import java.util.Map;
 
 import carte.*;
+import carte.Mazzo.MazzoBuilder;
+
 import java.util.Random;
 import java.util.Set;
 
 public class PartitaTressette {
 
-    private Model model;
-    private Mazzo mazzo;
-
     public static final int NUM_CARTE_PER_GIOCATORE = 10;
     private static final List<Integer> gerarchiaCarte = Arrays.asList(3, 2, 1, 10, 9, 8, 7, 6, 5, 4);
     
+    private final Model model;
+    private final Mazzo mazzo;
+
+    private Mazzo mazzoInGioco;
     private final int numGiocatori;
     private final int punteggioStabilito;
     private final boolean accusa;
     private TipoGiocatore turnoGiocatore; //0,1,2,3
     private Carta cartaPalo;
-    Map<TipoGiocatore, Carta> carteManoDiGiocoOrdinate;
+    private Map<TipoGiocatore, Carta> carteManoDiGiocoOrdinate;
     private List<Carta> carteUtenteOCarteSquadra1; //Utente o Utente+Pc1
     private List<Carta> cartePc1OCarteSquadra2; //Pc1 o Pc2+Pc3
+    private HashMap<TipoGiocatore, Giocatore> giocatori;
+    private double punteggioTotaleUtenteOCarteSquadra1;
+    private double punteggioTotalePc1OCarteSquadra2;
+    private int numTurno;
+    private Map<Integer, Pair<Double, Double>> puntiPerTurno;
 
-    HashMap<TipoGiocatore, Giocatore> giocatori;
-    
+
 	/**
      * Costruttore di una partita del Gioco del Tressette
      * 
@@ -44,16 +51,9 @@ public class PartitaTressette {
         this.punteggioStabilito = punteggio;
         this.numGiocatori = numGiocatori;
         this.accusa = accusa;
-        this.giocatori = new HashMap<>();
-        this. carteManoDiGiocoOrdinate = new LinkedHashMap<>();
-        this.carteUtenteOCarteSquadra1 = new ArrayList<>();
-        this.cartePc1OCarteSquadra2 = new ArrayList<>();
-        inizializzaGiocatori();
-        assegnaCarte();
-        
-        // Nelle regole chi ha il 4 denara inizia
-        // Se nessuno ha queste carte, inizia casualmente il giocatore
-        this.turnoGiocatore = determinaPrimoGiocatore();
+        this.numTurno = 0;
+        this.puntiPerTurno = new HashMap<>();
+        initPartita();
     }
     
     private void inizializzaGiocatori() {
@@ -82,25 +82,17 @@ public class PartitaTressette {
     
     private void assegnaCarte() {
 
-    	//int ripetizione = 1;
-    	//if(numGiocatori == 2)
-    	//{
-    	//	ripetizione = 2;
-    	//}
-    	List<Carta> carte= mazzo.getCarte();
+    	List<Carta> carte= mazzoInGioco.getCarte();
 
-    	//for(int y = 0; y < ripetizione; y++)
-    	//{
-	    	for(TipoGiocatore giocatore: giocatori.keySet())
-	    	{
-	    		List<Carta> carteGiocatore = new ArrayList<>();
-	    		for(int i=0; i < NUM_CARTE_PER_GIOCATORE;i++)
-	    		{
-	    			carteGiocatore.add(carte.remove(0));
-	    		}
-	    		giocatori.get(giocatore).aggiungiCarte(carteGiocatore);
-	    	}
-    	//}
+    	for(TipoGiocatore giocatore: giocatori.keySet())
+    	{
+    		List<Carta> carteGiocatore = new ArrayList<>();
+    		for(int i=0; i < NUM_CARTE_PER_GIOCATORE;i++)
+    		{
+    			carteGiocatore.add(carte.remove(0));
+    		}
+    		giocatori.get(giocatore).aggiungiCarte(carteGiocatore);
+    	}
     }
     
     private TipoGiocatore determinaPrimoGiocatore() {
@@ -354,7 +346,7 @@ public class PartitaTressette {
 	    
 	    this.turnoGiocatore = vincitore;
 	    if(numGiocatori == 2) {
-	    	if(mazzo.getCarte().size()==0)
+	    	if(mazzoInGioco.getCarte().size()==0)
 	    	{
 	    		//tutte le carte assegnate
 	    		return true;
@@ -378,12 +370,12 @@ public class PartitaTressette {
 		
 		//se ho assegnato gia' tutte le carte mi fermo
 		
-		if(mazzo.getCarte().size() % 2 != 0) {
+		if(mazzoInGioco.getCarte().size() % 2 != 0) {
 			System.out.println("Errore: nel mazzo c'e' un numero di carte dispari");
 			return;
 		}
 		
-    	List<Carta> carte= mazzo.getCarte();
+    	List<Carta> carte= mazzoInGioco.getCarte();
     	List<Carta> carteUtente = new ArrayList<>();
     	List<Carta> cartePc = new ArrayList<>();
     	if(turnoGiocatore.equals(TipoGiocatore.UTENTE)) {
@@ -402,14 +394,14 @@ public class PartitaTressette {
 		
 	}
 	
-	public boolean gestioneFineMano() {
+	public boolean gestioneFineTurno() {
 		//se il turno e' finito il numero di carte tra i due mazzi dei giocatori deve essere 40
 		if(carteUtenteOCarteSquadra1.size() + cartePc1OCarteSquadra2.size() != 40)
 		{
 			return false;
 		}
 		
-		if(mazzo.getCarte().size()!= 0)
+		if(mazzoInGioco.getCarte().size()!= 0)
 		{
 			System.out.println("Errore: nel mazzo ci sono ancora delle carte ma la partita e' finita");
 			return false;
@@ -438,6 +430,110 @@ public class PartitaTressette {
 		return true;
 	}
 	
+	public void aggiornaPunteggio(boolean ultimaPresa) {
+		boolean punteggioAggiuntivoSquadra1 = false;
+		boolean punteggioAggiuntivoSquadra2 = false;
+		//se sono all'ultima presa, devo dare un punto in piu' ai giocatori che hanno preso
+		//in teoria l'ultimo giocatore che ha preso e' quello che giocherebbe il turno successivo
+		if(ultimaPresa==true)
+		{
+			if(numGiocatori == 2) {
+				punteggioAggiuntivoSquadra1 = turnoGiocatore == TipoGiocatore.UTENTE;
+				punteggioAggiuntivoSquadra2 = turnoGiocatore == TipoGiocatore.PC1;
+			}
+			else
+			{
+				punteggioAggiuntivoSquadra1 = turnoGiocatore == TipoGiocatore.UTENTE || turnoGiocatore == TipoGiocatore.PC1;
+				punteggioAggiuntivoSquadra2 = turnoGiocatore == TipoGiocatore.PC2 || turnoGiocatore == TipoGiocatore.PC3;
+
+			}
+		}
+		punteggioTotalePc1OCarteSquadra2 = calcolaPunteggio(carteUtenteOCarteSquadra1, punteggioAggiuntivoSquadra1);
+		punteggioTotaleUtenteOCarteSquadra1 = calcolaPunteggio(cartePc1OCarteSquadra2, punteggioAggiuntivoSquadra2);
+        puntiPerTurno.put(numTurno, new Pair<>(punteggioTotaleUtenteOCarteSquadra1, punteggioTotalePc1OCarteSquadra2));
+	}
+	
+	private static double calcolaPunteggio(List<Carta> cartePrese, boolean ultimaPresa) {
+        double puntiGrezzi = 0.0;
+
+        for (Carta carta : cartePrese) {
+            switch (carta.getValore()) {
+                case ASSO:
+                    puntiGrezzi += 1.0;
+                    break;
+                case TRE:
+                case DUE:
+                case RE:
+                case CAVALLO:
+                case FANTE:
+                    puntiGrezzi += 1.0 / 3.0;
+                    break;
+                default:
+                    // 7, 6, 5, 4 → 0 punti
+                    break;
+            }
+        }
+
+        if (ultimaPresa) {
+            puntiGrezzi += 1.0;
+        }
+
+        // Scarta eventuali 1/3 o 2/3 in eccesso
+        //int puntiFinali = (int) puntiGrezzi;
+
+        return puntiGrezzi;
+    }
+	
+	public boolean isPartitaTerminata() {
+//		int puntiFinali1 = (int) punteggioTotalePc1OCarteSquadra2;
+//		int puntiFinali2 = (int) punteggioTotaleUtenteOCarteSquadra1;
+//
+//		return puntiFinali1 >= punteggioStabilito ||
+//				puntiFinali2 >= punteggioStabilito;
+		
+		if (puntiPerTurno.size() < numTurno) {
+		    System.out.println("La mappa è incompleta: mancano dati per alcuni turni.");
+		    return false;
+		}
+		
+		double somma1 = 0.0;
+		double somma2 = 0.0;
+		
+	    for (Pair<Double, Double> coppia : puntiPerTurno.values()) {
+	    	somma1 += coppia.getFirst();
+	    	somma2 += coppia.getSecond();
+	    }
+
+
+		int sommaPuntiFinali1 = (int) somma1;
+		int sommaPuntiFinali2 = (int) somma2;
+		
+	    return sommaPuntiFinali1 >= punteggioStabilito || sommaPuntiFinali2 >= punteggioStabilito;
+	}
+	
+	public void resetPerPartitaSuccessiva() {
+		initPartita();
+	}
+	
+	private void initPartita() {
+		this.mazzoInGioco = new Mazzo(mazzo);
+		this.giocatori = new HashMap<>();
+        this.punteggioTotaleUtenteOCarteSquadra1 = 0;
+        this.punteggioTotalePc1OCarteSquadra2 = 0;
+		inizializzaGiocatori();
+        assegnaCarte();
+        this.carteManoDiGiocoOrdinate = new LinkedHashMap<>();
+        this.carteUtenteOCarteSquadra1 = new ArrayList<>();
+        this.cartePc1OCarteSquadra2 = new ArrayList<>();
+		this.cartaPalo = null;
+
+        // Nelle regole chi ha il 4 denara inizia
+        // Se nessuno ha queste carte, inizia casualmente il giocatore
+        this.turnoGiocatore = determinaPrimoGiocatore();
+        this.numTurno++;
+        puntiPerTurno.put(numTurno, new Pair<>(punteggioTotaleUtenteOCarteSquadra1, punteggioTotalePc1OCarteSquadra2));
+	}
+	
 	public void resetPerManoSuccessiva() {
 		this.cartaPalo = null;
 		this.carteManoDiGiocoOrdinate.clear();
@@ -449,5 +545,49 @@ public class PartitaTressette {
     
     public TipoGiocatore getTurnoGiocatore() {
     	return this.turnoGiocatore;
+    }
+    
+    public double getPunteggioTotaleUtenteOCarteSquadra1(){
+    	if (puntiPerTurno.size() < numTurno) {
+		    System.out.println("La mappa è incompleta: mancano dati per alcuni turni.");
+		    return 0.0; 
+		}
+		
+		double somma1 = 0.0;
+	    for (Pair<Double, Double> coppia : puntiPerTurno.values()) {
+	    	somma1 += coppia.getFirst();
+	    }
+	    return somma1;
+    }
+    
+    public double getPunteggioTotalePc1OCarteSquadra2() {
+    	if (puntiPerTurno.size() < numTurno) {
+		    System.out.println("La mappa è incompleta: mancano dati per alcuni turni.");
+		    return 0.0; 
+		}
+		
+		double somma2 = 0.0;
+		
+	    for (Pair<Double, Double> coppia : puntiPerTurno.values()) {
+	    	somma2 += coppia.getSecond();
+	    }
+	    
+	    return somma2;
+    }
+    
+    public EsitoPartita controlloVittoria() {
+    	int punteggio1 = (int) getPunteggioTotaleUtenteOCarteSquadra1();
+    	int punteggio2 = (int) getPunteggioTotalePc1OCarteSquadra2();
+    	EsitoPartita esito = EsitoPartita.PAREGGIATA;
+    	if(punteggio1 == punteggio2){
+    		esito = EsitoPartita.PAREGGIATA;
+    	}
+    	else if(punteggio1 > punteggio2) {
+    		esito = EsitoPartita.VINTA;
+    	}
+    	else {
+    		esito = EsitoPartita.PERSA;
+    	}
+    	return esito;
     }
 }

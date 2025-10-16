@@ -16,8 +16,8 @@ Il giocatore o la squadra che raggiunge per prima il punteggio concordato vince 
 
 
 2. VALORE DELLE CARTE:
-- 3: 3 punti
-- 2: 2 punti
+- 3: 1/3 di punto ciascuno
+- 2: 1/3 di punto ciascuno
 - Asso: 1 punto
 - Re, Cavallo, Fante: 1/3 di punto ciascuno
 - 7, 6, 5, 4: nessun punto

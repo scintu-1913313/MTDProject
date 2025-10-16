@@ -106,6 +106,15 @@ public class View extends JFrame implements Observer {
     
 	public void uscitaForzataDalGiocatore() {
 		controller.notificaUscitaForzata();
+		ritotnoAlMenu();
+	}
+
+	public void terminaParita() {
+		controller.notificaTerminaPartita();
+		ritotnoAlMenu();
+	}
+	
+	public void ritotnoAlMenu() {
 		showPannelloMenu();
 	}
 

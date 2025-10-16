@@ -45,14 +45,21 @@ public class Model extends Observable implements Observer {
     }
     
     public void terminaParitaUscitaForzata() {
-    	scriviEsitoPartita(false,0); //partita persa per reset con punteggio 0
+    	scriviEsitoPartita(EsitoPartita.PERSA,0); //partita persa per reset con punteggio 0
     	partitaCorrente = null;
     }
     
-    public void scriviEsitoPartita(boolean vinta, int punteggioOttenuto) {
+    public void terminaParitaCompletata() {
+    	EsitoPartita esitoPartita = partitaCorrente.controlloVittoria();
+    	int punteggio = (int) partitaCorrente.getPunteggioTotaleUtenteOCarteSquadra1();
+    	scriviEsitoPartita(esitoPartita,punteggio); 
+    	partitaCorrente = null;
+    }
+
+    public void scriviEsitoPartita(EsitoPartita esitoParita, int punteggioOttenuto) {
     	//aggiorno le partite dell'utente e lo notifico alla vista per far aggiornare le statische sul pannello utente 
     	LocalDateTime dataFine = LocalDateTime.now();
-    	Partita p =new Partita(vinta,punteggioOttenuto,dataFine);
+    	Partita p =new Partita(esitoParita,punteggioOttenuto,dataFine);
     	gestoreUtente.aggiornaDatiUtente(p);
     	notificaAgliObserver(gestoreUtente.getUtente());
     }

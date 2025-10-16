@@ -59,4 +59,7 @@ public class Controller {
     	modello.terminaParitaUscitaForzata();
     }
 
+    public void notificaTerminaPartita() {
+    	modello.terminaParitaCompletata();
+    }
 }

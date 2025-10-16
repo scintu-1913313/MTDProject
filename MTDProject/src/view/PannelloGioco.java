@@ -161,21 +161,7 @@ public class PannelloGioco extends Pannello {
     private void gestisciNuovaPartita(Object arg) {
     	//nuova partita
     	partitaInCorso = (PartitaTressette) arg;
-    	resetCartePannelloGioco();
     	
-    	aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
-    	if(partitaInCorso.getNumeroGiocatori() == 2)
-    	{
-    		//carte pc 1
-    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
-    	}
-    	else
-    	{
-    		//carte pc 1,2,3
-    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
-    		aggiornaCartePc2(partitaInCorso.getPc(TipoGiocatore.PC2).getCarte());
-    		aggiornaCartePc3(partitaInCorso.getPc(TipoGiocatore.PC3).getCarte());
-    	}
     	iniziaPartita();
     }
     
@@ -325,7 +311,23 @@ public class PannelloGioco extends Pannello {
     }
     
 	private void iniziaPartita() {
+		resetCartePannelloGioco();
+    	
+    	aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
+    	if(partitaInCorso.getNumeroGiocatori() == 2)
+    	{
+    		//carte pc 1
+    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
+    	}
+    	else
+    	{
+    		//carte pc 1,2,3
+    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
+    		aggiornaCartePc2(partitaInCorso.getPc(TipoGiocatore.PC2).getCarte());
+    		aggiornaCartePc3(partitaInCorso.getPc(TipoGiocatore.PC3).getCarte());
+    	}
 		System.out.println("Inizia il "+partitaInCorso.getTurnoGiocatore());
+
 		giocaTurno();
 	}
 
@@ -357,17 +359,44 @@ public class PannelloGioco extends Pannello {
 			aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
 		}
 		partitaInCorso.resetPerManoSuccessiva();
-		if(partitaInCorso.gestioneFineMano())
-		{
+
+		if(partitaInCorso.gestioneFineTurno())
+		{	
+			partitaInCorso.aggiornaPunteggio(true);
+
+			System.out.println("Utente o Utente+pc: " + partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
+			System.out.println("Pc1 o Pc2+Pc3: " + partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());
+
+			if(partitaInCorso.isPartitaTerminata())
+			{
+				//TODO da rimuovere e gestire visualizzazione finale e 
+				JOptionPane.showMessageDialog(
+			            null,                      
+			            "Parita terimanta. ",             
+			            "Fine",           
+			            JOptionPane.INFORMATION_MESSAGE
+			        );
+				view.terminaParita();
+			}
+			else
+			{
+				partitaInCorso.resetPerPartitaSuccessiva();
+				iniziaPartita();
+			}
+			
+			//TODO da rimuovere e gestire con attesa e visualizzazione
 			JOptionPane.showMessageDialog(
 		            null,                      
-		            "Fine turno",             
+		            "Fine turno. ",             
 		            "Fine turno",           
 		            JOptionPane.INFORMATION_MESSAGE
 		        );
 		}
 		else
 		{
+			partitaInCorso.aggiornaPunteggio(false);
+			System.out.println("Utente o Utente+pc: " + partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
+			System.out.println("Pc1 o Pc2+Pc3: " + partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());
 			giocaTurno();
 		}
 	}

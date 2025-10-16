@@ -10,6 +10,24 @@ public class Mazzo {
 		this.carte = builder.carte;
 	}
 	
+	public Mazzo(Mazzo altro) {
+	    this.carte = new ArrayList<>();
+	    for (Carta c : altro.getCarte()) {
+	        this.carte.add(new Carta(
+	            c.getTipoMazzo(),
+	            c.getSeme(),
+	            c.getValore(),
+	            c.getPercorsoImmagine(),
+	            c.getPercorsoImmagineRetro()
+	        ));
+	    }
+	}
+
+	
+	public void mischiaCarte() {
+		java.util.Collections.shuffle(this.carte);
+	}
+	
 	public List<Carta> getCarte() {
 		return this.carte;
 	}

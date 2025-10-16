@@ -1,39 +1,44 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 
 public class Partita {
-	private boolean vinta;
+	private EsitoPartita esito;
     private int punteggioOttenuto;
 	private LocalDateTime dataFine;
 	
 	public JSONObject toJSON() {
 	    JSONObject obj = new JSONObject();
-	    obj.put("vinta", vinta);
+	    obj.put("esito", esito);
 	    obj.put("punteggioOttenuto", punteggioOttenuto);
-	    obj.put("dataFine", dataFine.toString()); // ISO format
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	    String dataFormattata = dataFine.format(formatter);
+	    obj.put("dataFine", dataFormattata); // ISO format
 	
 	    return obj;
 	}
 
-	public Partita(boolean vinta,int punteggioOttenuto,LocalDateTime dataFine) {
-		this.vinta = vinta;
+	public Partita(EsitoPartita esito,int punteggioOttenuto,LocalDateTime dataFine) {
+		this.esito = esito;
 		this.punteggioOttenuto = punteggioOttenuto;
 		this.dataFine = dataFine;
 	}
 	
     public static Partita fromJSON(JSONObject obj) {
         
-    	boolean vinta = obj.getBoolean("vinta");
+    	EsitoPartita esito = EsitoPartita.fromString(obj.getString("esito"));
     	int punteggioOttenuto = obj.getInt("punteggioOttenuto");
     	LocalDateTime dataFine = LocalDateTime.parse(obj.getString("dataFine"));
-        return new Partita(vinta,punteggioOttenuto,dataFine);
+        return new Partita(esito,punteggioOttenuto,dataFine);
     }
     
     @Override
     public String toString() {
-    	return "Vinta: " + vinta + ", punteggio ottenuto: " + punteggioOttenuto + ", data Fine: " + dataFine +".";
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	    String dataFormattata = dataFine.format(formatter);
+    	return "Esito: " + esito + "; Punteggio ottenuto: " + punteggioOttenuto + "; Data: " + dataFormattata +".";
     }
 }
