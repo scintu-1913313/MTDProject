@@ -187,7 +187,7 @@ public class PannelloGioco extends Pannello {
 			aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
 			if(partitaInCorso.isManoCompletata())
     		{
-    			
+				partitaInCorso.completamentoManoDiGioco();
     		        JOptionPane.showMessageDialog(
     		            null,                      // finestra padre (null = centrato sullo schermo)
     		            "mano finita",                // testo del messaggio
@@ -212,7 +212,7 @@ public class PannelloGioco extends Pannello {
 			}
     		if(partitaInCorso.isManoCompletata())
     		{
-    			
+				partitaInCorso.completamentoManoDiGioco();
     		        JOptionPane.showMessageDialog(
     		            null,                      // finestra padre (null = centrato sullo schermo)
     		            "mano finita",                // testo del messaggio
@@ -356,9 +356,7 @@ public class PannelloGioco extends Pannello {
 	
 	private void giocaTurnoPc(TipoGiocatore turnoPc) {
 		partitaInCorso.giocaCartaPc(turnoPc);
-//		gestisciCartaScelta(turnoPc);
 	}
-
 	
     public MioBottone getBottoneUscita() {
     	return bottoneExit;

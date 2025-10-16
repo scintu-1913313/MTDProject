@@ -2,7 +2,10 @@ package model;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +18,8 @@ public class PartitaTressette {
     private Mazzo mazzo;
 
     public static final int NUM_CARTE_PER_GIOCATORE = 10;
+    private static final List<Integer> gerarchiaCarte = Arrays.asList(3, 2, 1, 10, 9, 8, 7, 6, 5, 4);
+    
     private final int numGiocatori;
     private final int punteggioStabilito;
     private final boolean accusa;
@@ -24,9 +29,10 @@ public class PartitaTressette {
     private Carta cartaGiocataDaPc1;
     private Carta cartaGiocataDaPc2;
     private Carta cartaGiocataDaPc3;
+    Map<TipoGiocatore, Carta> carteManoDiGiocoOrdinate;
 
     HashMap<TipoGiocatore, Giocatore> giocatori;
-
+    
 	/**
      * Costruttore di una partita del Gioco del Tressette
      * 
@@ -40,7 +46,7 @@ public class PartitaTressette {
         this.numGiocatori = numGiocatori;
         this.accusa = accusa;
         this.giocatori = new HashMap<>();
-        
+        this. carteManoDiGiocoOrdinate = new LinkedHashMap<>();
         inizializzaGiocatori();
         assegnaCarte();
         
@@ -112,7 +118,9 @@ public class PartitaTressette {
     		}
     	}
     	
-    	return TipoGiocatore.PC1;
+    	Random rand = new Random();
+        int scelta = rand.nextInt(2); // 0 o 1
+        return scelta == 0 ? TipoGiocatore.UTENTE : TipoGiocatore.PC1;
     }
     
     public Giocatore getGiocatoreVero() {
@@ -179,6 +187,7 @@ public class PartitaTressette {
         
         System.out.println("Carta giocata dal giocatore utente: " + carta);
     	this.cartaGiocataDaUtente = carta;
+    	carteManoDiGiocoOrdinate.put(TipoGiocatore.UTENTE, cartaGiocataDaUtente);
     	carteDelGiocatore.remove(carta);
     	if(cartaPalo == null) //se la prima carta giocata e' quel del giocatore, allora la carta palo e' nulla e va settata 
     	{
@@ -223,9 +232,19 @@ public class PartitaTressette {
     	}
         System.out.println("Carta giocata dal giocatore pc: " + cartaScelta);
         switch (turnoPc) {
-	    	case PC1 -> this.cartaGiocataDaPc1 =  cartaScelta;
-	    	case PC2 -> this.cartaGiocataDaPc2 =  cartaScelta;
-	    	case PC3 -> this.cartaGiocataDaPc3 =  cartaScelta;
+	    	case PC1 -> {
+	    					this.cartaGiocataDaPc1 =  cartaScelta;     	
+	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC1, cartaScelta);
+	    				}
+	    	case PC2 -> {
+	    					this.cartaGiocataDaPc2 =  cartaScelta;
+	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC2, cartaScelta);
+	    				}
+	    	case PC3 -> {
+	    					this.cartaGiocataDaPc3 =  cartaScelta;
+	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC3, cartaScelta);
+	    				}
+	    	
 	    	default -> throw new IllegalArgumentException("Tipo non gestito: " + turnoPc);
 		}
         carteDelPc.remove(cartaScelta);
@@ -268,6 +287,42 @@ public class PartitaTressette {
     	}
     	return true;
     }
+    
+	public void completamentoManoDiGioco() {
+		
+		if (carteManoDiGiocoOrdinate == null){
+            throw new IllegalArgumentException("Mappa invalida");
+        }
+		
+		if((numGiocatori==2 && carteManoDiGiocoOrdinate.size() != 2) || (numGiocatori!=2 && carteManoDiGiocoOrdinate.size() != 4)){
+            throw new IllegalArgumentException("Numero di carte non valido per i giocatori");
+        }
+		
+		Iterator<Map.Entry<TipoGiocatore, Carta>> iterator = carteManoDiGiocoOrdinate.entrySet().iterator();
+	    Map.Entry<TipoGiocatore, Carta> prima = iterator.next();
+	    Carta semeComandante = prima.getValue();
+	    TipoGiocatore vincitore = prima.getKey();
+	    Carta cartaVincente = semeComandante;
+
+	    while (iterator.hasNext()) {
+	        Map.Entry<TipoGiocatore, Carta> entry = iterator.next();
+	        Carta carta = entry.getValue();
+	        if (carta.getSeme() == semeComandante.getSeme()) {
+	            if (confrontaCarte(carta, cartaVincente) > 0) {
+	                cartaVincente = carta;
+	                vincitore = entry.getKey();
+	            }
+	        }
+	    }
+	    System.out.println("Ha vinto il giocatore "+vincitore);
+	}
+	
+	private static int confrontaCarte(Carta c1, Carta c2) {
+		int p1 = gerarchiaCarte.indexOf(c1.getValore().getValoreNumerico());
+	    int p2 = gerarchiaCarte.indexOf(c2.getValore().getValoreNumerico());
+	    return Integer.compare(p2, p1); // indice più basso = carta più forte
+	}
+	
     public int getNumeroGiocatori() {
     	return this.numGiocatori;
     }

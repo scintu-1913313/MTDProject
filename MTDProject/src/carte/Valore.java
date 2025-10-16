@@ -38,4 +38,8 @@ public enum Valore {
 	public String toString() {
 		return String.valueOf(valore);
 	}
+	
+    public int getValoreNumerico() {
+        return valore;
+    }
 }
