@@ -31,8 +31,9 @@ public class Partita {
         
     	EsitoPartita esito = EsitoPartita.fromString(obj.getString("esito"));
     	int punteggioOttenuto = obj.getInt("punteggioOttenuto");
-    	LocalDateTime dataFine = LocalDateTime.parse(obj.getString("dataFine"));
-        return new Partita(esito,punteggioOttenuto,dataFine);
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    	LocalDateTime dataFine = LocalDateTime.parse(obj.getString("dataFine"), formatter);
+    	return new Partita(esito,punteggioOttenuto,dataFine);
     }
     
     @Override
