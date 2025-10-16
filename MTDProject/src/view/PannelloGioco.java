@@ -212,7 +212,8 @@ public class PannelloGioco extends Pannello {
 			}
     		if(partitaInCorso.isManoCompletata())
     		{
-				partitaInCorso.completamentoManoDiGioco();
+				partitaInCorso.completamentoManoDiGioco(); //assegna i dati ai vincitori della mano
+				partitaInCorso.resetManoSuccessiva();
     		        JOptionPane.showMessageDialog(
     		            null,                      // finestra padre (null = centrato sullo schermo)
     		            "mano finita",                // testo del messaggio

@@ -11,6 +11,7 @@ import java.util.Map;
 
 import carte.*;
 import java.util.Random;
+import java.util.Set;
 
 public class PartitaTressette {
 
@@ -25,11 +26,9 @@ public class PartitaTressette {
     private final boolean accusa;
     private TipoGiocatore turnoGiocatore; //0,1,2,3
     private Carta cartaPalo;
-    private Carta cartaGiocataDaUtente;
-    private Carta cartaGiocataDaPc1;
-    private Carta cartaGiocataDaPc2;
-    private Carta cartaGiocataDaPc3;
     Map<TipoGiocatore, Carta> carteManoDiGiocoOrdinate;
+    private List<Carta> carteUtenteOCarteSquadra1; //Utente o Utente+Pc1
+    private List<Carta> cartePc1OCarteSquadra2; //Pc1 o Pc2+Pc3
 
     HashMap<TipoGiocatore, Giocatore> giocatori;
     
@@ -47,6 +46,8 @@ public class PartitaTressette {
         this.accusa = accusa;
         this.giocatori = new HashMap<>();
         this. carteManoDiGiocoOrdinate = new LinkedHashMap<>();
+        this.carteUtenteOCarteSquadra1 = new ArrayList<>();
+        this.cartePc1OCarteSquadra2 = new ArrayList<>();
         inizializzaGiocatori();
         assegnaCarte();
         
@@ -186,8 +187,7 @@ public class PartitaTressette {
         }
         
         System.out.println("Carta giocata dal giocatore utente: " + carta);
-    	this.cartaGiocataDaUtente = carta;
-    	carteManoDiGiocoOrdinate.put(TipoGiocatore.UTENTE, cartaGiocataDaUtente);
+    	carteManoDiGiocoOrdinate.put(TipoGiocatore.UTENTE, carta);
     	carteDelGiocatore.remove(carta);
     	if(cartaPalo == null) //se la prima carta giocata e' quel del giocatore, allora la carta palo e' nulla e va settata 
     	{
@@ -233,15 +233,12 @@ public class PartitaTressette {
         System.out.println("Carta giocata dal giocatore pc: " + cartaScelta);
         switch (turnoPc) {
 	    	case PC1 -> {
-	    					this.cartaGiocataDaPc1 =  cartaScelta;     	
 	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC1, cartaScelta);
 	    				}
 	    	case PC2 -> {
-	    					this.cartaGiocataDaPc2 =  cartaScelta;
 	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC2, cartaScelta);
 	    				}
 	    	case PC3 -> {
-	    					this.cartaGiocataDaPc3 =  cartaScelta;
 	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC3, cartaScelta);
 	    				}
 	    	
@@ -280,16 +277,27 @@ public class PartitaTressette {
     
     public boolean isManoCompletata() {
     	if(numGiocatori == 2) {
-    		return cartaGiocataDaUtente != null && cartaGiocataDaPc1 != null;
+    		Set<TipoGiocatore> attesi = Set.of(TipoGiocatore.PC1, TipoGiocatore.UTENTE);
+    		Set<TipoGiocatore> presenti = carteManoDiGiocoOrdinate.keySet();
+    		return presenti.equals(attesi);
     	}
     	else if (numGiocatori == 3 || numGiocatori == 4) {
-    		return cartaGiocataDaUtente != null && cartaGiocataDaPc1 != null && cartaGiocataDaPc2 != null && cartaGiocataDaPc3 != null;
+    		Set<TipoGiocatore> attesi = Set.of(
+    		        TipoGiocatore.PC1,
+    		        TipoGiocatore.PC2,
+    		        TipoGiocatore.PC3,
+    		        TipoGiocatore.UTENTE
+    		    );
+		    Set<TipoGiocatore> presenti = carteManoDiGiocoOrdinate.keySet();
+		    return presenti.equals(attesi);
     	}
     	return true;
     }
     
 	public void completamentoManoDiGioco() {
-		
+		//qui vado a determinare chi prende le carte della mano di gioco
+		//una volta trovato il giocatore che vince la mano, vengono inserite le carte nel mazzo personale di carte prese
+		//lo stesso giocatore che ha vinto sara' il giocatore che inizia la mano successiva
 		if (carteManoDiGiocoOrdinate == null){
             throw new IllegalArgumentException("Mappa invalida");
         }
@@ -315,12 +323,37 @@ public class PartitaTressette {
 	        }
 	    }
 	    System.out.println("Ha vinto il giocatore "+vincitore);
+	    if(this.numGiocatori == 2)
+	    {
+	    	switch (vincitore) {
+		    	case UTENTE -> carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
+		    	case PC1 -> cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
+		    	default -> throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
+			}
+	    }
+	    else
+	    {
+	    	switch (vincitore) {
+		    	case UTENTE -> carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
+		    	case PC1 -> carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
+		    	case PC2 -> cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
+		    	case PC3 -> cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
+		    	default -> throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
+			}
+	    }
+	    
+	    this.turnoGiocatore = vincitore;
 	}
 	
 	private static int confrontaCarte(Carta c1, Carta c2) {
 		int p1 = gerarchiaCarte.indexOf(c1.getValore().getValoreNumerico());
 	    int p2 = gerarchiaCarte.indexOf(c2.getValore().getValoreNumerico());
 	    return Integer.compare(p2, p1); // indice più basso = carta più forte
+	}
+	
+	public void resetManoSuccessiva() {
+		this.cartaPalo = null;
+		this.carteManoDiGiocoOrdinate.clear();
 	}
 	
     public int getNumeroGiocatori() {
