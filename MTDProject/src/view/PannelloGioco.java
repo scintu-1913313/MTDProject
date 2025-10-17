@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.LayoutManager;
@@ -42,12 +44,13 @@ public class PannelloGioco extends Pannello {
 	private JPanel pannelloCartePc2Destra;
 	private JPanel pannelloCartePc3Sinistra;
 	private JPanel pannelloCarteBancoCentrale;
-
-
+	private JPanel pannelloCarteBancoInterno;
+	
     private List<CartaView> carteGiocatore;
     private List<CartaView> cartePc1;
     private List<CartaView> cartePc2;
     private List<CartaView> cartePc3;
+    private List<CartaView> carteBanco;
 
 	private PartitaTressette partitaInCorso;
 	//private boolean cartaInGioco; //viene usata per vedere se e' il turno del giocatore e se puo selezionare la carta
@@ -66,7 +69,7 @@ public class PannelloGioco extends Pannello {
         cartePc1 = new ArrayList<>();
         cartePc2 = new ArrayList<>();
         cartePc3 = new ArrayList<>();
-		
+        carteBanco = new ArrayList<>();
         
         //Io sono un BorderLayout. Aggiungo il bottone di uscita a nord
         pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -106,12 +109,23 @@ public class PannelloGioco extends Pannello {
         
         
         //costruisco e aggiungo il banco al centro dove verrano messe le carte selezionate da giocatore e pc
-        pannelloCarteBancoCentrale = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pannelloCarteBancoCentrale.setOpaque(false);
-        pannelloPrincipaleDelGioco.add(pannelloCarteBancoCentrale, BorderLayout.CENTER);  
-
-        add(pannelloPrincipaleDelGioco,BorderLayout.CENTER);
         
+        pannelloCarteBancoCentrale = new JPanel(new GridBagLayout());
+        pannelloCarteBancoCentrale.setOpaque(false);
+
+        pannelloCarteBancoInterno = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        pannelloCarteBancoInterno.setOpaque(false);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        pannelloCarteBancoCentrale.add(pannelloCarteBancoInterno, gbc);
+        pannelloPrincipaleDelGioco.add(pannelloCarteBancoCentrale, BorderLayout.CENTER);
+        
+        add(pannelloPrincipaleDelGioco,BorderLayout.CENTER);
+
         this.turnoDelGiocatore = false;
 	}
 	
@@ -170,7 +184,8 @@ public class PannelloGioco extends Pannello {
     	if(giocatoreCheHaGiocatoLaCarta.equals(TipoGiocatore.UTENTE))
     	{
 			turnoDelGiocatore = false; //il giocatore ha giocato
-			aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
+			aggiornaCarteUtente(partitaInCorso.getGiocatoreVero().getCarte());
+			aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
 			// Simula attesa di 1 secondo (1000 ms)
 	        //new javax.swing.Timer(1000, e -> {
 	        //    ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
@@ -195,6 +210,8 @@ public class PannelloGioco extends Pannello {
 	        	case PC3 -> aggiornaCartePc3(carte);
 	        	default -> throw new IllegalArgumentException("Tipo non gestito: " + giocatoreCheHaGiocatoLaCarta);
 			}
+			aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
+
     		if(partitaInCorso.isManoCompletata())
     		{
     		    gestisciFineDellaMano();
@@ -215,7 +232,7 @@ public class PannelloGioco extends Pannello {
     	
     }
 
-    private void aggiornaCarteGiocatore(List<Carta> carte) {
+    private void aggiornaCarteUtente(List<Carta> carte) {
         carteGiocatore.clear();
         pannelloCarteGiocatoreSotto.removeAll();
         
@@ -251,6 +268,21 @@ public class PannelloGioco extends Pannello {
     	
     	pannelloCarteGiocatoreSotto.revalidate();
     	pannelloCarteGiocatoreSotto.repaint();
+    }
+    
+    private void aggiornaCarteBanco(List<Carta> carte) {
+    	carteBanco.clear();
+    	pannelloCarteBancoInterno.removeAll();
+        
+        int numCarte = carte.size();
+    	for (int i=0; i<numCarte; i++) {
+    		CartaView cartaView = new CartaView(carte.get(i),false,false);
+    		carteBanco.add(cartaView);
+    		pannelloCarteBancoInterno.add(cartaView,cartaView.toString());
+    	}
+    	
+    	pannelloCarteBancoInterno.revalidate();
+    	pannelloCarteBancoInterno.repaint();
     }
     
     private void aggiornaCartePc1(List<Carta> carte) {
@@ -308,12 +340,15 @@ public class PannelloGioco extends Pannello {
         
         cartePc3.clear();
         pannelloCartePc3Sinistra.removeAll();
+        
+        carteBanco.clear();
+        pannelloCarteBancoInterno.removeAll();
     }
     
 	private void iniziaPartita() {
 		resetCartePannelloGioco();
-    	
-    	aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
+		aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
+		aggiornaCarteUtente(partitaInCorso.getGiocatoreVero().getCarte());
     	if(partitaInCorso.getNumeroGiocatori() == 2)
     	{
     		//carte pc 1
@@ -355,7 +390,7 @@ public class PannelloGioco extends Pannello {
 		//False se partita a 2 giocatori ma non tutte le carte sono state distribuite
 		if(!partitaInCorso.completamentoManoDiGioco())
 		{
-			aggiornaCarteGiocatore(partitaInCorso.getGiocatoreVero().getCarte());
+			aggiornaCarteUtente(partitaInCorso.getGiocatoreVero().getCarte());
 			aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
 		}
 		partitaInCorso.resetPerManoSuccessiva();

@@ -14,6 +14,7 @@ import carte.Mazzo.MazzoBuilder;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PartitaTressette {
 
@@ -448,8 +449,8 @@ public class PartitaTressette {
 
 			}
 		}
-		punteggioTotalePc1OCarteSquadra2 = calcolaPunteggio(carteUtenteOCarteSquadra1, punteggioAggiuntivoSquadra1);
-		punteggioTotaleUtenteOCarteSquadra1 = calcolaPunteggio(cartePc1OCarteSquadra2, punteggioAggiuntivoSquadra2);
+		punteggioTotaleUtenteOCarteSquadra1 = calcolaPunteggio(carteUtenteOCarteSquadra1, punteggioAggiuntivoSquadra1);
+		punteggioTotalePc1OCarteSquadra2 = calcolaPunteggio(cartePc1OCarteSquadra2, punteggioAggiuntivoSquadra2);
         puntiPerTurno.put(numTurno, new Pair<>(punteggioTotaleUtenteOCarteSquadra1, punteggioTotalePc1OCarteSquadra2));
 	}
 	
@@ -589,5 +590,9 @@ public class PartitaTressette {
     		esito = EsitoPartita.PERSA;
     	}
     	return esito;
+    }
+    
+    public List<Carta> getCarteNelBanco(){
+        return new ArrayList<>(carteManoDiGiocoOrdinate.values());
     }
 }

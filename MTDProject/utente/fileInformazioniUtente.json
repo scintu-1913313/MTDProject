@@ -10,6 +10,31 @@
             "esito": "PERSA",
             "dataFine": "16/10/2025 19:23",
             "punteggioOttenuto": 0
+        },
+        {
+            "esito": "PERSA",
+            "dataFine": "16/10/2025 19:25",
+            "punteggioOttenuto": 0
+        },
+        {
+            "esito": "PERSA",
+            "dataFine": "16/10/2025 19:35",
+            "punteggioOttenuto": 9
+        },
+        {
+            "esito": "PERSA",
+            "dataFine": "16/10/2025 21:19",
+            "punteggioOttenuto": 5
+        },
+        {
+            "esito": "VINTA",
+            "dataFine": "16/10/2025 21:37",
+            "punteggioOttenuto": 14
+        },
+        {
+            "esito": "PERSA",
+            "dataFine": "17/10/2025 19:29",
+            "punteggioOttenuto": 0
         }
     ],
     "avatar": "AVATAR1",
