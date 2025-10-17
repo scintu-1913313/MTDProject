@@ -35,6 +35,16 @@
             "esito": "PERSA",
             "dataFine": "17/10/2025 19:29",
             "punteggioOttenuto": 0
+        },
+        {
+            "esito": "VINTA",
+            "dataFine": "17/10/2025 19:53",
+            "punteggioOttenuto": 12
+        },
+        {
+            "esito": "VINTA",
+            "dataFine": "17/10/2025 19:57",
+            "punteggioOttenuto": 15
         }
     ],
     "avatar": "AVATAR1",

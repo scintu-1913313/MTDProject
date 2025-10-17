@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 
 import carte.Carta;
 import carte.Mazzo;
+import model.EsitoPartita;
 import model.Model;
 import model.PartitaTressette;
 import model.TipoGiocatore;
@@ -273,14 +274,16 @@ public class PannelloGioco extends Pannello {
     private void aggiornaCarteBanco(List<Carta> carte) {
     	carteBanco.clear();
     	pannelloCarteBancoInterno.removeAll();
-        
-        int numCarte = carte.size();
-    	for (int i=0; i<numCarte; i++) {
-    		CartaView cartaView = new CartaView(carte.get(i),false,false);
-    		carteBanco.add(cartaView);
-    		pannelloCarteBancoInterno.add(cartaView,cartaView.toString());
-    	}
     	
+        if(carte != null) {
+        	int numCarte = carte.size();
+        	for (int i=0; i<numCarte; i++) {
+        		CartaView cartaView = new CartaView(carte.get(i),false,false);
+        		carteBanco.add(cartaView);
+        		pannelloCarteBancoInterno.add(cartaView,cartaView.toString());
+        	}
+        }
+        
     	pannelloCarteBancoInterno.revalidate();
     	pannelloCarteBancoInterno.repaint();
     }
@@ -404,28 +407,23 @@ public class PannelloGioco extends Pannello {
 
 			if(partitaInCorso.isPartitaTerminata())
 			{
-				//TODO da rimuovere e gestire visualizzazione finale e 
-				JOptionPane.showMessageDialog(
-			            null,                      
-			            "Parita terimanta. ",             
-			            "Fine",           
-			            JOptionPane.INFORMATION_MESSAGE
-			        );
+				aggiornaCarteBanco(null);
+				PannelloEsitoPartita.mostraEsito(this, "Franco", (int)partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1(), partitaInCorso.controlloVittoria());
 				view.terminaParita();
 			}
 			else
 			{
 				partitaInCorso.resetPerPartitaSuccessiva();
 				iniziaPartita();
+				
+				//TODO da rimuovere e gestire con attesa e visualizzazione
+				JOptionPane.showMessageDialog(
+			            null,                      
+			            "Fine turno. ",             
+			            "Fine turno",           
+			            JOptionPane.INFORMATION_MESSAGE
+			        );
 			}
-			
-			//TODO da rimuovere e gestire con attesa e visualizzazione
-			JOptionPane.showMessageDialog(
-		            null,                      
-		            "Fine turno. ",             
-		            "Fine turno",           
-		            JOptionPane.INFORMATION_MESSAGE
-		        );
 		}
 		else
 		{
