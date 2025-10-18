@@ -165,15 +165,20 @@ public class PannelloGioco extends Pannello {
         //pannello sopra con carte e label.
         pannelloSopra = new JPanel();
         pannelloSopra.setOpaque(false);
-        pannelloSopra.setLayout(new BoxLayout(pannelloSopra, BoxLayout.Y_AXIS));
+        pannelloSopra.setLayout(new GridBagLayout());
         labelGiocatore2 = new JLabel(TipoGiocatore.PC1.toString());
         labelGiocatore2.setFont(View.FONT_GIOCO);
         labelGiocatore2.setForeground(Color.BLACK);
-        pannelloSopra.add(labelGiocatore2);
-        pannelloSopra.add(Box.createVerticalStrut(5));
         pannelloCartePc1Sopra = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannelloCartePc1Sopra.setOpaque(false);
-        pannelloSopra.add(pannelloCartePc1Sopra);
+        GridBagConstraints gbcSopra = new GridBagConstraints();
+        gbcSopra.gridx = 0;
+        gbcSopra.gridy = 0;
+        gbcSopra.anchor = GridBagConstraints.CENTER;
+        gbcSopra.insets = new Insets(0, 0, 5, 0);
+        pannelloSopra.add(labelGiocatore2, gbcSopra);
+        gbcSopra.gridy = 1;
+        pannelloSopra.add(pannelloCartePc1Sopra, gbcSopra);
         pannelloPrincipaleDelGioco.add(pannelloSopra, BorderLayout.NORTH);
 
 
@@ -213,17 +218,21 @@ public class PannelloGioco extends Pannello {
         //pannello sotto con carte e label
         pannelloSotto = new JPanel();
         pannelloSotto.setOpaque(false);
-        pannelloSotto.setLayout(new BoxLayout(pannelloSotto, BoxLayout.Y_AXIS));
+        pannelloSotto.setLayout(new GridBagLayout());
         pannelloCarteGiocatoreSotto = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannelloCarteGiocatoreSotto.setOpaque(false);
-        pannelloSotto.add(pannelloCarteGiocatoreSotto);
-        pannelloSotto.add(Box.createVerticalStrut(5));
         labelGiocatore1 = new JLabel("");
         labelGiocatore1.setFont(View.FONT_GIOCO);
         labelGiocatore1.setForeground(Color.BLACK);
-        pannelloSotto.add(labelGiocatore1);
         pannelloPrincipaleDelGioco.add(pannelloSotto, BorderLayout.SOUTH);  
-        
+        GridBagConstraints gbcsotto = new GridBagConstraints();
+        gbcsotto.gridx = 0;
+        gbcsotto.gridy = 0;
+        gbcsotto.anchor = GridBagConstraints.CENTER;
+        pannelloSotto.add(labelGiocatore1, gbcsotto);
+        gbcsotto.gridy = 1;
+        gbcsotto.insets = new Insets(5, 0, 0, 0);
+        pannelloSotto.add(pannelloCarteGiocatoreSotto, gbcsotto);
         
         //costruisco e aggiungo il banco al centro dove verrano messe le carte selezionate da giocatore e pc
         pannelloCentrale = new JPanel(new GridBagLayout());
@@ -462,6 +471,8 @@ public class PannelloGioco extends Pannello {
     	
     	pannelloCartePc1Sopra.revalidate();
     	pannelloCartePc1Sopra.repaint();
+    	pannelloSopra.revalidate();
+    	pannelloSopra.repaint();
     }
     
     private void aggiornaCartePc2(List<Carta> carte) {
