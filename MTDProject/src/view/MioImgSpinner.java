@@ -53,7 +53,7 @@ public class MioImgSpinner extends MioSpinner {
 		if(indiceCorrente == 0)
 		{
 			leftButton.setEnabled(false);
-			leftButton.setBackground(MioBottone.VERDE_TAVOLO);
+			leftButton.setBackground(View.VERDE_TAVOLO);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class MioImgSpinner extends MioSpinner {
 		if(indiceCorrente == oggetti.size() - 1)
 		{
 			rightButton.setEnabled(false);
-			rightButton.setBackground(MioBottone.VERDE_TAVOLO);
+			rightButton.setBackground(View.VERDE_TAVOLO);
 		}
 	}
 	
@@ -82,7 +82,7 @@ public class MioImgSpinner extends MioSpinner {
 		if(indiceCorrente == oggetti.size() - 1)
 		{
 			rightButton.setEnabled(false);
-			rightButton.setBackground(MioBottone.VERDE_TAVOLO);
+			rightButton.setBackground(View.VERDE_TAVOLO);
 		}
 		else
 		{
@@ -92,7 +92,7 @@ public class MioImgSpinner extends MioSpinner {
 		if(indiceCorrente == 0)
 		{
 			leftButton.setEnabled(false);
-			leftButton.setBackground(MioBottone.VERDE_TAVOLO);
+			leftButton.setBackground(View.VERDE_TAVOLO);
 		}
 		else
 		{

@@ -25,7 +25,7 @@ public class GestoreAudio {
      * Costruttore privato (pattern Singleton)
      */
     private GestoreAudio() {
-    	musicaAbilitata = true;
+    	musicaAbilitata = false;
     	musicaInRiproduzione= false;
     }
     
@@ -167,7 +167,7 @@ public class GestoreAudio {
      * 
      * @param enabled true per attivare, false per disattivare
      */
-    public void setMusicEnabled(boolean enabled) {
+    private void setMusicEnabled(boolean enabled) {
         this.musicaAbilitata = enabled;
         if (!enabled) {
             stopBackgroundMusic();
@@ -183,5 +183,22 @@ public class GestoreAudio {
      */
     public boolean isMusicaAbilitata() {
         return musicaAbilitata;
+    }
+    
+    /**
+     * Verifica se la musica di sottofondo è attiva
+     * 
+     * @return true se la musica è attiva, false altrimenti
+     */
+    public boolean cambiaStatoMusica() {
+        if(musicaAbilitata) {
+        	setMusicEnabled(false);
+        	return musicaAbilitata;
+        }
+        else
+        {
+        	setMusicEnabled(true);
+        	return musicaAbilitata;
+        }
     }
 }

@@ -12,8 +12,13 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 import controller.Controller;
 
+
 @SuppressWarnings("deprecation")
 public class View extends JFrame implements Observer {
+	public static final Color VERDE_TAVOLO = new Color(2, 86, 14);
+    public static final Color VERDE_HOVER = new Color(70, 180, 70);
+    public static final Color BORDO_CHIARO = new Color(255, 255, 255);
+    public static final Font FONT_GIOCO = new Font("Georgia", Font.BOLD, 14);
     
     //private PannelloMenu pannelloMenu;
     //private PannelloRegole pannelloRegole;

@@ -11,15 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MioBottone extends JButton {
-	
-	
-	public static final Color VERDE_TAVOLO = new Color(2, 86, 14);
-    public static final Color VERDE_HOVER = new Color(70, 180, 70);
-    public static final Color BORDO_CHIARO = new Color(255, 255, 255);
-    public static final Font FONT_GIOCO = new Font("Georgia", Font.BOLD, 14);
-    
-   
-    
+	    
     static {
         UIManager.put("Button.arc", 20); // se usi FlatLaf o Look&Feel moderno
     }
@@ -40,9 +32,9 @@ public class MioBottone extends JButton {
         setOpaque(false);
         setContentAreaFilled(false);
         setForeground(Color.BLACK);
-        setBorder(BorderFactory.createLineBorder(BORDO_CHIARO, 2));
+        setBorder(BorderFactory.createLineBorder(View.BORDO_CHIARO, 2));
         setCursor(new Cursor(Cursor.HAND_CURSOR));
-        setFont(FONT_GIOCO);
+        setFont(View.FONT_GIOCO);
         setPreferredSize(new Dimension(30, 30));
         setMargin(new Insets(5,5,5,5));
         
@@ -54,13 +46,13 @@ public class MioBottone extends JButton {
             public void mouseEntered(MouseEvent e) {
             	if(isEnabled())
             	{
-            		setBackground(VERDE_HOVER);
+            		setBackground(View.VERDE_HOVER);
             	}
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                setBackground(VERDE_TAVOLO);
+                setBackground(View.VERDE_TAVOLO);
             }
         });
 
@@ -71,7 +63,7 @@ public class MioBottone extends JButton {
     }
     
     public void resetToDefault() {
-        setBackground(VERDE_TAVOLO);
+        setBackground(View.VERDE_TAVOLO);
     }
     
     @Override

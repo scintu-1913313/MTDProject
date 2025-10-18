@@ -48,7 +48,7 @@ public MioIntSpinner(String titolo, int init, int min, int max, int step){
 		if(valoreCorrente == minimo)
 		{
 			leftButton.setEnabled(false);
-			leftButton.setBackground(MioBottone.VERDE_TAVOLO);
+			leftButton.setBackground(View.VERDE_TAVOLO);
 		}
 	}
 
@@ -63,7 +63,7 @@ public MioIntSpinner(String titolo, int init, int min, int max, int step){
 		if(valoreCorrente == massimo)
 		{
 			rightButton.setEnabled(false);
-			rightButton.setBackground(MioBottone.VERDE_TAVOLO);
+			rightButton.setBackground(View.VERDE_TAVOLO);
 		}
 	}
 	

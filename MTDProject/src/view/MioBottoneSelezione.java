@@ -14,19 +14,19 @@ import model.GestoreAudio;
 public class MioBottoneSelezione extends JButton{
 	
 	private boolean cliccato = false;
-	private ImageIcon immagineVuota;
-	private ImageIcon immagineSelezione;
+	private ImageIcon immagineOff;
+	private ImageIcon immagineOn;
 	
-	public MioBottoneSelezione() {
+	public MioBottoneSelezione(String pathImmagineOff, String pathImmagineOn) {
         super();
 	
-        immagineVuota = new ImageIcon(getClass().getResource("/img/checkboxVuota.png"));
-        Image iconaVuotaRidotta = immagineVuota.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        immagineVuota = new ImageIcon(iconaVuotaRidotta);
+        immagineOff = new ImageIcon(getClass().getResource(pathImmagineOff));
+        Image iconaVuotaRidotta = immagineOff.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        immagineOff = new ImageIcon(iconaVuotaRidotta);
         
-        immagineSelezione = new ImageIcon(getClass().getResource("/img/checkboxCliccata.png"));
-        Image iconaSelezioneRidotta = immagineSelezione.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        immagineSelezione = new ImageIcon(iconaSelezioneRidotta);
+        immagineOn = new ImageIcon(getClass().getResource(pathImmagineOn));
+        Image iconaSelezioneRidotta = immagineOn.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        immagineOn = new ImageIcon(iconaSelezioneRidotta);
         
         setIcon(new ImageIcon(iconaVuotaRidotta));
         
@@ -47,15 +47,29 @@ public class MioBottoneSelezione extends JButton{
 		cliccato = !cliccato;
 		if (cliccato)
 		{
-			setIcon(immagineSelezione);
+			setIcon(immagineOn);
 			
 		}
 		else
 		{
-			setIcon(immagineVuota);			
+			setIcon(immagineOff);			
 		}
-	
 	}
+	
+	
+	public void setCliccato(boolean cliccato)
+	{
+		this.cliccato = cliccato;
+		if (cliccato)
+		{
+			setIcon(immagineOn);
+		}
+		else
+		{
+			setIcon(immagineOff);			
+		}
+	}
+	
 	public boolean getCliccato()
 	{
 		return cliccato;

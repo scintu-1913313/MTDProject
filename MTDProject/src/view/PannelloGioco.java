@@ -1,8 +1,10 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +14,8 @@ import java.awt.LayoutManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -20,12 +24,14 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import carte.Carta;
 import carte.Mazzo;
 import model.EsitoPartita;
+import model.GestoreAudio;
 import model.Model;
 import model.PartitaTressette;
 import model.TipoGiocatore;
@@ -38,7 +44,12 @@ public class PannelloGioco extends Pannello {
 	
 	private JPanel pannelloInAlto;
 	private MioBottone bottoneExit;
-	private MioBottone bottoneMusica;
+	private MioBottoneSelezione bottoneMusica;
+
+	JLabel label1Punti;
+    JLabel label2Punti;
+    String nomeGiocatori1;
+    String nomeGiocatori2;
 
 	private JPanel pannelloCarteGiocatoreSotto;
 	private JPanel pannelloCartePc1Sopra;
@@ -73,18 +84,73 @@ public class PannelloGioco extends Pannello {
         carteBanco = new ArrayList<>();
         
         //Io sono un BorderLayout. Aggiungo il bottone di uscita a nord
-        pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        pannelloInAlto.setOpaque(false);
+//        bottoneExit = new MioBottone("Esci");
+//        bottoneExit.setPreferredSize(new Dimension(50, 50));
+//        bottoneExit.setMaximumSize(new Dimension(50, 50));
+//        bottoneExit.setMinimumSize(new Dimension(50, 50));
+//        bottoneExit.setMargin(new Insets(10, 10, 10, 10));
+//        bottoneExit.addActionListener(e -> uscitaForzataDalGiocatore());
+//        pannelloInAlto.add(bottoneExit);
+//        add(pannelloInAlto, BorderLayout.NORTH);
+        
+        pannelloInAlto = new JPanel(new BorderLayout());
         pannelloInAlto.setOpaque(false);
+
+        // Pannello sinistro con bottone Esci
+        JPanel pannelloInAltoSinistra = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        pannelloInAltoSinistra.setOpaque(false);
         bottoneExit = new MioBottone("Esci");
         bottoneExit.setPreferredSize(new Dimension(50, 50));
         bottoneExit.setMaximumSize(new Dimension(50, 50));
         bottoneExit.setMinimumSize(new Dimension(50, 50));
         bottoneExit.setMargin(new Insets(10, 10, 10, 10));
         bottoneExit.addActionListener(e -> uscitaForzataDalGiocatore());
-        pannelloInAlto.add(bottoneExit);
+        pannelloInAltoSinistra.add(bottoneExit);
+
+        // Pannello centrale con le due label
+        JPanel pannelloInAltroCentrale = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        pannelloInAltroCentrale.setOpaque(false);
+        nomeGiocatori1="";
+        nomeGiocatori2="";
+        label1Punti = new JLabel("0");
+        label2Punti = new JLabel("0");
+        label1Punti.setFont(View.FONT_GIOCO);
+        label1Punti.setForeground(Color.BLACK);
+
+        label2Punti.setFont(View.FONT_GIOCO);
+        label2Punti.setForeground(Color.BLACK);
+
+        pannelloInAltroCentrale.add(label1Punti);
+        pannelloInAltroCentrale.add(Box.createHorizontalStrut(30)); // Spazio tra le label
+        pannelloInAltroCentrale.add(label2Punti);
+
+        JPanel pannelloInAltoDestra = new JPanel();
+        pannelloInAltoDestra.setOpaque(false);
+        bottoneMusica = new MioBottoneSelezione("/img/soundOff.png","/img/soundOn.png");
+        bottoneMusica.setPreferredSize(new Dimension(50, 50));
+        bottoneMusica.setMaximumSize(new Dimension(50, 50));
+        bottoneMusica.setMinimumSize(new Dimension(50, 50));
+        bottoneMusica.setMargin(new Insets(10, 10, 10, 10));
+        bottoneMusica.addActionListener(e ->{ GestoreAudio.getInstance().cambiaStatoMusica();
+        										view.getPannelloMenu().aggiornaStatoBottoneMusica();
+        									});
+        if(GestoreAudio.getInstance().isMusicaAbilitata()) {
+            bottoneMusica.setCliccato(true);
+        }
+        else
+        {
+            bottoneMusica.setCliccato(false);
+        }
+        pannelloInAltoDestra.add(bottoneMusica);
+
+        // Componi il pannello in alto
+        pannelloInAlto.add(pannelloInAltoSinistra, BorderLayout.WEST);
+        pannelloInAlto.add(pannelloInAltroCentrale, BorderLayout.CENTER);
+        pannelloInAlto.add(pannelloInAltoDestra, BorderLayout.EAST);
+
         add(pannelloInAlto, BorderLayout.NORTH);
-        
-        
         //costurisco e aggiungo i vari pannelli per le carte dei vari giocatori
         //metto tutto in un borderLayout che poi vado ad aggiungere al centro di me stesso\
         pannelloPrincipaleDelGioco = new JPanel(new BorderLayout());
@@ -138,6 +204,11 @@ public class PannelloGioco extends Pannello {
         }
     }
 	
+	public void aggiornaStatoBottoneMusica() {
+		boolean stato = GestoreAudio.getInstance().isMusicaAbilitata();
+        bottoneMusica.setCliccato(stato);
+	}
+	
 	private void uscitaForzataDalGiocatore() {
 		
 		int scelta = JOptionPane.showOptionDialog(
@@ -177,7 +248,33 @@ public class PannelloGioco extends Pannello {
     	//nuova partita
     	partitaInCorso = (PartitaTressette) arg;
     	
+    	inizializzaNomiGiocatori();
+        aggiornaLabelGiocatori("0","0");
+
     	iniziaPartita();
+    }
+    
+    private void inizializzaNomiGiocatori() {
+    	int numGiocatori = partitaInCorso.getNumeroGiocatori();
+    	if(numGiocatori == 2) {
+    		this.nomeGiocatori1 = view.getPannelloAccount().getNickname();
+    		this.nomeGiocatori2 = TipoGiocatore.PC1.toString();
+    	}
+    	else if(numGiocatori == 3)
+    	{
+    		this.nomeGiocatori1 = view.getPannelloAccount().getNickname() +" + "+ TipoGiocatore.PC1.toString();
+    		this.nomeGiocatori2 = TipoGiocatore.PC2.toString()+ " + morto";
+    	}
+    	else if(numGiocatori == 4)
+    	{
+    		this.nomeGiocatori1 = view.getPannelloAccount().getNickname() +" + "+ TipoGiocatore.PC1.toString();
+    		this.nomeGiocatori2 = TipoGiocatore.PC2.toString() + " + " + TipoGiocatore.PC3.toString();
+    	}
+    }
+
+    private void aggiornaLabelGiocatori(String punteggio1, String punteggio2) {
+    	label1Punti.setText(nomeGiocatori1 + ": "+ punteggio1);
+    	label2Punti.setText(nomeGiocatori2 + ": "+ punteggio2);
     }
     
     private void gestisciCartaScelta(Object arg) {
@@ -430,10 +527,21 @@ public class PannelloGioco extends Pannello {
 			partitaInCorso.aggiornaPunteggio(false);
 			System.out.println("Utente o Utente+pc: " + partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
 			System.out.println("Pc1 o Pc2+Pc3: " + partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());
+			
+			String punteggio1 = formattaPunteggio(partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
+			String punteggio2 = formattaPunteggio(partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());	
+			
+	        aggiornaLabelGiocatori(punteggio1,punteggio2);
+
 			giocaTurno();
 		}
 	}
 
+	private static String formattaPunteggio(double valore) {
+        BigDecimal bd = new BigDecimal(valore).setScale(1, RoundingMode.HALF_UP);
+        return bd.stripTrailingZeros().toPlainString(); // Rimuove lo .0 se non serve
+    };
+    
 	private void giocaTurnoPc(TipoGiocatore turnoPc) {
 		partitaInCorso.giocaCartaPc(turnoPc);
 	}

@@ -104,7 +104,7 @@ public class PannelloMenu extends Pannello {
         intestazioneBottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
         pannelloInternoMenu.add(intestazioneBottoneAccusa);
 
-        bottoneAccusa = new MioBottoneSelezione();
+        bottoneAccusa = new MioBottoneSelezione("/img/checkboxVuota.png","/img/checkboxCliccata.png");
         bottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
         pannelloInternoMenu.add(bottoneAccusa);
         
@@ -134,11 +134,10 @@ public class PannelloMenu extends Pannello {
         bottoneMusica.setMargin(new Insets(10, 10, 10, 10));
         bottoneMusica.addActionListener(e -> {
             // Riproduci suono del pulsante
-        	GestoreAudio audioManager = GestoreAudio.getInstance();            
             // Cambia stato della musica
-            boolean newState = !audioManager.isMusicaAbilitata();
-            audioManager.setMusicEnabled(newState);
+        	boolean newState = GestoreAudio.getInstance().cambiaStatoMusica();
             bottoneMusica.setText(newState ? "Musica: ON" : "Musica: OFF");
+            view.getPannelloGioco().aggiornaStatoBottoneMusica();
         });
         pannelloInBasso.add(bottoneMusica);
 
@@ -186,6 +185,11 @@ public class PannelloMenu extends Pannello {
 	public boolean getAccusa()
 	{
 		return  this.bottoneAccusa.getCliccato();
+	}
+	
+	public void aggiornaStatoBottoneMusica() {
+		boolean stato = GestoreAudio.getInstance().isMusicaAbilitata();
+        bottoneMusica.setText(stato ? "Musica: ON" : "Musica: OFF");
 	}
 	
     @Override
