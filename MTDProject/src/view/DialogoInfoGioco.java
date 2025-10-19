@@ -7,8 +7,8 @@ public class DialogoInfoGioco extends MioDialog {
 
     private JPanel pannelloCentrale;
 
-    public DialogoInfoGioco(Frame owner, String titolo, String info, int durataMillis) {
-        super(owner, titolo, 250, 80);
+    public DialogoInfoGioco(Frame owner, int larghezza,int altezza, String titolo, String info, int durataMillis) {
+        super(owner, titolo, larghezza, altezza);
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0)); // finestra trasparente
 

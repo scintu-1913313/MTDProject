@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.LayoutManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -19,7 +16,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -27,21 +23,20 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingWorker;
 
 import carte.Carta;
-import carte.Mazzo;
 import model.Accusa;
-import model.EsitoPartita;
 import model.GestoreAudio;
 import model.Model;
 import model.Pair;
 import model.PartitaTressette;
 import model.TipoGiocatore;
-import model.Utente;
 
 public class PannelloGioco extends Pannello {
-	
+	private static int TEMPO_ATTESA_DEFAULT= 1000; //1000ms -> 1s
+	private static int TEMPO_ATTESA_FINE_TURNO= 3000; //3000ms -> 3s
+	private static int TEMPO_ATTESA_TRA_GIOCATORI= 2000; //2000ms -> 2s
+
 	private View view;
 	private JPanel pannelloPrincipaleDelGioco; 
 	
@@ -364,7 +359,7 @@ public class PannelloGioco extends Pannello {
     }
     
     private void giocaTurnoConAttesa() {
-		new javax.swing.Timer(1000, e -> {
+		new javax.swing.Timer(TEMPO_ATTESA_DEFAULT, e -> {
             ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
             giocaTurno();
         }).start();
@@ -377,10 +372,6 @@ public class PannelloGioco extends Pannello {
 			turnoDelGiocatore = false; //il giocatore ha giocato
 			aggiornaCarteUtente(partitaInCorso.getGiocatoreVero().getCarte());
 			aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
-			// Simula attesa di 1 secondo (1000 ms)
-	        //new javax.swing.Timer(1000, e -> {
-	        //    ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
-	        //}).start();
 	        
 			if(partitaInCorso.isManoCompletata())
     		{
@@ -567,7 +558,7 @@ public class PannelloGioco extends Pannello {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
 		
 		System.out.println("Turno del giocatore" + turnoGiocatore);
-		new DialogoInfoGioco(view, "Turno" , "Turno del giocatore " + turnoGiocatore, 2000);
+		new DialogoInfoGioco(view, 250, 80, "Turno" , "Turno del giocatore " + turnoGiocatore, TEMPO_ATTESA_TRA_GIOCATORI);
 		int roundAttuale = partitaInCorso.getRound();
 		aggiornaLabelRound(roundAttuale);
 		if(partitaInCorso.isAccusaAbilitata()) {
@@ -581,7 +572,7 @@ public class PannelloGioco extends Pannello {
 		{
 			turnoDelGiocatore = false;
 			// Simula attesa di 1 secondo (1000 ms)
-	        new javax.swing.Timer(1000, e -> {
+	        new javax.swing.Timer(TEMPO_ATTESA_DEFAULT, e -> {
 	            ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
 	            giocaTurnoPc(turnoGiocatore);
 	        }).start();
@@ -642,15 +633,9 @@ public class PannelloGioco extends Pannello {
 			else
 			{
 				partitaInCorso.resetPerPartitaSuccessiva();
+				new DialogoInfoGioco(view, 300,80,"Fine turno" , "Turno terminato. Creazie nuovo turno... ", TEMPO_ATTESA_FINE_TURNO);
+
 				iniziaPartita();
-				
-				//TODO da rimuovere e gestire con attesa e visualizzazione
-				JOptionPane.showMessageDialog(
-			            null,                      
-			            "Fine turno. ",             
-			            "Fine turno",           
-			            JOptionPane.INFORMATION_MESSAGE
-			        );
 			}
 		}
 		else
