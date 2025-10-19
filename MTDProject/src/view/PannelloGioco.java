@@ -245,6 +245,7 @@ public class PannelloGioco extends Pannello {
         gbcsotto.insets = new Insets(5, 0, 0, 0);
         pannelloSotto.add(pannelloCarteGiocatoreSotto, gbcsotto);
         
+        
         //costruisco e aggiungo il banco al centro dove verrano messe le carte selezionate da giocatore e pc
         pannelloCentrale = new JPanel(new GridBagLayout());
         pannelloCentrale.setOpaque(false);
@@ -258,9 +259,8 @@ public class PannelloGioco extends Pannello {
 
         pannelloCentrale.add(pannelloCarteBancoInterno, gbc);
         pannelloPrincipaleDelGioco.add(pannelloCentrale, BorderLayout.CENTER);
-        
-        add(pannelloPrincipaleDelGioco,BorderLayout.CENTER);
 
+        add(pannelloPrincipaleDelGioco,BorderLayout.CENTER);
         this.turnoDelGiocatore = false;
 	}
 	
@@ -559,6 +559,7 @@ public class PannelloGioco extends Pannello {
 	private void giocaTurno() {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
 		System.out.println("Turno del giocatore" + turnoGiocatore);
+		new DialogoInfoGioco(view, "Turno" , "Turno del giocatore " + turnoGiocatore, 2000);
 		int roundAttuale = partitaInCorso.getRound();
 		aggiornaLabelRound(roundAttuale);
 		if(partitaInCorso.isAccusaAbilitata()) {
@@ -604,8 +605,7 @@ public class PannelloGioco extends Pannello {
 		}			
 	}
 	
-	private void gestisciFineDellaMano() {
-		
+	private void gestisciFineDellaMano() {		
 		//True se partita a 3/4 giocatori o se tutte le carte sono state distribuite ai 2 giocatori
 		//False se partita a 2 giocatori ma non tutte le carte sono state distribuite
 		if(!partitaInCorso.completamentoManoDiGioco())

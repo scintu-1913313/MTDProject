@@ -18,8 +18,12 @@ public class View extends JFrame implements Observer {
 	public static final Color VERDE_TAVOLO = new Color(2, 86, 14);
     public static final Color VERDE_HOVER = new Color(70, 180, 70);
     public static final Color BORDO_CHIARO = new Color(255, 255, 255);
+    public static final Color TRASPARENTE = new Color(0, 0, 0, 0);
+    public static final Color VERDE_PANNELLO = new Color(0, 128, 0);
+    public static final Color VERDE_SCURO= new Color(0, 90, 0);
     public static final Font FONT_GIOCO = new Font("Georgia", Font.BOLD, 14);
-    
+
+	
     //private PannelloMenu pannelloMenu;
     //private PannelloRegole pannelloRegole;
     private Controller controller;

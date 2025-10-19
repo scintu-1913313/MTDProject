@@ -24,11 +24,11 @@ public class PannelloMenu extends Pannello {
         super(new BorderLayout());
     	this.view = view;
         setSize(new Dimension(Pannello.LARGHEZZA-400, Pannello.ALTEZZA-300));
-        setBackground(VERDE_PANNELLO);
+        setBackground(View.VERDE_PANNELLO);
 		setOpaque(false);
 
         JPanel pannelloInternoMenu = new JPanel();
-        pannelloInternoMenu.setBackground(VERDE_PANNELLO);
+        pannelloInternoMenu.setBackground(View.VERDE_PANNELLO);
         pannelloInternoMenu.setOpaque(true);
         pannelloInternoMenu.setLayout(new BoxLayout(pannelloInternoMenu, BoxLayout.Y_AXIS));
         
@@ -36,7 +36,7 @@ public class PannelloMenu extends Pannello {
         
         // Pannello superiore con layout personalizzato
         JPanel pannelloInAlto = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        pannelloInAlto.setBackground(VERDE_PANNELLO);
+        pannelloInAlto.setBackground(View.VERDE_PANNELLO);
         pannelloInAlto.setOpaque(true);
         
         MioBottone bottoneExit= new MioBottone("Esci");
@@ -112,7 +112,7 @@ public class PannelloMenu extends Pannello {
         
         // Pannello superiore con layout personalizzato
         JPanel pannelloInBasso= new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        pannelloInBasso.setBackground(VERDE_PANNELLO);
+        pannelloInBasso.setBackground(View.VERDE_PANNELLO);
         pannelloInBasso.setOpaque(true);
         
         MioBottone bottoneRegole = new MioBottone("Regole");

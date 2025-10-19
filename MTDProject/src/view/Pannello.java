@@ -9,10 +9,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Pannello extends JPanel implements Observer {
-
-	protected static final Color TRASPARENTE = new Color(0, 0, 0, 0);
-	protected static final Color VERDE_PANNELLO = new Color(0, 128, 0);
-	protected static final Color VERDE_SCURO= new Color(0, 90, 0);
 	protected BufferedImage sfondo;
 	public static final int ALTEZZA = 800;
 	public static final int LARGHEZZA = 1200;

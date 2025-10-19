@@ -12,6 +12,6 @@ public class MioLabel extends JLabel {
 		setFont(new Font("SansSerif", Font.BOLD, 14));
         setForeground(Color.BLACK);
         setOpaque(true);
-        setBackground(Pannello.VERDE_PANNELLO);
+        setBackground(View.VERDE_PANNELLO);
 	}
 }

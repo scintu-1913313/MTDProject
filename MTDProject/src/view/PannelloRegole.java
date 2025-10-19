@@ -14,12 +14,12 @@ public class PannelloRegole extends Pannello{
 	public PannelloRegole(View view) {
 		super(new BorderLayout());
 		//setBounds(50, 50, 600, 400);
-		setBackground(Pannello.VERDE_PANNELLO);
+		setBackground(View.VERDE_PANNELLO);
 		setOpaque(false);
 
 		// Bottone in basso a destra
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		topPanel.setBackground(TRASPARENTE);
+		topPanel.setBackground(View.TRASPARENTE);
 		
 		MioBottone bottoneRitornoMenu = new MioBottone("Menu'");
 		bottoneRitornoMenu.setPreferredSize(new Dimension(140, 40));
@@ -42,7 +42,7 @@ public class PannelloRegole extends Pannello{
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
         areaTesto.setOpaque(true);
-        areaTesto.setBackground(Pannello.VERDE_PANNELLO); // VERDE chiaro
+        areaTesto.setBackground(View.VERDE_PANNELLO); // VERDE chiaro
         areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità
         
         //areaTesto.setForeground(Color.WHITE);

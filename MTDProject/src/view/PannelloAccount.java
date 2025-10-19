@@ -41,11 +41,11 @@ public class PannelloAccount extends Pannello{
 	public PannelloAccount(View view) {
 		super(new BorderLayout());
 		this.view = view;
-		setBackground(Pannello.VERDE_PANNELLO);
+		setBackground(View.VERDE_PANNELLO);
 		setOpaque(false);
 		
 		pannelloInternoAccount = new JPanel();
-		pannelloInternoAccount.setBackground(VERDE_PANNELLO);
+		pannelloInternoAccount.setBackground(View.VERDE_PANNELLO);
 		pannelloInternoAccount.setOpaque(true);
 		pannelloInternoAccount.setLayout(new BoxLayout(pannelloInternoAccount, BoxLayout.Y_AXIS));
 		
@@ -90,7 +90,7 @@ public class PannelloAccount extends Pannello{
         areaTesto.setLineWrap(true);
         areaTesto.setWrapStyleWord(true);
         areaTesto.setOpaque(true);
-        areaTesto.setBackground(Pannello.VERDE_SCURO);
+        areaTesto.setBackground(View.VERDE_SCURO);
         areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità        
         areaTesto.setFont(new Font("SansSerif", Font.BOLD, 14));
         // ScrollPane con solo scrollbar verticale visibile
@@ -108,7 +108,7 @@ public class PannelloAccount extends Pannello{
 
 		// Bottone in basso a destra
 		JPanel downPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		downPanel.setBackground(TRASPARENTE);
+		downPanel.setBackground(View.TRASPARENTE);
 		
 		bottoneSalvataggioDati = new MioBottone("Salva");
 		bottoneSalvataggioDati.setPreferredSize(new Dimension(100, 40));
