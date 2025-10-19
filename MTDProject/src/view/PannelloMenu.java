@@ -160,8 +160,8 @@ public class PannelloMenu extends Pannello {
     	} 
     	else 
     	{
-    		view.iniziaGioco();
     		view.showPannelloGioco();
+    		view.iniziaGioco();
     	}
 	}
 	

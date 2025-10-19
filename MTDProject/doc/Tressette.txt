@@ -53,8 +53,9 @@ Il gioco termina quando tutti i giocatori hanno esaurito le carte.
 Il giocatore che ha effettuato l' ultima presa acquisisce 1 punto in piu'.
 
 6. DICHIARAZIONI SPECIALI: ACCUSA
-Ad inizio partita i giocatori devono scegliere se utilizzare l'accusa obbligatoria o a scelta.
-L' accusa deve essere chiamata da ogni giocatore solo nel primo giro di ogni mano, durante il proprio turno.
+Ad inizio partita i giocatori devono scegliere se utilizzare l'accusa obbligatoria o non.
+Se si gioca a 3 o 4 giocatori, l' accusa deve essere chiamata da ogni giocatore solo nel primo round di ogni turno di gioco.
+Se si gioca a 2 giocatori, l' accusa deve essere chiamata da ogni giocatore solo nei primi 3 round di ogni turno di gioco.
 
 Accusa obbligatoria: tutti i giocatori sono obbligati a chiamare l'accusa.
 Accusa facoltativa: e' a discrezione di un giocatore chiamare l'accusa.

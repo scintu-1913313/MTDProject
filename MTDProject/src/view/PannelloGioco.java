@@ -27,12 +27,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 
 import carte.Carta;
 import carte.Mazzo;
+import model.Accusa;
 import model.EsitoPartita;
 import model.GestoreAudio;
 import model.Model;
+import model.Pair;
 import model.PartitaTressette;
 import model.TipoGiocatore;
 import model.Utente;
@@ -402,12 +405,12 @@ public class PannelloGioco extends Pannello {
     			if(!partitaInCorso.getTurnoGiocatore().equals(TipoGiocatore.UTENTE))
     			{
     				turnoDelGiocatore = false;
-    				giocaTurno();
     			}
     			else
     			{
     				turnoDelGiocatore = true;
     			}
+				giocaTurno();
     		}
     	}
     	
@@ -556,7 +559,11 @@ public class PannelloGioco extends Pannello {
 	private void giocaTurno() {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
 		System.out.println("Turno del giocatore" + turnoGiocatore);
-		aggiornaLabelRound(partitaInCorso.getRound());
+		int roundAttuale = partitaInCorso.getRound();
+		aggiornaLabelRound(roundAttuale);
+		if(partitaInCorso.isAccusaAbilitata()) {
+			gestioneAccuse(turnoGiocatore);
+		}
 		if(turnoGiocatore == TipoGiocatore.UTENTE) //sono il giocatore vero
 		{
 			turnoDelGiocatore = true;
@@ -570,6 +577,31 @@ public class PannelloGioco extends Pannello {
 	            giocaTurnoPc(turnoGiocatore);
 	        }).start();
 		}
+	}
+	
+	private void gestioneAccuse(TipoGiocatore giocatore) {
+    	int numGiocatori = partitaInCorso.getNumeroGiocatori();
+		int roundAttuale = partitaInCorso.getRound();
+		String nomeGiocatore = giocatore.toString();
+		if(giocatore.equals(TipoGiocatore.UTENTE)) {
+			nomeGiocatore = view.getPannelloAccount().getNickname();
+		}
+		if(giocatore.equals(TipoGiocatore.PC3) && numGiocatori == 3) {
+			nomeGiocatore = "Morto";
+		}
+		if((numGiocatori==2 && roundAttuale <= 3) || 
+		   ((numGiocatori==3 || numGiocatori==4) && roundAttuale == 1)	) {
+
+			List<Pair<Accusa, List<Carta>>> accuse = partitaInCorso.verificaAccuse();
+
+			System.out.println("Round: "+ roundAttuale+ "; " +accuse.size() + " accuse per il giocatore " + nomeGiocatore);
+			for(Pair<Accusa, List<Carta>> a : accuse) {
+				new DialogoAccuse(view, "Accuse", nomeGiocatore,a).setVisible(true);
+			}
+			String punteggio1 = formattaPunteggio(partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
+			String punteggio2 = formattaPunteggio(partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());	
+	        aggiornaLabelGiocatori(punteggio1,punteggio2);
+		}			
 	}
 	
 	private void gestisciFineDellaMano() {

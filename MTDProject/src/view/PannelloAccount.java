@@ -41,7 +41,6 @@ public class PannelloAccount extends Pannello{
 	public PannelloAccount(View view) {
 		super(new BorderLayout());
 		this.view = view;
-		//setBounds(50, 50, 600, 400);
 		setBackground(Pannello.VERDE_PANNELLO);
 		setOpaque(false);
 		
@@ -183,7 +182,4 @@ public class PannelloAccount extends Pannello{
     		view.aggiornaDatiUtente();
     	}
     }
-    
-    
-    
 }

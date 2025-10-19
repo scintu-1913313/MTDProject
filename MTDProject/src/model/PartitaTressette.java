@@ -3,18 +3,22 @@ package model;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import carte.*;
 import carte.Mazzo.MazzoBuilder;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PartitaTressette {
 
@@ -34,12 +38,12 @@ public class PartitaTressette {
     private List<Carta> carteUtenteOCarteSquadra1; //Utente o Utente+Pc1
     private List<Carta> cartePc1OCarteSquadra2; //Pc1 o Pc2+Pc3
     private HashMap<TipoGiocatore, Giocatore> giocatori;
-    private double punteggioTotaleUtenteOCarteSquadra1;
-    private double punteggioTotalePc1OCarteSquadra2;
+    private double punteggioAccuseTotaleUtenteOCarteSquadra1;
+    private double punteggioAccuseTotalePc1OCarteSquadra2;
     private int numTurno;
     private int round;
     private Map<Integer, Pair<Double, Double>> puntiPerTurno;
-
+    private List<Pair<Accusa, List<Carta>>> accuseTotaliTurno;
 
 	/**
      * Costruttore di una partita del Gioco del Tressette
@@ -451,9 +455,11 @@ public class PartitaTressette {
 
 			}
 		}
-		punteggioTotaleUtenteOCarteSquadra1 = calcolaPunteggio(carteUtenteOCarteSquadra1, punteggioAggiuntivoSquadra1);
-		punteggioTotalePc1OCarteSquadra2 = calcolaPunteggio(cartePc1OCarteSquadra2, punteggioAggiuntivoSquadra2);
-        puntiPerTurno.put(numTurno, new Pair<>(punteggioTotaleUtenteOCarteSquadra1, punteggioTotalePc1OCarteSquadra2));
+		double punteggioTotaleUtenteOCarteSquadra1 = calcolaPunteggio(carteUtenteOCarteSquadra1, punteggioAggiuntivoSquadra1);
+		double punteggioTotalePc1OCarteSquadra2 = calcolaPunteggio(cartePc1OCarteSquadra2, punteggioAggiuntivoSquadra2);
+		double punteggioFinale1 = punteggioTotaleUtenteOCarteSquadra1 + this.punteggioAccuseTotaleUtenteOCarteSquadra1;
+		double punteggioFinale2 = punteggioTotalePc1OCarteSquadra2 + this.punteggioAccuseTotalePc1OCarteSquadra2;
+        puntiPerTurno.put(numTurno, new Pair<>(punteggioFinale1, punteggioFinale2));
 	}
 	
 	private static double calcolaPunteggio(List<Carta> cartePrese, boolean ultimaPresa) {
@@ -487,13 +493,101 @@ public class PartitaTressette {
         return puntiGrezzi;
     }
 	
-	public boolean isPartitaTerminata() {
-//		int puntiFinali1 = (int) punteggioTotalePc1OCarteSquadra2;
-//		int puntiFinali2 = (int) punteggioTotaleUtenteOCarteSquadra1;
-//
-//		return puntiFinali1 >= punteggioStabilito ||
-//				puntiFinali2 >= punteggioStabilito;
+	
+	
+	public List<Pair<Accusa, List<Carta>>> verificaAccuse() {
 		
+		List<Carta> carte = giocatori.get(turnoGiocatore).getCarte();
+		 List<Pair<Accusa, List<Carta>>> accuse = new ArrayList<>();
+
+	    // Mappa: seme -> carte con quel seme
+	    Map<Seme, List<Carta>> cartePerSeme = carte.stream()
+	        .collect(Collectors.groupingBy(Carta::getSeme));
+
+	    // Verifica Napoli: asso, due, tre dello stesso seme
+	    for (Map.Entry<Seme, List<Carta>> entry : cartePerSeme.entrySet()) {
+	        Map<Valore, List<Carta>> perValore = entry.getValue().stream()
+	            .filter(c -> c.getValore() == Valore.ASSO || c.getValore() == Valore.DUE || c.getValore() == Valore.TRE)
+	            .collect(Collectors.groupingBy(Carta::getValore));
+
+	        if (perValore.keySet().containsAll(Set.of(Valore.ASSO, Valore.DUE, Valore.TRE))) {
+	            List<Carta> napoli = Stream.of(Valore.ASSO, Valore.DUE, Valore.TRE)
+	                .map(perValore::get)
+	                .flatMap(List::stream)
+	                .collect(Collectors.toList());
+	            accuse.add(new Pair<>(Accusa.NAPOLI, napoli));
+	        }
+	    }
+
+	    // Mappa: valore -> carte con quel valore (solo asso, due, tre)
+	    Map<Valore, List<Carta>> cartePerValore = carte.stream()
+	            .filter(c -> c.getValore() == Valore.ASSO || c.getValore() == Valore.DUE || c.getValore() == Valore.TRE)
+	            .collect(Collectors.groupingBy(Carta::getValore));
+
+        for (Map.Entry<Valore, List<Carta>> entry : cartePerValore.entrySet()) {
+            List<Carta> gruppo = entry.getValue();
+            if (gruppo.size() == 4) {
+                accuse.add(new Pair<>(Accusa.SUPERBUONGIOCO, gruppo));
+            } else if (gruppo.size() == 3) {
+                accuse.add(new Pair<>(Accusa.BUONGIOCO, gruppo));
+            }
+        }
+	    
+        // Filtro le accuse già dichiarate 
+        List<Pair<Accusa, List<Carta>>> nuoveAccuse = accuse.stream()
+            .filter(nuova -> !accuseTotaliTurno.contains(nuova))
+            .collect(Collectors.toList());
+
+        // Aaggiorno le accuseTotaliTurno
+        accuseTotaliTurno.addAll(nuoveAccuse);
+        
+        if(nuoveAccuse.size()>0) {
+	        List<Accusa> listaAccuse = nuoveAccuse.stream()
+	        	    .map(Pair::getFirst)
+	        	    .collect(Collectors.toList());
+	        
+	        aggiornaPunteggiConAccuse(listaAccuse);
+        }
+        return nuoveAccuse;    
+	}
+	private void aggiornaPunteggiConAccuse(List<Accusa> listaAccuse) {
+		int val = 0;
+		for (Accusa a: listaAccuse) {
+			val += a.getValore();
+		}
+		double punteggioFinale1 = puntiPerTurno.get(numTurno).getFirst();
+		double punteggioFinale2 = puntiPerTurno.get(numTurno).getSecond();
+		if (numGiocatori == 2 )
+		{
+			if (turnoGiocatore.equals(TipoGiocatore.UTENTE))
+			{
+				punteggioAccuseTotaleUtenteOCarteSquadra1 += val;
+				punteggioFinale1 += val;
+			}
+			else 
+			{
+				punteggioAccuseTotalePc1OCarteSquadra2 += val;
+				punteggioFinale2 += val;
+			}
+		}
+		else 
+		{
+			if (turnoGiocatore.equals(TipoGiocatore.UTENTE) || turnoGiocatore.equals(TipoGiocatore.PC1)) 
+			{
+				punteggioAccuseTotaleUtenteOCarteSquadra1 += val;
+				punteggioFinale1 += val;
+			}
+			else
+			{
+				punteggioAccuseTotalePc1OCarteSquadra2 += val;
+				punteggioFinale2 += val;
+			}
+
+		}
+        puntiPerTurno.put(numTurno, new Pair<>(punteggioFinale1, punteggioFinale2));
+	}
+
+	public boolean isPartitaTerminata() {
 		if (puntiPerTurno.size() < numTurno) {
 		    System.out.println("La mappa è incompleta: mancano dati per alcuni turni.");
 		    return false;
@@ -521,13 +615,14 @@ public class PartitaTressette {
 	private void initPartita() {
 		this.mazzoInGioco = new Mazzo(mazzo);
 		this.giocatori = new HashMap<>();
-        this.punteggioTotaleUtenteOCarteSquadra1 = 0;
-        this.punteggioTotalePc1OCarteSquadra2 = 0;
+        this.punteggioAccuseTotaleUtenteOCarteSquadra1 = 0;
+        this.punteggioAccuseTotalePc1OCarteSquadra2 = 0;
 		inizializzaGiocatori();
         assegnaCarte();
         this.carteManoDiGiocoOrdinate = new LinkedHashMap<>();
         this.carteUtenteOCarteSquadra1 = new ArrayList<>();
         this.cartePc1OCarteSquadra2 = new ArrayList<>();
+        this.accuseTotaliTurno = new ArrayList<>();
 		this.cartaPalo = null;
 
         // Nelle regole chi ha il 4 denara inizia
@@ -535,7 +630,7 @@ public class PartitaTressette {
         this.turnoGiocatore = determinaPrimoGiocatore();
         this.numTurno++;
         this.round = 1;
-        puntiPerTurno.put(numTurno, new Pair<>(punteggioTotaleUtenteOCarteSquadra1, punteggioTotalePc1OCarteSquadra2));
+        puntiPerTurno.put(numTurno, new Pair<>(punteggioAccuseTotaleUtenteOCarteSquadra1, punteggioAccuseTotalePc1OCarteSquadra2));
 	}
 	
 	public void resetPerManoSuccessiva() {
@@ -597,6 +692,10 @@ public class PartitaTressette {
     
     public List<Carta> getCarteNelBanco(){
         return new ArrayList<>(carteManoDiGiocoOrdinate.values());
+    }
+    
+    public boolean isAccusaAbilitata() {
+    	return this.accusa;
     }
     
     public int getRound() {

@@ -1,5 +1,7 @@
 package carte;
 
+import model.Pair;
+
 public class Carta {
 	private final Seme seme;
 	private final Valore valore;
@@ -46,7 +48,7 @@ public class Carta {
 	@Override
 	public boolean equals(Object obj) {
 	    if (this == obj) return true;
-	    if (obj == null || getClass() != obj.getClass()) return false;
+        if (!(obj instanceof Carta)) return false;
 
 	    Carta other = (Carta) obj;
 	    return seme == other.seme && valore == other.valore && tipoMazzo == other.tipoMazzo;
