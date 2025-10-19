@@ -1,39 +1,40 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-
-import javax.swing.Timer;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import java.awt.*;
+import javax.swing.*;
 
 public class DialogoInfoGioco extends MioDialog {
 
-	private PannelloSemplice pannelloCentrale;
+    private JPanel pannelloCentrale;
 
-	public DialogoInfoGioco(Frame owner, String titolo, String info,int durataMillis) {
-        super(owner, titolo,250,80);
+    public DialogoInfoGioco(Frame owner, String titolo, String info, int durataMillis) {
+        super(owner, titolo, 250, 80);
         setUndecorated(true);
-        setBackground(new Color(0, 0, 0, 0)); // trasparente
+        setBackground(new Color(0, 0, 0, 0)); // finestra trasparente
 
-        // Pannello con angoli arrotondati
-        pannelloCentrale = new PannelloSemplice();
+        // Pannello con angoli arrotondati e sfondo verde
+        pannelloCentrale = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(0, 128, 0, 230)); // verde semi-trasparente
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 30, 30);
+                g2.dispose();
+            }
+        };
+        pannelloCentrale.setOpaque(false);
         pannelloCentrale.setLayout(new GridBagLayout());
-        pannelloCentrale.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         pannelloCentrale.setPreferredSize(new Dimension(getWidth(), getHeight()));
+        pannelloCentrale.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         // Label del messaggio
         MioLabel labelInfo = new MioLabel(info);
         labelInfo.setHorizontalAlignment(SwingConstants.CENTER);
         labelInfo.setVerticalAlignment(SwingConstants.CENTER);
         labelInfo.setFont(View.FONT_GIOCO);
         labelInfo.setForeground(Color.BLACK);
+        labelInfo.setOpaque(false); // sfondo trasparente
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -42,7 +43,12 @@ public class DialogoInfoGioco extends MioDialog {
         pannelloCentrale.add(labelInfo, gbc);
 
         setContentPane(pannelloCentrale);
-        setLocationRelativeTo(owner);
+        setSize(250, 60);
+
+        // Posizionamento leggermente sopra il centro del frame
+        int x = owner.getX() + (owner.getWidth() - getWidth()) / 2;
+        int y = owner.getY() + (owner.getHeight() - getHeight()) / 2 - 100; // 100 pixel sopra il centro
+        setLocation(x, y);
 
         // Timer per chiusura automatica
         Timer timer = new Timer(durataMillis, e -> dispose());
@@ -50,5 +56,5 @@ public class DialogoInfoGioco extends MioDialog {
         timer.start();
 
         setVisible(true);
-	}
+    }
 }
