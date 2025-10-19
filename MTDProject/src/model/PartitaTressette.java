@@ -37,6 +37,7 @@ public class PartitaTressette {
     private double punteggioTotaleUtenteOCarteSquadra1;
     private double punteggioTotalePc1OCarteSquadra2;
     private int numTurno;
+    private int round;
     private Map<Integer, Pair<Double, Double>> puntiPerTurno;
 
 
@@ -346,6 +347,7 @@ public class PartitaTressette {
 	    }
 	    
 	    this.turnoGiocatore = vincitore;
+	    this.round++;
 	    if(numGiocatori == 2) {
 	    	if(mazzoInGioco.getCarte().size()==0)
 	    	{
@@ -532,6 +534,7 @@ public class PartitaTressette {
         // Se nessuno ha queste carte, inizia casualmente il giocatore
         this.turnoGiocatore = determinaPrimoGiocatore();
         this.numTurno++;
+        this.round = 1;
         puntiPerTurno.put(numTurno, new Pair<>(punteggioTotaleUtenteOCarteSquadra1, punteggioTotalePc1OCarteSquadra2));
 	}
 	
@@ -594,5 +597,9 @@ public class PartitaTressette {
     
     public List<Carta> getCarteNelBanco(){
         return new ArrayList<>(carteManoDiGiocoOrdinate.values());
+    }
+    
+    public int getRound() {
+    	return this.round;
     }
 }

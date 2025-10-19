@@ -46,6 +46,8 @@ public class PannelloGioco extends Pannello {
 	private MioBottone bottoneExit;
 	private MioBottoneSelezione bottoneMusica;
 
+	JLabel labelRound;
+	
 	JLabel label1Punti;
     JLabel label2Punti;
     String nomeGiocatori1;
@@ -129,11 +131,17 @@ public class PannelloGioco extends Pannello {
         pannelloInAltroCentrale.add(label1Punti);
         pannelloInAltroCentrale.add(Box.createHorizontalStrut(30)); // Spazio tra le label
         pannelloInAltroCentrale.add(label2Punti);
+        pannelloInAltroCentrale.add(Box.createHorizontalStrut(30)); // Spazio tra le label
+        labelRound = new JLabel("Round: 1");
+        labelRound.setFont(View.FONT_GIOCO);
+        labelRound.setForeground(Color.BLACK);
+        pannelloInAltroCentrale.add(labelRound);
 
         
         //pannelloCarteBancoCentrale
         JPanel pannelloInAltoDestra = new JPanel();
         pannelloInAltoDestra.setOpaque(false);
+                
         bottoneMusica = new MioBottoneSelezione("/img/soundOff.png","/img/soundOn.png");
         bottoneMusica.setPreferredSize(new Dimension(50, 50));
         bottoneMusica.setMaximumSize(new Dimension(50, 50));
@@ -343,6 +351,10 @@ public class PannelloGioco extends Pannello {
     	}
     }
 
+    private void aggiornaLabelRound(int round) {
+    	labelRound.setText("Round: "+ round);
+    }
+    
     private void aggiornaLabelGiocatori(String punteggio1, String punteggio2) {
     	label1Punti.setText(nomeGiocatori1 + ": "+ punteggio1);
     	label2Punti.setText(nomeGiocatori2 + ": "+ punteggio2);
@@ -544,6 +556,7 @@ public class PannelloGioco extends Pannello {
 	private void giocaTurno() {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
 		System.out.println("Turno del giocatore" + turnoGiocatore);
+		aggiornaLabelRound(partitaInCorso.getRound());
 		if(turnoGiocatore == TipoGiocatore.UTENTE) //sono il giocatore vero
 		{
 			turnoDelGiocatore = true;
