@@ -558,7 +558,7 @@ public class PannelloGioco extends Pannello {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
 		
 		System.out.println("Turno del giocatore" + turnoGiocatore);
-		new DialogoInfoGioco(view, 250, 80, "Turno" , "Turno del giocatore " + turnoGiocatore, TEMPO_ATTESA_TRA_GIOCATORI);
+		new DialogoInfoGioco(view, 250, 60, "Turno" , "Turno del giocatore " + turnoGiocatore, TEMPO_ATTESA_TRA_GIOCATORI);
 		int roundAttuale = partitaInCorso.getRound();
 		aggiornaLabelRound(roundAttuale);
 		if(partitaInCorso.isAccusaAbilitata()) {
@@ -632,8 +632,11 @@ public class PannelloGioco extends Pannello {
 			}
 			else
 			{
+				carteBanco.clear();
+		        pannelloCarteBancoInterno.removeAll();
+				aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
 				partitaInCorso.resetPerPartitaSuccessiva();
-				new DialogoInfoGioco(view, 300,80,"Fine turno" , "Turno terminato. Creazie nuovo turno... ", TEMPO_ATTESA_FINE_TURNO);
+				new DialogoInfoGioco(view, 350,80,"Fine turno" , "Turno terminato. Creazie nuovo turno... ", TEMPO_ATTESA_FINE_TURNO);
 
 				iniziaPartita();
 			}
@@ -644,11 +647,17 @@ public class PannelloGioco extends Pannello {
 			System.out.println("Utente o Utente+pc: " + partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
 			System.out.println("Pc1 o Pc2+Pc3: " + partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());
 			
+			//TODO da inserire quale e' il giocatore che prende la mano(in teoria turnoDelGiocatore in partitaInCorso)
+			new DialogoInfoGioco(view, 250,80,"Presa" , "Franco prende la mano", TEMPO_ATTESA_TRA_GIOCATORI);
+
 			String punteggio1 = formattaPunteggio(partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
 			String punteggio2 = formattaPunteggio(partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());	
 			
 	        aggiornaLabelGiocatori(punteggio1,punteggio2);
-
+	        
+	        carteBanco.clear();
+	        pannelloCarteBancoInterno.removeAll();
+			aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
 	        giocaTurnoConAttesa();
 		}
 	}

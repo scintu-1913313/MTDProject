@@ -43,7 +43,6 @@ public class DialogoInfoGioco extends MioDialog {
         pannelloCentrale.add(labelInfo, gbc);
 
         setContentPane(pannelloCentrale);
-        setSize(250, 60);
 
         // Posizionamento leggermente sopra il centro del frame
         int x = owner.getX() + (owner.getWidth() - getWidth()) / 2;
