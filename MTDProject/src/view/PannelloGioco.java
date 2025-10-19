@@ -363,6 +363,13 @@ public class PannelloGioco extends Pannello {
     	label2Punti.setText(nomeGiocatori2 + ": "+ punteggio2);
     }
     
+    private void giocaTurnoConAttesa() {
+		new javax.swing.Timer(1000, e -> {
+            ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
+            giocaTurno();
+        }).start();
+    }
+    
     private void gestisciCartaScelta(Object arg) {
     	TipoGiocatore giocatoreCheHaGiocatoLaCarta = (TipoGiocatore) arg;
     	if(giocatoreCheHaGiocatoLaCarta.equals(TipoGiocatore.UTENTE))
@@ -381,7 +388,7 @@ public class PannelloGioco extends Pannello {
     		}
 			else
 			{
-				giocaTurno();
+				giocaTurnoConAttesa();
 			}
     	}
     	else
@@ -410,7 +417,7 @@ public class PannelloGioco extends Pannello {
     			{
     				turnoDelGiocatore = true;
     			}
-				giocaTurno();
+    			giocaTurnoConAttesa();
     		}
     	}
     	
@@ -553,11 +560,12 @@ public class PannelloGioco extends Pannello {
     	}
 		System.out.println("Inizia il "+partitaInCorso.getTurnoGiocatore());
 
-		giocaTurno();
+		giocaTurnoConAttesa();
 	}
 
 	private void giocaTurno() {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
+		
 		System.out.println("Turno del giocatore" + turnoGiocatore);
 		new DialogoInfoGioco(view, "Turno" , "Turno del giocatore " + turnoGiocatore, 2000);
 		int roundAttuale = partitaInCorso.getRound();
@@ -656,7 +664,7 @@ public class PannelloGioco extends Pannello {
 			
 	        aggiornaLabelGiocatori(punteggio1,punteggio2);
 
-			giocaTurno();
+	        giocaTurnoConAttesa();
 		}
 	}
 
