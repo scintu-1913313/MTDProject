@@ -36,6 +36,10 @@ public class Partita {
     	return new Partita(esito,punteggioOttenuto,dataFine);
     }
     
+    public EsitoPartita getEsito() {
+    	return this.esito;
+    }
+    
     @Override
     public String toString() {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");

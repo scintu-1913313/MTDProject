@@ -34,6 +34,7 @@ public class GestoreUtente {
 	
 	public void aggiornaDatiUtente(Partita p) {
 		utente.aggiungiPartita(p);
+		gestisciLivello(p);
 		aggiornaDati();
 	}
 	
@@ -43,9 +44,15 @@ public class GestoreUtente {
 		aggiornaDati();
 	}
 	
-	public void aggiornaDatiUtente(int livello) {
-		utente.setLivello(livello);
-		aggiornaDati();
+	private void gestisciLivello(Partita p) {
+		if(p.getEsito().equals(EsitoPartita.VINTA)) {
+			int livelloAttuale = utente.getLivello();
+			if(livelloAttuale < 100) //100 e' il livello massimo
+			{
+				livelloAttuale+=1;
+			}
+			utente.setLivello(livelloAttuale);
+		}
 	}
 	
 	public void aggiornaDati() {
