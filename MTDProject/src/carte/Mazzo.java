@@ -54,12 +54,12 @@ public class Mazzo {
 		}	
 		public String getPath(Seme seme, Valore valore, TipoMazzo nomeTipoMazzo ) {
 			
-			return "/img/" + nomeTipoMazzo +"/" + valore + "_" + seme + ".jpg";
+			return "/img/" + nomeTipoMazzo +"/" + valore + "_" + seme + ".png";
 		}
 		
 		public String getPathRetro(TipoMazzo nomeTipoMazzo ) {
 			
-			return "/img/" + nomeTipoMazzo +"/retro.jpg";
+			return "/img/" + nomeTipoMazzo +"/retro.png";
 		}
 
 		public MazzoBuilder mescola() {

@@ -451,6 +451,21 @@ public class PannelloGioco extends Pannello {
                 		}
                 	}
                 };
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                	if(turnoDelGiocatore)
+                	{
+                		cartaView.setMouseOver(true);
+                		cartaView.repaint();
+                	}
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                	cartaView.setMouseOver(false);
+            		cartaView.repaint();
+                };
+
             });
     		carteGiocatore.add(cartaView);
     		pannelloCarteGiocatoreSotto.add(cartaView,cartaView.toString());

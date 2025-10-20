@@ -68,25 +68,11 @@ public class CartaView extends JPanel {
         } catch (Exception e) {
             System.out.println("Errore nella lettura del file: " + path + "; Errore: " + e.getMessage());
         }
-
-        // se sono il giocatore vero do' la possibilita' di cliccare le carte
-        if (!coperta) {
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    mouseOver = true;
-                    repaint();
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    mouseOver = false;
-                    repaint();
-                }
-            });
-        }
     }
 
+    public void setMouseOver(boolean value) {
+    	mouseOver = value;
+    }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
