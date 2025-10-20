@@ -439,6 +439,7 @@ public class PannelloGioco extends Pannello {
                 		}
                 		else
                 		{
+                			cartaView.startShakeAnimation();
                 			JOptionPane.showMessageDialog(
                 		            null,                      
                 		            "La carta selezionata non e' ammissibile. Scegliere una carta con lo stesso seme del palo",             

@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import carte.*;
 
@@ -28,6 +29,12 @@ public class CartaView extends JPanel{
     private boolean coperta;
     private boolean ruotata;
 
+    private int shakeOffsetX = 0;
+    private Timer shakeTimer;
+    private int shakeStep = 0;
+    private final int SHAKE_DURATION = 10; // numero di oscillazioni
+    private final int SHAKE_AMPLITUDE = 5; // pixel di spostamento
+    
     public CartaView(Carta carta, boolean coperta, boolean ruotata) {
         this.carta = carta;
         this.coperta = coperta;
@@ -94,31 +101,37 @@ public class CartaView extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int larghezza;
-        int altezza;
-        if(coperta == true){
-    		larghezza = CARTA_LARGHEZZA_PC;
-            altezza = CARTA_ALTEZZA_PC;
-    	}
-    	else {
-    		larghezza = CARTA_LARGHEZZA_UTENTE;
-            altezza = CARTA_ALTEZZA_UTENTE;
-		}
-        
         if (immagine != null) {
             Graphics2D g2d = (Graphics2D) g.create();
 
             if (ruotata) {
-                // Trasla e ruota il contesto grafico
-                g2d.translate(getWidth() / 2, getHeight() / 2);
+                g2d.translate(getWidth() / 2 + shakeOffsetX, getHeight() / 2);
                 g2d.rotate(Math.toRadians(90));
-                g2d.drawImage(immagine, -larghezza / 2, -altezza / 2, this);
+                g2d.drawImage(immagine, -getHeight() / 2, -getWidth() / 2, getHeight(), getWidth(), this);
             } else {
+                g2d.translate(shakeOffsetX, 0);
                 g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
             }
 
             g2d.dispose();
         }
+    }
+    
+    public void startShakeAnimation() {
+        if (shakeTimer != null && shakeTimer.isRunning()) return;
+
+        shakeStep = 0;
+        shakeTimer = new Timer(30, e -> {
+            shakeOffsetX = (shakeStep % 2 == 0) ? SHAKE_AMPLITUDE : -SHAKE_AMPLITUDE;
+            repaint();
+            shakeStep++;
+            if (shakeStep >= SHAKE_DURATION) {
+                shakeTimer.stop();
+                shakeOffsetX = 0;
+                repaint();
+            }
+        });
+        shakeTimer.start();
     }
     
     public Carta getCarta() {
