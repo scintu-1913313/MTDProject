@@ -1,7 +1,6 @@
 package model;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 import javax.sound.sampled.*;
@@ -47,22 +46,27 @@ public class GestoreAudio {
      * @param filename Il percorso del file audio da riprodurre
      */
     
-    private void play(String filename) {        
+    private void play(String filename) {                
         try {
-            URL soundURL = GestoreAudio.class.getResource(filename);
+        	InputStream in = getClass().getResourceAsStream(filename);
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(in);
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioIn);
+			clip.start();
+		} catch (FileNotFoundException e1) {
+			System.err.println("FileNotFoundException: Errore nella riproduzione dell'audio: " + filename);
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			System.err.println("IOException: Errore nella riproduzione dell'audio: " + filename);
+			e1.printStackTrace();
+		} catch (UnsupportedAudioFileException e1) {
+			System.err.println("UnsupportedAudioFileException: Errore nella riproduzione dell'audio: " + filename);
+			e1.printStackTrace();
+		} catch (LineUnavailableException e1) {
+			System.err.println("LineUnavailableException: Errore nella riproduzione dell'audio: " + filename);
+			e1.printStackTrace();
+		}
 
-            if (soundURL!=null) {
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioStream);
-                clip.start();
-            } else {
-                System.err.println("File audio non trovato: " + filename);
-            }
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            System.err.println("Errore nella riproduzione dell'audio: " + filename);
-            e.printStackTrace();
-        }
     }
     
     /**
@@ -105,9 +109,10 @@ public class GestoreAudio {
             Thread soundThread = new Thread(() -> {
                 try {
                     // Utilizziamo AudioInputStream e Clip per riprodurre il file WAV
-                    AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
+                	InputStream in = getClass().getResourceAsStream(PATH_MUSICA_GIOCO);
+        			AudioInputStream audioIn = AudioSystem.getAudioInputStream(in);
                     Clip clip = AudioSystem.getClip();
-                    clip.open(audioStream);
+                    clip.open(audioIn);
                     
                     // Impostiamo il volume a un livello moderato
                     if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
@@ -132,7 +137,7 @@ public class GestoreAudio {
                     // Fermiamo la riproduzione quando necessario
                     clip.stop();
                     clip.close();
-                    audioStream.close();
+                    audioIn.close();
                     
                 } catch (Exception e) {
                     System.out.println("Errore nella riproduzione di main_music.wav: " + e.getMessage());
