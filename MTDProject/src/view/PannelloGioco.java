@@ -665,7 +665,7 @@ public class PannelloGioco extends Pannello {
 			System.out.println("Pc1 o Pc2+Pc3: " + partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());
 			
 	    	String nomeGiocatore = calcolaNomeGiocatore(partitaInCorso.getNumeroGiocatori(),partitaInCorso.getTurnoGiocatore());
-			new DialogoInfoGioco(view, 250,80,"Presa" , nomeGiocatore + " prende la mano", TEMPO_ATTESA_TRA_GIOCATORI);
+			new DialogoInfoGioco(view, 250,60,"Presa" , nomeGiocatore + " prende la mano", TEMPO_ATTESA_TRA_GIOCATORI);
 
 			String punteggio1 = formattaPunteggio(partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
 			String punteggio2 = formattaPunteggio(partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());	

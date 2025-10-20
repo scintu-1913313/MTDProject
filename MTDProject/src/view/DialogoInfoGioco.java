@@ -25,7 +25,8 @@ public class DialogoInfoGioco extends MioDialog {
         };
         pannelloCentrale.setOpaque(false);
         pannelloCentrale.setLayout(new GridBagLayout());
-        pannelloCentrale.setPreferredSize(new Dimension(getWidth(), getHeight()));
+        pannelloCentrale.setPreferredSize(new Dimension(larghezza, altezza));
+        pannelloCentrale.setSize(larghezza, altezza);
         pannelloCentrale.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Label del messaggio
@@ -43,7 +44,9 @@ public class DialogoInfoGioco extends MioDialog {
         pannelloCentrale.add(labelInfo, gbc);
 
         setContentPane(pannelloCentrale);
-
+        getRootPane().setOpaque(false);
+        setBackground(new Color(0, 0, 0, 0));
+        
         // Posizionamento leggermente sopra il centro del frame
         int x = owner.getX() + (owner.getWidth() - getWidth()) / 2;
         int y = owner.getY() + (owner.getHeight() - getHeight()) / 2 - 100; // 100 pixel sopra il centro
