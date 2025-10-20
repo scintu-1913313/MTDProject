@@ -8,6 +8,13 @@ import model.EsitoPartita;
 
 public class PannelloEsitoPartita {
 
+    /**
+     * Mostra una finestra di dialogo modale con l'esito della partita.
+     * @param parent componente padre per il posizionamento della dialog
+     * @param nomeGiocatore nome del giocatore locale
+     * @param mioPunteggio punteggio ottenuto
+     * @param esito risultato (vittoria/pareggio/sconfitta)
+     */
 	public static void mostraEsito(Component parent, String nomeGiocatore, int mioPunteggio, EsitoPartita esito) {
         JDialog dialog = new JDialog(SwingUtilities.getWindowAncestor(parent), "Fine Partita", Dialog.ModalityType.APPLICATION_MODAL);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

@@ -10,13 +10,18 @@ public enum AvatarEnum {
     private final int avatarId;
     
 	/**
-	 * Costruttore 
+	 * Costruisce un' avatar con il relativo id numerico.
 	 * @param avatarId. L'id dell avatar
 	 */
     AvatarEnum(int avatarId){
 		this.avatarId = avatarId;
 	}
 	
+	/**
+	 * Converte un id numerico in AvatarEnum (default DEFAULT se non valido).
+	 * @param avatarId L'id numerico dell' avatar
+	 * @return L' avatar corrispondente all'id (default DEFAULT se non valido)
+	 */
     public static AvatarEnum fromId(int avatarId) {
         for (AvatarEnum a : values()) {
             if (a.avatarId == avatarId) {
@@ -26,6 +31,11 @@ public enum AvatarEnum {
         return DEFAULT;
     }
     
+	/**
+	 * Converte una stringa in AvatarEnum (default DEFAULT se non valido).
+	 * @param avatarString La stringa dell' avatar
+	 * @return L' avatar corrispondente alla stringa (default DEFAULT se non valido)
+	 */
     public static AvatarEnum fromString(String avatarString) {
         for (AvatarEnum a : values()) {
             if (a.name().equals(avatarString)){
@@ -37,7 +47,7 @@ public enum AvatarEnum {
     
     
 	/**
-	 * 
+	 * Restituisce la stringa rappresentativa dell' avatar.
 	 * @param avatar. L'avatar da convertire in stringa
 	 * @return La stringa associata all'avatar tramite toString()
 	 */
@@ -46,7 +56,8 @@ public enum AvatarEnum {
 	}
 	
 	/**
-	 * @return Il nome in stringa dell' avatar
+	 * Restituisce la rappresentazione testuale dell' avatar.
+	 * @return L'id dell' avatar in stringa.
 	 */
 	@Override
 	public String toString() {

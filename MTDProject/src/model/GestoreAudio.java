@@ -41,13 +41,11 @@ public class GestoreAudio {
         }
         return instance;
     }
-    
+        
     /**
-     * Riproduce un file audio
-     * 
-     * @param filename Il percorso del file audio da riprodurre
+     * Riproduce un file audio WAV preso dalle risorse.
+     * @param filename percorso della risorsa audio
      */
-    
     private void play(String filename) {        
         try {
             URL soundURL = GestoreAudio.class.getResource(filename);
@@ -67,23 +65,21 @@ public class GestoreAudio {
     }
     
     /**
-     * Riproduce l' effetto sonoro del bottone
-     * 
+     * Riproduce l'effetto sonoro del bottone.
      */
     public void playBottone() {        
         play(PATH_AUDIO_BOTTONE);
     }
     
     /**
-     * Riproduce l' effetto sonoro della carta
-     * 
+     * Riproduce l'effetto sonoro della carta.
      */
     public void playCarta() {        
         play(PATH_AUDIO_CARTA);
     }
     
     /**
-     * Avvia la riproduzione della musica di sottofondo
+     * Avvia la riproduzione della musica di sottofondo in loop se abilitata.
      */
     public void playBackgroundMusic() {
         System.out.println("Tentativo di avviare la musica di sottofondo");
@@ -159,7 +155,7 @@ public class GestoreAudio {
     }
     
     /**
-     * Interrompe la riproduzione della musica di sottofondo
+     * Interrompe la riproduzione della musica di sottofondo.
      */
     public void stopBackgroundMusic() {
         if (musicTimer != null) {
@@ -171,9 +167,8 @@ public class GestoreAudio {
     }
     
     /**
-     * Attiva o disattiva la musica di sottofondo
-     * 
-     * @param enabled true per attivare, false per disattivare
+     * Abilita o disabilita la musica e avvia/ferma la riproduzione di conseguenza.
+     * @param enabled true per abilitare, false per disabilitare
      */
     private void setMusicEnabled(boolean enabled) {
         this.musicaAbilitata = enabled;
@@ -185,18 +180,16 @@ public class GestoreAudio {
     }
     
     /**
-     * Verifica se la musica di sottofondo è attiva
-     * 
-     * @return true se la musica è attiva, false altrimenti
+     * Indica se la musica di sottofondo è abilitata.
+     * @return true se abilitata, false altrimenti
      */
     public boolean isMusicaAbilitata() {
         return musicaAbilitata;
     }
     
     /**
-     * Verifica se la musica di sottofondo è attiva
-     * 
-     * @return true se la musica è attiva, false altrimenti
+     * Inverte lo stato della musica (on/off) e ritorna il nuovo stato.
+     * @return nuovo stato della musica dopo il cambio
      */
     public boolean cambiaStatoMusica() {
         if(musicaAbilitata) {

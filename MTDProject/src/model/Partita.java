@@ -10,6 +10,10 @@ public class Partita {
     private int punteggioOttenuto;
 	private LocalDateTime dataFine;
 	
+	/**
+	 * Formatta e serializza questa Partita in un JSONObject con esito, punteggio e data formattata.
+	 * @return JSONObject serializzato
+	 */
 	public JSONObject toJSON() {
 	    JSONObject obj = new JSONObject();
 	    obj.put("esito", esito);
@@ -21,13 +25,24 @@ public class Partita {
 	    return obj;
 	}
 
+	/**
+	 * Costruisce una Partita con esito, punteggio e data di fine.
+	 * @param esito esito della partita
+	 * @param punteggioOttenuto punteggio ottenuto
+	 * @param dataFine data e ora di fine
+	 */
 	public Partita(EsitoPartita esito,int punteggioOttenuto,LocalDateTime dataFine) {
 		this.esito = esito;
 		this.punteggioOttenuto = punteggioOttenuto;
 		this.dataFine = dataFine;
 	}
 	
-    public static Partita fromJSON(JSONObject obj) {
+	/**
+	 * Crea un'istanza Partita a partire da un JSONObject (parsing dei campi).
+	 * @param obj JSONObject contenente i campi della partita
+	 * @return nuova Partita deserializzata
+	 */
+	public static Partita fromJSON(JSONObject obj) {
         
     	EsitoPartita esito = EsitoPartita.fromString(obj.getString("esito"));
     	int punteggioOttenuto = obj.getInt("punteggioOttenuto");
@@ -36,12 +51,20 @@ public class Partita {
     	return new Partita(esito,punteggioOttenuto,dataFine);
     }
     
-    public EsitoPartita getEsito() {
-    	return this.esito;
-    }
+	/**
+	 * Restituisce l'esito della partita.
+	 * @return EsitoPartita corrente
+	 */
+	public EsitoPartita getEsito() {
+		return this.esito;
+	}
     
-    @Override
-    public String toString() {
+	/**
+	 * Rappresentazione testuale compatta della partita (esito, punteggio e data).
+	 * @return stringa descrittiva
+	 */
+	@Override
+	public String toString() {
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	    String dataFormattata = dataFine.format(formatter);
     	return "Esito: " + esito + "; Punteggio ottenuto: " + punteggioOttenuto + "; Data: " + dataFormattata +".";

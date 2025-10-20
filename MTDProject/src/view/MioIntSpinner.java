@@ -17,7 +17,15 @@ public class MioIntSpinner extends MioSpinner {
     private int massimo;
     private int step;
 
-public MioIntSpinner(String titolo, int init, int min, int max, int step){
+	/**
+	 * Crea uno spinner numerico personalizzato con frecce orizzontali.
+	 * @param titolo etichetta descrittiva
+	 * @param init valore iniziale
+	 * @param min valore minimo
+	 * @param max valore massimo
+	 * @param step passo di incremento/decremento
+	 */
+	public MioIntSpinner(String titolo, int init, int min, int max, int step){
 		super(titolo);
 		this.valoreCorrente = init;
 		this.minimo = min;
@@ -38,6 +46,9 @@ public MioIntSpinner(String titolo, int init, int min, int max, int step){
         add(textField, BorderLayout.CENTER);
     }
 
+	/**
+	 * Decrementa il valore corrente(se possibile) e aggiorna il campo di testo.
+	 */
 	private void decrementaValore() {
 		rightButton.setEnabled(true);
 		if(valoreCorrente > minimo)
@@ -52,6 +63,9 @@ public MioIntSpinner(String titolo, int init, int min, int max, int step){
 		}
 	}
 
+	/**
+	 * Incrementa il valore corrente(se possibile) e aggiorna il campo di testo.
+	 */
 	private void incrementaValore() {
 		leftButton.setEnabled(true);
 
@@ -67,6 +81,10 @@ public MioIntSpinner(String titolo, int init, int min, int max, int step){
 		}
 	}
 	
+	/**
+	 * Restituisce il valore corrente dello spinner.
+	 * @return valore corrente
+	 */
 	public int getValoreCorrente() {
 		return this.valoreCorrente;
 	}

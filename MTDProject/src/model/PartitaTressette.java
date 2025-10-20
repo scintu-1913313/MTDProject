@@ -46,12 +46,14 @@ public class PartitaTressette {
     private List<Pair<Accusa, List<Carta>>> accuseTotaliTurno;
 
 	/**
-     * Costruttore di una partita del Gioco del Tressette
-     * 
-     * @param gioco L'istanza del modello cui la partita appartiene
-     * @param mazzo Il mazzo di carte da utilizzare
-     */
-    public PartitaTressette(Model model, Mazzo mazzo, int numGiocatori, int punteggio, boolean accusa) {
+	 * Costruisce una nuova partita di Tressette e inizializza mazzo, giocatori e stato iniziale.
+	 * @param model modello proprietario della partita(Model)
+	 * @param mazzo mazzo iniziale costruito
+	 * @param numGiocatori numero di giocatori (2-4)
+	 * @param punteggio punteggio obiettivo(11,21,31,41)
+	 * @param accusa true se abilitate le accuse
+	 */
+	public PartitaTressette(Model model, Mazzo mazzo, int numGiocatori, int punteggio, boolean accusa) {
     	this.model = model;
         this.mazzo = mazzo;
         this.punteggioStabilito = punteggio;
@@ -62,6 +64,9 @@ public class PartitaTressette {
         initPartita();
     }
     
+	/**
+	 * Inizializza i giocatori basandosi sul numero di partecipanti.
+	 */
     private void inizializzaGiocatori() {
     	
     	Utente u = model.getUtente();
@@ -86,6 +91,9 @@ public class PartitaTressette {
     	}
     }
     
+	/**
+	 * Assegna 10 carte ad ogni giocatore all'inizio della partita.
+	 */
     private void assegnaCarte() {
 
     	List<Carta> carte= mazzoInGioco.getCarte();
@@ -101,6 +109,10 @@ public class PartitaTressette {
     	}
     }
     
+	/**
+	 * Determina il primo giocatore in base alla presenza del 4 di denari o casualmente.
+	 * @return il tipo di giocatore che inizia la partita.
+	 */
     private TipoGiocatore determinaPrimoGiocatore() {
     	TipoGiocatore result = TipoGiocatore.UTENTE;
 
@@ -122,7 +134,11 @@ public class PartitaTressette {
         return scelta == 0 ? TipoGiocatore.UTENTE : TipoGiocatore.PC1;
     }
     
-    public Giocatore getGiocatoreVero() {
+	/**
+	 * Restituisce il giocatore vero (non IA) se esistente.
+	 * @return Giocatore vero(Utente) o null
+	 */
+	public Giocatore getGiocatoreVero() {
     	for(TipoGiocatore giocatore: giocatori.keySet()){
     		if(giocatori.get(giocatore).getIsIA()!=true) {
     			return giocatori.get(giocatore);
@@ -132,7 +148,12 @@ public class PartitaTressette {
     	return null;
     }
     
-    public Giocatore getPc(TipoGiocatore giocatorePc) {
+	/**
+	 * Restituisce il Giocatore corrispondente a un TipoGiocatore PC (IA).
+	 * @param giocatorePc tipo di giocatore PC richiesto.
+	 * @return Giocatore PC corrispondente o null.
+	 */
+	public Giocatore getPc(TipoGiocatore giocatorePc) {
     	for(TipoGiocatore giocatore: giocatori.keySet()){
     		if(giocatore.equals(giocatorePc)) {
     			return giocatori.get(giocatore);
@@ -142,13 +163,20 @@ public class PartitaTressette {
     	return null;
     }
     
-    public boolean verificaCartaScelta(Carta carta) {
+	/**
+	 * Verifica se la carta scelta è valida rispetto al palo.
+	 * Se il palo ancora non è stato stabilito, qualsiasi carta è valida.
+	 * Altrimenti, la carta deve seguire il seme del palo se possibile.
+	 * @param carta carta selezionata
+	 * @return true se la scelta è valida
+	 */
+	public boolean verificaCartaScelta(Carta carta) {
         if (carta == null) {
         	System.out.println("Sono entranto nel verifica carta ma e' invalida");
             return false;
         }
         
-        // Caso 1: cartaPalo è null → qualsiasi carta va bene
+        // Caso 1: cartaPalo è null -> qualsiasi carta va bene
         if (cartaPalo == null) {
             return true;
         }
@@ -158,7 +186,7 @@ public class PartitaTressette {
             return true;
         }
         
-        // Caso 3: il seme è diverso → va bene solo se il giocatore non ha carte del seme del palo
+        // Caso 3: il seme è diverso -> va bene solo se il giocatore non ha carte del seme del palo
         List<Carta> carteDelGiocatore = giocatori.get(TipoGiocatore.UTENTE).getCarte();
 
         for (Carta c : carteDelGiocatore) {
@@ -167,10 +195,15 @@ public class PartitaTressette {
             }
         }
         
-        return true; // non ha carte del seme del palo → scelta valida
+        return true; // non ha carte del seme del palo -> scelta valida
     }
     
-    public void giocaCartaUtente(Carta carta) {
+	/**
+	 * Esegue la giocata di una carta da parte dell'utente, aggiornando stato e notificando le informazioni alla vista.
+	 * Aggiorna anche la carta palo se è la prima carta giocata nella mano.
+	 * @param carta carta giocata
+	 */
+	public void giocaCartaUtente(Carta carta) {
     	// Verifica che sia il turno del giocatore e che la carta sia valida
     	//se sono qui il giocatore ha giocato una carta buona(controllo sul seme che comanda gia' fatto)
         if (turnoGiocatore != TipoGiocatore.UTENTE || carta == null) {
@@ -195,7 +228,12 @@ public class PartitaTressette {
     	model.notificaAgliObserver(TipoGiocatore.UTENTE);
     }
     
-    public void giocaCartaPc(TipoGiocatore turnoPc) {
+	/**
+	 * Logica di gioco automatico per un PC: sceglie e gioca una carta.
+	 * Aggiorna anche la carta palo se è la prima carta giocata nella mano.
+	 * @param turnoPc TipoGiocatore del PC che deve giocare
+	 */
+	public void giocaCartaPc(TipoGiocatore turnoPc) {
         List<Carta> carteDelPc= giocatori.get(turnoPc).getCarte();
         Carta cartaScelta;
         if(carteDelPc.isEmpty())
@@ -259,7 +297,11 @@ public class PartitaTressette {
     	model.notificaAgliObserver(turnoPc);
     }
     
-    public void aggiornaTurnoGiocatore() {
+	/**
+	 * Aggiorna il turno al giocatore successivo in base al numero di partecipanti.
+	 * Tiene conto di come sono disposti i giocatori intorno al tavolo, giocando in senso antiorario.
+	 */
+	public void aggiornaTurnoGiocatore() {
     	if(numGiocatori == 2)
     	{
     		if(turnoGiocatore.equals(TipoGiocatore.PC1))
@@ -283,7 +325,11 @@ public class PartitaTressette {
     	}
     }
     
-    public boolean isManoCompletata() {
+	/**
+	 * Controlla se tutti i giocatori hanno giocato nella mano corrente.
+	 * @return true se la mano è completa
+	 */
+	public boolean isManoCompletata() {
     	if(numGiocatori == 2) {
     		Set<TipoGiocatore> attesi = Set.of(TipoGiocatore.PC1, TipoGiocatore.UTENTE);
     		Set<TipoGiocatore> presenti = carteManoDiGiocoOrdinate.keySet();
@@ -302,6 +348,12 @@ public class PartitaTressette {
     	return true;
     }
     
+	/**
+	 * Conclude la mano corrente determinando assegnando le carte al giocatore che ha vinto la mano 
+	 * e aggiornando lo stato della partita.
+	 * Il giocatore che vince la mano inizia la mano successiva.
+	 * @return true se la partita è finita per il caso considerato
+	 */
 	public boolean completamentoManoDiGioco() {
 		//qui vado a determinare chi prende le carte della mano di gioco
 		//una volta trovato il giocatore che vince la mano, vengono inserite le carte nel mazzo personale di carte prese
@@ -366,12 +418,21 @@ public class PartitaTressette {
 	    }
 	}
 	
+	/**
+	 * Confronta due carte in base alla gerarchia definita(regole dei punti del gioco) per determinare quale è più forte.
+	 * @param c1 prima carta
+	 * @param c2 seconda carta
+	 * @return valore negativo se c1 è più forte, positivo se c2 è più forte, zero se uguali
+	 */
 	private static int confrontaCarte(Carta c1, Carta c2) {
 		int p1 = gerarchiaCarte.indexOf(c1.getValore().getValoreNumerico());
 	    int p2 = gerarchiaCarte.indexOf(c2.getValore().getValoreNumerico());
 	    return Integer.compare(p2, p1); // indice più basso = carta più forte
 	}
 	
+	/**
+	 * Assegna carte dal mazzo ai giocatori nei match a 2 giocatori quando necessario.
+	 */
 	public void assegnaCartaDalMazzo() {
 		//se non sono a due giocatori o se ho finito le carte, non devo assegnare nulla
 		if(numGiocatori != 2 || mazzoInGioco.getCarte().size()==0) {
@@ -403,6 +464,11 @@ public class PartitaTressette {
 		
 	}
 	
+	/**
+	 * Verifica le condizioni di fine di un turno all'interno di una partita.
+	 * Controlla che tutte le carte siano state giocate e che il mazzo sia vuoto.
+	 * @return true se il turno è correttamente concluso
+	 */
 	public boolean gestioneFineTurno() {
 		//se il turno e' finito il numero di carte tra i due mazzi dei giocatori deve essere 40
 		if(carteUtenteOCarteSquadra1.size() + cartePc1OCarteSquadra2.size() != 40)
@@ -439,6 +505,10 @@ public class PartitaTressette {
 		return true;
 	}
 	
+	/**
+	 * Calcola e aggiorna i punteggi delle squadre considerando l'ultima presa.
+	 * @param ultimaPresa true se assegnare il punto aggiuntivo dell'ultima presa.
+	 */
 	public void aggiornaPunteggio(boolean ultimaPresa) {
 		boolean punteggioAggiuntivoSquadra1 = false;
 		boolean punteggioAggiuntivoSquadra2 = false;
@@ -464,6 +534,14 @@ public class PartitaTressette {
         puntiPerTurno.put(numTurno, new Pair<>(punteggioFinale1, punteggioFinale2));
 	}
 	
+	/**
+	 * Calcola il punteggio totale(ad ogni mano) basato sulle carte prese e sull'ultima presa.
+	 * Il punteggio viene calcolato sommando i valori delle carte secondo le regole del Tressette.
+	 * Se ultimaPresa è true, viene aggiunto un punto extra.
+	 * @param cartePrese lista delle carte prese
+	 * @param ultimaPresa true se assegnare il punto aggiuntivo dell'ultima presa.
+	 * @return punteggio calcolato
+	 */
 	private static double calcolaPunteggio(List<Carta> cartePrese, boolean ultimaPresa) {
         double puntiGrezzi = 0.0;
 
@@ -489,18 +567,19 @@ public class PartitaTressette {
             puntiGrezzi += 1.0;
         }
 
-        // Scarta eventuali 1/3 o 2/3 in eccesso
-        //int puntiFinali = (int) puntiGrezzi;
-
         return puntiGrezzi;
     }
 	
 	
 	
+	/**
+	 * Verifica e restituisce la lista delle accuse valide per il giocatore corrente.
+	 * @return lista di coppie (Accusa, liste di Carte) delle accuse rilevate valide
+	 */
 	public List<Pair<Accusa, List<Carta>>> verificaAccuse() {
 		
 		List<Carta> carte = giocatori.get(turnoGiocatore).getCarte();
-		 List<Pair<Accusa, List<Carta>>> accuse = new ArrayList<>();
+		List<Pair<Accusa, List<Carta>>> accuse = new ArrayList<>();
 
 	    // Mappa: seme -> carte con quel seme
 	    Map<Seme, List<Carta>> cartePerSeme = carte.stream()
@@ -552,6 +631,11 @@ public class PartitaTressette {
         }
         return nuoveAccuse;    
 	}
+
+	/**
+	 * Aggiorna i punteggi totali delle squadre in base alle accuse fatte nel turno corrente.
+	 * @param listaAccuse lista delle accuse fatte
+	 */
 	private void aggiornaPunteggiConAccuse(List<Accusa> listaAccuse) {
 		int val = 0;
 		for (Accusa a: listaAccuse) {
@@ -589,6 +673,10 @@ public class PartitaTressette {
         puntiPerTurno.put(numTurno, new Pair<>(punteggioFinale1, punteggioFinale2));
 	}
 
+	/**
+	 * Determina se la partita ha raggiunto il punteggio stabilito per concludersi.
+	 * @return true se partita terminata
+	 */
 	public boolean isPartitaTerminata() {
 		if (puntiPerTurno.size() < numTurno) {
 		    System.out.println("La mappa è incompleta: mancano dati per alcuni turni.");
@@ -610,10 +698,18 @@ public class PartitaTressette {
 	    return sommaPuntiFinali1 >= punteggioStabilito || sommaPuntiFinali2 >= punteggioStabilito;
 	}
 	
+	/**
+	 * Resetta il gioco per iniziare un nuovo turno della partita mantenendo le regole e le impostazioni.
+	 * Vengono reinizializzati il mazzo e le carte dei giocatori per iniziare una nuovo turno.
+	 * I valori di punteggio totale vengono mantenuti.
+	 */
 	public void resetPerPartitaSuccessiva() {
 		initPartita();
 	}
 	
+	/**
+	 * Inizializza lo stato interno della partita: assegnazione mazzo, giocatori e gestione turno.
+	 */
 	private void initPartita() {
 		this.mazzoInGioco = new Mazzo(mazzo);
 		this.giocatori = new HashMap<>();
@@ -635,20 +731,36 @@ public class PartitaTressette {
         puntiPerTurno.put(numTurno, new Pair<>(punteggioAccuseTotaleUtenteOCarteSquadra1, punteggioAccuseTotalePc1OCarteSquadra2));
 	}
 	
+	/**
+	 * Resetta lo stato specifico della mano (palo e banco) per la mano successiva.
+	 */
 	public void resetPerManoSuccessiva() {
 		this.cartaPalo = null;
 		this.carteManoDiGiocoOrdinate.clear();
 	}
 	
-    public int getNumeroGiocatori() {
-    	return this.numGiocatori;
-    }
+	/**
+	 * Restituisce il numero di giocatori di questa partita.
+	 * @return numero giocatori
+	 */
+	public int getNumeroGiocatori() {
+		return this.numGiocatori;
+	}
     
-    public TipoGiocatore getTurnoGiocatore() {
-    	return this.turnoGiocatore;
-    }
+	/**
+	 * Restituisce il TipoGiocatore del turno corrente.
+	 * @return TipoGiocatore corrente
+	 */
+	public TipoGiocatore getTurnoGiocatore() {
+		return this.turnoGiocatore;
+	}
     
-    public double getPunteggioTotaleUtenteOCarteSquadra1(){
+	/**
+	 * Calcola il punteggio totale accumulato dalla squadra 1 (utente o utente+pc1).
+	 * Il punteggio totale viene calcolato sommando i punteggi di ogni turno e include anche i punti delle accuse fatte.
+	 * @return punteggio totale squadra 1(utente o utente+pc1)
+	 */
+	public double getPunteggioTotaleUtenteOCarteSquadra1(){
     	if (puntiPerTurno.size() < numTurno) {
 		    System.out.println("La mappa è incompleta: mancano dati per alcuni turni.");
 		    return 0.0; 
@@ -661,7 +773,12 @@ public class PartitaTressette {
 	    return somma1;
     }
     
-    public double getPunteggioTotalePc1OCarteSquadra2() {
+	/**
+	 * Calcola il punteggio totale accumulato dalla squadra 2 (Pc1 o Pc2+pc3).
+	 * Il punteggio totale viene calcolato sommando i punteggi di ogni turno e include anche i punti delle accuse fatte.
+	 * @return punteggio totale squadra 2(Pc1 o Pc2+pc3).
+	 */
+	public double getPunteggioTotalePc1OCarteSquadra2() {
     	if (puntiPerTurno.size() < numTurno) {
 		    System.out.println("La mappa è incompleta: mancano dati per alcuni turni.");
 		    return 0.0; 
@@ -676,7 +793,11 @@ public class PartitaTressette {
 	    return somma2;
     }
     
-    public EsitoPartita controlloVittoria() {
+	/**
+	 * Determina l'esito(per l'utente) della partita confrontando i punteggi totali dei 2 giocatori/squadre.
+	 * @return EsitoPartita risultante
+	 */
+	public EsitoPartita controlloVittoria() {
     	int punteggio1 = (int) getPunteggioTotaleUtenteOCarteSquadra1();
     	int punteggio2 = (int) getPunteggioTotalePc1OCarteSquadra2();
     	EsitoPartita esito = EsitoPartita.PAREGGIATA;
@@ -692,15 +813,27 @@ public class PartitaTressette {
     	return esito;
     }
     
-    public List<Carta> getCarteNelBanco(){
-        return new ArrayList<>(carteManoDiGiocoOrdinate.values());
-    }
+	/**
+	 * Restituisce una copia delle carte attualmente nel banco (in tavola).
+	 * @return lista di Carte nel banco
+	 */
+	public List<Carta> getCarteNelBanco(){
+		return new ArrayList<>(carteManoDiGiocoOrdinate.values());
+	}
     
-    public boolean isAccusaAbilitata() {
-    	return this.accusa;
-    }
+	/**
+	 * Indica se la modalità accuse è abilitata per questa partita.
+	 * @return true se abilitata
+	 */
+	public boolean isAccusaAbilitata() {
+		return this.accusa;
+	}
     
-    public int getRound() {
-    	return this.round;
-    }
+	/**
+	 * Restituisce il round corrente della partita.
+	 * @return numero del round
+	 */
+	public int getRound() {
+		return this.round;
+	}
 }

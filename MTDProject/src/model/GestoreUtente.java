@@ -12,16 +12,27 @@ public class GestoreUtente {
 	private final String percorsoFileUtente = "MTDProject/utente/fileInformazioniUtente.json"; //final perche' non deve essere modificato
 	private Utente utente;
 	
+	/**
+	 * Costruttore che inizializza il gestore utente e carica i dati dal file.
+	 */
 	public GestoreUtente() {
 		utente = Utente.getIstance();
 		utente.resetUtente();
 		leggiDatiUtente();
 	}
 	
+	/**
+	 * Indica se l'utente corrente è registrato.
+	 * Viene controllato tramite il metodo isRegistrato() di Utente.
+	 * @return true se l'utente e' registrato, false altrimenti
+	 */
 	public boolean getControlloUtenteRegistrato() {
 		return utente.isRegistrato();
 	}
 	
+	/**
+	 * Tenta di leggere i dati utente dal file JSON; in caso di errore reimposta l'utente a default.
+	 */
 	private void leggiDatiUtente() {
 		try {
 			JSONObject json = gestoreFile.leggiFileJSON(percorsoFileUtente);
@@ -32,18 +43,32 @@ public class GestoreUtente {
 		}
 	}
 	
+	/**
+	 * Aggiunge una partita allo storico dell'utente, gestisce il livello e salva i dati su file.
+	 * @param p partita da aggiungere
+	 */
 	public void aggiornaDatiUtente(Partita p) {
 		utente.aggiungiPartita(p);
 		gestisciLivello(p);
 		aggiornaDati();
 	}
 	
+	/**
+	 * Aggiorna avatar e nickname dell'utente e salva i dati su file.
+	 * @param avatar avatar scelto
+	 * @param nickname nickname scelto
+	 */
 	public void aggiornaDatiUtente(AvatarEnum avatar,String nickname) {
 		utente.setAvatar(avatar);
 		utente.setNickname(nickname);
 		aggiornaDati();
 	}
 	
+	/**
+	 * Incrementa il livello dell'utente in caso di vittoria (fino al massimo 100).
+	 * Ogni vittoria aumenta il livello di 1, fino a un massimo di 100(livello massimo).
+	 * @param p partita considerata
+	 */
 	private void gestisciLivello(Partita p) {
 		if(p.getEsito().equals(EsitoPartita.VINTA)) {
 			int livelloAttuale = utente.getLivello();
@@ -55,12 +80,10 @@ public class GestoreUtente {
 		}
 	}
 	
+	/**
+	 * Costrtuisce la struttura da inserire nel file JSON e salva i dati dell'utente su file.
+	 */
 	public void aggiornaDati() {
-        /*JSONObject datiAggiornati = new JSONObject();
-        datiAggiornati.put("avatar", giocatore.getAvatarEnum());
-        datiAggiornati.put("nickname", giocatore.getNickname());
-        datiAggiornati.put("livello", giocatore.getLivello());*/
-		
 		Map<String, Object> datiOrdinati = new LinkedHashMap<>();
 		datiOrdinati.put("avatar", utente.getAvatarEnum());
 		datiOrdinati.put("nickname", utente.getNickname());
@@ -83,13 +106,20 @@ public class GestoreUtente {
 
     }
 
+	/**
+	 * Elimina i dati locali dell'utente (reset) e aggiorna il file.
+	 * TODO
+	 */
 	public void eliminaUtente() {
 		utente.resetUtente();
 		aggiornaDati();
 	}
 
-	//legge giocatore da JSON
-    private void parsaUtenteDaJSON(JSONObject obj) {
+	/**
+	 * Parsa un JSONObject da cui estrarre i dati dell'utente registrato.
+	 * @param obj JSONObject da cui estrarre i dati.
+	 */
+	private void parsaUtenteDaJSON(JSONObject obj) {
     	utente.setNickname(obj.optString("nickname", ""));
     	utente.setLivello(obj.optInt("livello", 0));
 
@@ -104,7 +134,11 @@ public class GestoreUtente {
 
     }
     
-    public Utente getUtente() {
-    	return this.utente;
-    }
+	/**
+	 * Restituisce l'istanza Utente gestita.
+	 * @return Utente corrente
+	 */
+	public Utente getUtente() {
+		return this.utente;
+	}
 }

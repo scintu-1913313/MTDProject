@@ -15,30 +15,35 @@ public enum Valore {
 	private final int valore;
 	
 	/**
-	 * Costruttore 
-	 * @param valore. Il valore del seme
+	 * Costruttore enum che associa un valore numerico al valore della carta enum.
+	 * @param valore valore numerico associato al nome enum
 	 */
 	Valore(int valore){
 		this.valore = valore;
 	}
 	
 	/**
-	 * 
-	 * @param valore. Il valore da convertire in stringa
-	 * @return La stringa associata al valore tramite toString()
+	 * Restituisce la rappresentazione testuale del valore (toString).
+	 * @param valore enum Valore da convertire
+	 * @return stringa rappresentativa del valore
 	 */
 	public static String getStringValore(Valore valore) {
 		return valore.toString();
 	}
 	
 	/**
-	 * @return Il valore in stringa
+	 * Restituisce il valore numerico come stringa.
+	 * @return rappresentazione testuale del valore
 	 */
 	@Override
 	public String toString() {
 		return String.valueOf(valore);
 	}
 	
+	/**
+	 * Restituisce il valore numerico.
+	 * @return valore numerico associato alla carta
+	 */
     public int getValoreNumerico() {
         return valore;
     }

@@ -16,7 +16,7 @@ public enum Accusa {
 	);
     
 	/**
-	 * Costruttore 
+	 * Costruisce un' accusa con il relativo valore numerico.
 	 * @param accusa. L' accusa
 	 */
     Accusa(int accusa){
@@ -24,6 +24,7 @@ public enum Accusa {
 	}    
 	
     /**
+	 *  Restituisce il valore numerico associato all'accusa.
 	 *	@return Il valore dell'accusa
 	 */
     public int getValore() {
@@ -31,6 +32,7 @@ public enum Accusa {
     }
     
 	/**
+	 * Restituisce la rappresentazione testuale dell'accusa.
 	 * @return Il nome in stringa dell'accusa
 	 */
 	@Override

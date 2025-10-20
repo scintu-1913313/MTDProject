@@ -14,6 +14,10 @@ public class PannelloPrincipale extends Pannello {
     private PannelloRegole pannelloRegole;
     private PannelloAccount pannelloAccount;
 
+    /**
+     * Costruisce il contenitore principale che raggruppa i pannelli navigabili(MENU/REGOLE/ACCOUNT).
+     * @param view riferimento alla finestra principale
+     */
 	public PannelloPrincipale(View view) {
 		super(new GridBagLayout());
 		// Carica lo sfondo
@@ -45,6 +49,10 @@ public class PannelloPrincipale extends Pannello {
         add(pannelloNascosto, gbc);
 	}
 
+    /**
+     * Disegna lo sfondo del pannello principale(immagine sfondo).
+     * @param g contesto grafico
+     */
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -53,14 +61,26 @@ public class PannelloPrincipale extends Pannello {
         }
     }
 
+    /**
+     * Mostra uno dei pannelli contenuti (MENU/REGOLE/ACCOUNT).
+     * @param name nome del pannello da visualizzare
+     */
 	public void showPanel(String name) {
         layoutPannelloNascosto.show(pannelloNascosto, name);
     }
 
+    /**
+     * Restituisce il pannello Menu.
+     * @return pannelloMenu
+     */
     public PannelloMenu getPannelloMenu() {
         return pannelloMenu;
     }
     
+    /**
+     * Restituisce il pannello Account.
+     * @return pannelloAccount
+     */
     public PannelloAccount getPannelloAccount() {
         return pannelloAccount;
     }

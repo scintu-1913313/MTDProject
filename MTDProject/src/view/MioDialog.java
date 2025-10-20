@@ -6,6 +6,14 @@ import java.awt.*;
 public abstract class MioDialog extends JDialog {
 
 	protected JPanel pannelloBottoni;
+
+    /**
+     * Costruisce un dialogo modale(bloccante) con stile coerente e bottone di chiusura.
+     * @param owner finestra proprietaria
+     * @param titolo titolo del dialog
+     * @param larghezza larghezza del dialog
+     * @param altezza altezza del dialog
+     */
     public MioDialog(Frame owner, String titolo,int larghezza,int altezza) {
         super(owner, titolo, true); // true = modalità bloccante
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);

@@ -86,6 +86,10 @@ public class PannelloGioco extends Pannello {
 	//private boolean cartaInGioco; //viene usata per vedere se e' il turno del giocatore e se puo selezionare la carta
 	private boolean turnoDelGiocatore; //viene usata per vedere se e' il turno del giocatore e se puo selezionare la carta
 
+	/**
+	 * Costruisce il pannello di gioco completo con tutti i sottopannelli e componenti.
+	 * @param view riferimento alla View principale
+	 */
 	public PannelloGioco(View view) {
 		super(new BorderLayout());
 		this.view = view;
@@ -259,6 +263,10 @@ public class PannelloGioco extends Pannello {
         this.turnoDelGiocatore = false;
 	}
 	
+	/**
+	 * Disegna il pannello di gioco con lo sfondo(immagine banco da gioco).
+	 * @param g contesto grafico
+	 */
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -267,11 +275,17 @@ public class PannelloGioco extends Pannello {
         }
     }
 	
+	/**
+	 * Aggiorna l'aspetto del bottone della musica in base allo stato corrente.
+	 */
 	public void aggiornaStatoBottoneMusica() {
 		boolean stato = GestoreAudio.getInstance().isMusicaAbilitata();
         bottoneMusica.setCliccato(stato);
 	}
 	
+	/**
+	 * Gestisce l'uscita forzata del giocatore dalla partita con conferma tramite un dialogo.
+	 */
 	private void uscitaForzataDalGiocatore() {
 		
 		int scelta = JOptionPane.showOptionDialog(
@@ -291,7 +305,12 @@ public class PannelloGioco extends Pannello {
 		        view.uscitaForzataDalGiocatore();
 		    }
 	}
-		    
+	
+	/**
+	 * Gestisce gli aggiornamenti dal modello(Partita o giocatori).
+	 * @param o oggetto osservato
+	 * @param arg argomento dell'aggiornamento
+	 */
     @Override
     public void update(Observable o, Object arg) {
     	if (!(o instanceof Model))
@@ -307,6 +326,10 @@ public class PannelloGioco extends Pannello {
     	}
     }
     
+	/**
+	 * Gestisce l'inizio di una nuova partita.
+	 * @param arg la partita PartitaTressette
+	 */
     private void gestisciNuovaPartita(Object arg) {
     	//nuova partita
     	partitaInCorso = (PartitaTressette) arg;
@@ -317,6 +340,9 @@ public class PannelloGioco extends Pannello {
     	iniziaPartita();
     }
     
+	/**
+	 * Inizializza i nomi e le Label dei giocatori in base al numero di giocatori nella partita.
+	 */
     private void inizializzaNomiGiocatori() {
     	int numGiocatori = partitaInCorso.getNumeroGiocatori();
     	labelGiocatore1.setText(view.getPannelloAccount().getNickname());
@@ -349,15 +375,27 @@ public class PannelloGioco extends Pannello {
     	}
     }
 
+	/**
+	 * Aggiorna la Label del round corrente.
+	 * @param round il round corrente
+	 */
     private void aggiornaLabelRound(int round) {
     	labelRound.setText("Round: "+ round);
     }
     
+	/**
+	 * Aggiorna la Label dei punteggi dei giocatori.
+	 * @param punteggio1 punteggio dell'utente o della squadra1(Utente + Pc1)
+	 * @param punteggio2 punteggio del Pc1 o della squadra2(Pc2 + Pc3)
+	 */
     private void aggiornaLabelGiocatori(String punteggio1, String punteggio2) {
     	label1Punti.setText(nomeGiocatori1 + ": "+ punteggio1);
     	label2Punti.setText(nomeGiocatori2 + ": "+ punteggio2);
     }
     
+	/** 
+	 * Gioca il turno del giocatore o del pc con un'attesa predefinita(1s) attraverso un Timer.
+	*/
     private void giocaTurnoConAttesa() {
 		new javax.swing.Timer(TEMPO_ATTESA_DEFAULT, e -> {
             ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
@@ -365,6 +403,11 @@ public class PannelloGioco extends Pannello {
         }).start();
     }
     
+	/**
+	 * Gestisce la carta giocata da un giocatore.
+	 * Sulla base del tipo di giocatore, aggiorna le carte visualizzate e gestisce il flusso del gioco.
+	 * @param arg il tipo di giocatore che ha giocato la carta (TipoGiocatore)
+	 */
     private void gestisciCartaScelta(Object arg) {
     	TipoGiocatore giocatoreCheHaGiocatoLaCarta = (TipoGiocatore) arg;
     	
@@ -422,6 +465,11 @@ public class PannelloGioco extends Pannello {
     	
     }
 
+	/**
+	 * Aggiorna le carte visualizzate per l'utente.
+	 * Aggiorna il pannello delle carte del giocatore e aggiunge i listener per la selezione delle carte da parte dell'utente.
+	 * @param carte Lista delle carte del giocatore utente.
+	 */
     private void aggiornaCarteUtente(List<Carta> carte) {
         carteGiocatore.clear();
         pannelloCarteGiocatoreSotto.removeAll();
@@ -477,6 +525,10 @@ public class PannelloGioco extends Pannello {
     	pannelloSotto.repaint();
     }
     
+	/**
+	 * Aggiorna il pannello delle carte da visualizzare nel banco.
+	 * @param carte Lista delle carte da visualizzare nel banco.
+	 */
     private void aggiornaCarteBanco(List<Carta> carte) {
     	carteBanco.clear();
     	pannelloCarteBancoInterno.removeAll();
@@ -494,6 +546,9 @@ public class PannelloGioco extends Pannello {
     	pannelloCarteBancoInterno.repaint();
     }
     
+	/**
+	 * Aggiorna le carte di tutti i giocatori in base al numero di giocatori nella partita.
+	 */
     private void aggiornaCarteGiocatori() {
 		aggiornaCarteUtente(partitaInCorso.getGiocatoreVero().getCarte());
     	if(partitaInCorso.getNumeroGiocatori() == 2)
@@ -510,6 +565,10 @@ public class PannelloGioco extends Pannello {
     	}
     }
     
+	/**
+	 * Aggiorna il pannello delle carte del giocatore PC1.
+	 * @param carte Lista delle carte del giocatore PC1.
+	 */
     private void aggiornaCartePc1(List<Carta> carte) {
         cartePc1.clear();
         pannelloCartePc1Sopra.removeAll();
@@ -527,6 +586,10 @@ public class PannelloGioco extends Pannello {
     	pannelloSopra.repaint();
     }
     
+	/**
+	 * Aggiorna il pannello delle carte del giocatore PC2.
+	 * @param carte Lista delle carte del giocatore PC2.
+	 */
     private void aggiornaCartePc2(List<Carta> carte) {
         cartePc2.clear();
         pannelloCartePc2Destra.removeAll();
@@ -541,6 +604,10 @@ public class PannelloGioco extends Pannello {
     	pannelloCartePc2Destra.repaint();
     }
     
+	/**
+	 * Aggiorna il pannello delle carte del giocatore PC3.
+	 * @param carte Lista delle carte del giocatore PC3.
+	 */
     private void aggiornaCartePc3(List<Carta> carte) {
         cartePc3.clear();
         pannelloCartePc3Sinistra.removeAll();
@@ -555,6 +622,9 @@ public class PannelloGioco extends Pannello {
     	pannelloCartePc2Destra.repaint();
     }
     
+	/**
+	 * Resetta tutti i pannelli dei giocatori e le carte visualizzate nei pannelli di gioco.
+	 */
     public void resetCartePannelloGioco() {
     	carteGiocatore.clear();
         pannelloCarteGiocatoreSotto.removeAll();
@@ -572,6 +642,10 @@ public class PannelloGioco extends Pannello {
         pannelloCarteBancoInterno.removeAll();
     }
     
+	/**
+	 * Inizia la partita, resettando le carte e aggiornando i pannelli dei giocatori e del banco.
+	 * Avvia il primo turno di gioco con un'attesa predefinita.
+	 */
 	private void iniziaPartita() {
 		resetCartePannelloGioco();
 		aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
@@ -582,6 +656,12 @@ public class PannelloGioco extends Pannello {
 		giocaTurnoConAttesa();
 	}
 
+	/**
+	 * Gestisce il turno di gioco.
+	 * Per ogni turno, mostra un dialogo informativo sul giocatore che deve giocare il turno, 
+	 * aggiorna il round e gestisce le accuse se abilitate in quel round.
+	 * Ogni turno viene giocato dal giocatore o dal pc in base a quale giocatore deve giocare.
+	 */
 	private void giocaTurno() {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
 		
@@ -608,6 +688,12 @@ public class PannelloGioco extends Pannello {
 		}
 	}
 	
+	/**
+	 * Calcola il nome del giocatore in base al tipo di giocatore e al numero di giocatori nella partita.
+	 * @param numGiocatori numero di giocatori nella partita
+	 * @param giocatore tipo di giocatore da calcolare(TipoGiocatore)
+	 * @return
+	 */
 	private String calcolaNomeGiocatore(int numGiocatori, TipoGiocatore giocatore) {
 		String risultato = giocatore.toString();
 		if(giocatore.equals(TipoGiocatore.UTENTE)) {
@@ -619,6 +705,12 @@ public class PannelloGioco extends Pannello {
 		return risultato;
 	}
 	
+	/**
+	 * Gestisce le accuse durante il turno di un giocatore.
+	 * Verifica se ci sono accuse da mostrare in base al numero di giocatori e al round attuale.
+	 * Se ci sono accuse, mostra un dialogo per ogni accusa trovata e aggiorna la label dei punteggi dei giocatori.
+	 * @param giocatore tipo di giocatore su cui verificare le accuse.
+	 */
 	private void gestioneAccuse(TipoGiocatore giocatore) {
     	int numGiocatori = partitaInCorso.getNumeroGiocatori();
 		int roundAttuale = partitaInCorso.getRound();
@@ -638,7 +730,11 @@ public class PannelloGioco extends Pannello {
 	        aggiornaLabelGiocatori(punteggio1,punteggio2);
 		}			
 	}
-	
+	/**
+	 * Gestisce la fine della mano di gioco.
+	 * Aggiorna le carte dei giocatori, calcola e visualizza i punteggi, verifica se la partita è terminata
+	 * e avvia il turno successivo o termina la partita in base alle condizioni di gioco.
+	 */
 	private void gestisciFineDellaMano() {		
 		//True se partita a 3/4 giocatori o se tutte le carte sono state distribuite ai 2 giocatori
 		//False se partita a 2 giocatori ma non tutte le carte sono state distribuite
@@ -703,15 +799,28 @@ public class PannelloGioco extends Pannello {
 		}
 	}
 
+	/**
+	 * Formatta il punteggio in modo che abbia al massimo una cifra decimale.
+	 * @param valore il valore del punteggio da formattare.
+	 * @return Stringa formattata del punteggio.
+	 */
 	private static String formattaPunteggio(double valore) {
         BigDecimal bd = new BigDecimal(valore).setScale(1, RoundingMode.HALF_UP);
         return bd.stripTrailingZeros().toPlainString(); // Rimuove lo .0 se non serve
     };
     
+	/**
+	 * Gioca il turno del PC nella partita in corso.
+	 * @param turnoPc tipo di giocatore PC che deve giocare il turno.
+	 */
 	private void giocaTurnoPc(TipoGiocatore turnoPc) {
 		partitaInCorso.giocaCartaPc(turnoPc);
 	}
 	
+	/**
+	 * Restituisce il bottone di uscita del pannello di gioco.
+	 * @return bottone Esci
+	 */
     public MioBottone getBottoneUscita() {
     	return bottoneExit;
     }

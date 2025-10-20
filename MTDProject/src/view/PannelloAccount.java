@@ -38,6 +38,10 @@ public class PannelloAccount extends Pannello{
 	private JTextArea areaTesto;
 	private View view;
 	
+	/**
+	 * Costruisce il pannello account che permette la gestione dell'utente.
+	 * @param view riferimento alla View principale
+	 */
 	public PannelloAccount(View view) {
 		super(new BorderLayout());
 		this.view = view;
@@ -128,14 +132,25 @@ public class PannelloAccount extends Pannello{
 
 	}
 	
+	/**
+	 * Indica se l'utente corrente è registrato.
+	 * @return true se registrato
+	 */
 	public boolean registrazioneOk() {
 		return utenteRegistrato;
 	}
 	
+	/**
+	 * Restituisce il bottone di salvataggio dati nella UI.
+	 * @return il bottone "Salva"
+	 */
 	public MioBottone getBottoneSalvataggioDati() {
 		return bottoneSalvataggioDati;
 	}
 	
+	/*
+	 * Aggiornamento ricevuto dal modello; aggiorna i campi utente.
+	 */
     @Override
     public void update(Observable o, Object arg) {
     	if (!(o instanceof Model && arg instanceof Utente))
@@ -161,15 +176,27 @@ public class PannelloAccount extends Pannello{
     		areaTesto.setText(partite);
     	
     }
+
+	/**
+	 * Restituisce l'Avatar selezionato nello spinner.
+	 * @return Avatar corrente
+	 */
     public Avatar getAvatar() {
     	return  (Avatar) spinnerTipoAvatar.getOggettoCorrente();
 
     }
-    
+
+	/**
+	 * Restituisce il testo presente nel campo nickname.
+	 * @return nickname inserito dall'utente
+	 */
     public String getNickname() {
     	return nicknameField.getText();
     }
     
+	/**
+	 * Valida e salva localmente i dati dell'utente; notifica la View.
+	 */
     public void controlloDati() {
     	String nome = nicknameField.getText();
     	if (nome.isEmpty()) {

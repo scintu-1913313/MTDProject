@@ -11,6 +11,10 @@ import javax.swing.*;
 
 public class PannelloRegole extends Pannello{
 	
+	/**
+	 * Costruisce il pannello che mostra le regole del gioco e il bottone di ritorno al menu.
+	 * @param view riferimento alla View principale usato per navigazione
+	 */
 	public PannelloRegole(View view) {
 		super(new BorderLayout());
 		//setBounds(50, 50, 600, 400);

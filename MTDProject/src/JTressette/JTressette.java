@@ -6,6 +6,10 @@ import view.View;
 
 public class JTressette{
 
+	/**
+	 * Entry point dell'applicazione: costruisce View, Model e Controller e avvia il gioco.
+	 * @param args argomenti da linea di comando (ignorati)
+	 */
 	public static void main(String[] args) {
 		System.out.println("MAIN");
 		View view = new View();

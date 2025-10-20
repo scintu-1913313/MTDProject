@@ -12,37 +12,53 @@ public class GestoreFile {
 	
 	private static GestoreFile obj; 
 	
+	/**
+	 * Costruttore privato (Singleton Pattern).
+	 */
 	private GestoreFile() {
 		
 	}
 	
-	//singleton
+	/**
+	 * Restituisce l'istanza singleton di GestoreFile.
+	 * @return GestoreFile unico
+	 */
 	public static GestoreFile getGestoreFile() {
 		
 		if (obj == null) {
-			
 			obj = new GestoreFile();
 		}
 		return obj;
 	}
 	
-	//SCRITTURA
-    public void scriviFileJSON(String percorso, boolean append, JSONObject info) throws IOException {
-    	
-    	FileWriter file = new FileWriter(percorso,append);
-    	file.write(info.toString(4)); // 4 = indentazione leggibile
-    	file.close();
+	/**
+	 * Scrive un JSONObject su file con indentazione leggibile.
+	 * @param percorso path del file
+	 * @param append se true aggiunge al file, altrimenti sovrascrive
+	 * @param info JSONObject da scrivere
+	 * @throws IOException se si verifica un errore di I/O
+	 */
+	public void scriviFileJSON(String percorso, boolean append, JSONObject info) throws IOException {
+        
+		FileWriter file = new FileWriter(percorso,append);
+		file.write(info.toString(4)); // 4 = indentazione leggibile
+		file.close();
    }
     
-	//LETTURA
-    public JSONObject leggiFileJSON(String percorso) throws IOException {
-        // Legge il contenuto del file come stringa
-        String contenuto = new String(Files.readAllBytes(Paths.get(percorso)));
-        // Converte la stringa in oggetto JSON
-        JSONObject json = new JSONObject(contenuto);
+	/**
+	 * Legge e parsa un file JSON in un JSONObject.
+	 * @param percorso path del file JSON
+	 * @return JSONObject letto
+	 * @throws IOException se si verifica un errore di I/O
+	 */
+	public JSONObject leggiFileJSON(String percorso) throws IOException {
+		// Legge il contenuto del file come stringa
+		String contenuto = new String(Files.readAllBytes(Paths.get(percorso)));
+		// Converte la stringa in oggetto JSON
+		JSONObject json = new JSONObject(contenuto);
 
-        return json;
-    }
+		return json;
+	}
 }
 
 

@@ -7,6 +7,15 @@ public class DialogoInfoGioco extends MioDialog {
 
     private JPanel pannelloCentrale;
 
+    /**
+     * Costruisce e mostra un dialogo informativo non decorato con chiusura automatica a tempo.
+     * @param owner finestra proprietaria
+     * @param larghezza larghezza dialog
+     * @param altezza altezza dialog
+     * @param titolo titolo del dialog
+     * @param info testo da mostrare
+     * @param durataMillis durata in ms prima della chiusura automatica
+     */
     public DialogoInfoGioco(Frame owner, int larghezza,int altezza, String titolo, String info, int durataMillis) {
         super(owner, titolo, larghezza, altezza);
         setUndecorated(true);
@@ -14,6 +23,10 @@ public class DialogoInfoGioco extends MioDialog {
 
         // Pannello con angoli arrotondati e sfondo verde
         pannelloCentrale = new JPanel() {
+            /*
+             * Disegna il pannello con angoli arrotondati e sfondo semi-trasparente.
+             * @param g contesto grafico
+             */
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();

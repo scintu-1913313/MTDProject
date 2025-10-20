@@ -13,20 +13,30 @@ import java.awt.event.MouseEvent;
 public class MioBottone extends JButton {
 	    
     static {
-        UIManager.put("Button.arc", 20); // se usi FlatLaf o Look&Feel moderno
+        UIManager.put("Button.arc", 20);
     }
 
+    /**
+     * Crea un bottone con testo e stile personalizzato dell'app.
+     * @param text etichetta del bottone
+     */
     public MioBottone(String text) {
         super(text);
         initBottone();
     }
     
+    /**
+     * Crea un bottone con icona e stile personalizzato dell'app.
+     * @param icon icona da mostrare all'interno del bottone
+     */
     public MioBottone(Icon icon) {
         super(icon);
         initBottone();
     }
     
-    
+    /**
+     * Inizializza lo stile e i comportamenti del bottone.
+     */
     private void initBottone() {
     	setFocusPainted(false);
         setOpaque(false);
@@ -62,10 +72,17 @@ public class MioBottone extends JButton {
         });
     }
     
+    /**
+     * Ripristina lo stile di background di default del bottone.
+     */
     public void resetToDefault() {
         setBackground(View.VERDE_TAVOLO);
     }
     
+    /**
+     *  Disegna il bottone con angoli arrotondati.
+     *  @param g contesto grafico
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
@@ -77,6 +94,10 @@ public class MioBottone extends JButton {
         g2.dispose();
     }
     
+    /**
+     * Disegna il bordo arrotondato del bottone.
+     * @param g contesto grafico
+     */
     @Override
     protected void paintBorder(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();

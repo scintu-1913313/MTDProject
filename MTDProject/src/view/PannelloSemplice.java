@@ -15,10 +15,17 @@ public class PannelloSemplice extends JPanel {
 	private int arcWidth = 30;
     private int arcHeight = 30;
 
+    /**
+     * Costruisce un pannello semplice con angoli arrotondati e sfondo custom.
+     */
     public PannelloSemplice() {
         setOpaque(false);
     }
 
+    /**
+     * Disegna il pannello con angoli arrotondati e sfondo custom.
+     * @param g contesto grafico
+     */
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();

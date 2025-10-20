@@ -27,6 +27,13 @@ public class CartaView extends JPanel {
     private final int SHAKE_DURATION = 10; // numero di oscillazioni
     private final int SHAKE_AMPLITUDE = 5; // pixel di spostamento
 
+    /**
+     * Crea una vista grafica per una singola carta.
+     * @param carta l'oggetto Carta da visualizzare
+     * @param coperta true se la carta deve essere mostrata sul retro
+     * @param ruotata true se la carta deve essere ruotata di 90 gradi
+     * @param ridotta true per usare dimensioni ridotte
+     */
     public CartaView(Carta carta, boolean coperta, boolean ruotata, boolean ridotta) {
         this.carta = carta;
         this.coperta = coperta;
@@ -70,9 +77,18 @@ public class CartaView extends JPanel {
         }
     }
 
+    /**
+     * Imposta lo stato di hover della carta (bordo evidenziato).
+     * @param value true se il mouse è sopra la carta
+     */
     public void setMouseOver(boolean value) {
     	mouseOver = value;
     }
+
+    /**
+     * Disegna la carta con angoli stondati e bordo evidenziato se in hover.
+     * @param g contesto grafico
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -102,6 +118,9 @@ public class CartaView extends JPanel {
         }
     }
 
+    /**
+     * Avvia una breve animazione di "shaking" della carta.
+     */
     public void startShakeAnimation() {
         if (shakeTimer != null && shakeTimer.isRunning()) return;
 
@@ -119,6 +138,10 @@ public class CartaView extends JPanel {
         shakeTimer.start();
     }
 
+    /**
+     * Restituisce l'oggetto Carta associato a questa vista.
+     * @return la Carta visualizzata
+     */
     public Carta getCarta() {
         return carta;
     }

@@ -20,7 +20,14 @@ public class DialogoAccuse extends MioDialog {
 	private JPanel pannelloCarteCentrale;
 	private JPanel pannelloCentrale;
 
-	public DialogoAccuse(Frame owner, String titolo, String giocatore, Pair<Accusa, List<Carta>> accuse) {
+    /**
+     * Costruisce un dialog che mostra le accuse e le carte coinvolte.
+     * @param owner finestra proprietaria
+     * @param titolo titolo del dialog
+     * @param giocatore nome del giocatore che effettua l'accusa
+     * @param accuse coppia contenente tipo di accusa e lista delle carte associate all'accusa
+     */
+    public DialogoAccuse(Frame owner, String titolo, String giocatore, Pair<Accusa, List<Carta>> accuse) {
         super(owner, titolo,380,250);
         
         String tipoDiAccusa = accuse.getFirst().toString();

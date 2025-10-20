@@ -20,6 +20,10 @@ public class PannelloMenu extends Pannello {
 	private MioBottoneSelezione bottoneAccusa;
     private MioBottone bottoneMusica;
 
+    /**
+     * Costruisce il pannello principale del menu' dell'applicazione.
+     * @param view riferimento alla View principale
+     */
     public PannelloMenu(View view) {
         super(new BorderLayout());
     	this.view = view;
@@ -150,6 +154,9 @@ public class PannelloMenu extends Pannello {
         pannelloInternoMenu.add(Box.createVerticalStrut(15));        
     }
     
+    /**
+     * Avvia la procedura di inizio partita controllando i dati dell'utente.
+     */
 	private void iniziaPartita()
 	{
 		PannelloAccount p = (PannelloAccount) view.getPannelloAccount();
@@ -165,34 +172,53 @@ public class PannelloMenu extends Pannello {
     	}
 	}
 	
+    /**
+     * Restituisce il bottone "Inizio Partita" usato per avviare la partita.
+     * @return il bottone di start
+     */
 	public MioBottone getBottoneStart() {
 		return this.bottoneStart;
 	}
 	
+    /**
+     * Restituisce il numero di giocatori selezionato nello spinner.
+     * @return numero di giocatori (2-4)
+     */
 	public int getNumeroGiocatori() {
 		return this.spinnerNumeroGiocatori.getValoreCorrente();
 	}
 	
+    /**
+     * Restituisce il punteggio stabilito selezionato nello spinner.
+     * @return punteggio di vittoria
+     */
 	public int getPunteggioStabilito() {
 		return this.spinnerPunteggio.getValoreCorrente();
 	}
 	
+    /**
+     * Restituisce il tipo di mazzo selezionato tramite lo spinner immagini.
+     * @return il TipoMazzo selezionato
+     */
 	public TipoMazzo getTipoMazzo() {
-		Carta c = (Carta) this.spinnerTipoCarte.getOggettoCorrente();
-		return c.getTipoMazzo();
+        Carta c = (Carta) this.spinnerTipoCarte.getOggettoCorrente();
+        return c.getTipoMazzo();
 	}
 	
+    /**
+     * Indica se è stata selezionata l'opzione "Accusa".
+     * @return true se l'accusa è selezionata
+     */
 	public boolean getAccusa()
 	{
 		return  this.bottoneAccusa.getCliccato();
 	}
 	
+    /**
+     * Aggiorna la label del bottone musica in base allo stato corrente.
+     */
 	public void aggiornaStatoBottoneMusica() {
 		boolean stato = GestoreAudio.getInstance().isMusicaAbilitata();
         bottoneMusica.setText(stato ? "Musica: ON" : "Musica: OFF");
 	}
-	
-    @Override
-    public void update(Observable o, Object arg) {
-    }
 }

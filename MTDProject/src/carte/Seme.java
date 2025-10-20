@@ -9,24 +9,25 @@ public enum Seme {
 	private final String nomeSeme;
 	
 	/**
-	 * Costruttore 
-	 * @param nomeSeme. La stringa del seme
+	 * Costruttore enum che associa la rappresentazione testuale al seme.
+	 * @param nomeSeme nome testuale del seme
 	 */
 	Seme(String nomeSeme){
 		this.nomeSeme = nomeSeme;
 	}
 	
 	/**
-	 * 
-	 * @param seme. Il seme da convertire in stringa
-	 * @return La stringa associata al seme tramite toString()
+	 * Restituisce la stringa descrittiva del seme.
+	 * @param seme enum Seme da convertire
+	 * @return stringa rappresentativa del seme
 	 */
 	public static String getNomeSeme(Seme seme) {
 		return seme.toString();
 	}
 	
 	/**
-	 * @return Il nome in stringa del seme
+	 * Rappresentazione testuale del seme.
+	 * @return nome del seme
 	 */
 	@Override
 	public String toString() {

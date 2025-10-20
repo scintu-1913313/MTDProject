@@ -17,6 +17,11 @@ public class MioBottoneSelezione extends JButton{
 	private ImageIcon immagineOff;
 	private ImageIcon immagineOn;
 	
+	/**
+	 * Costruisce un bottone di selezione con due icone (off/on) e suono al click.
+	 * @param pathImmagineOff percorso immagine stato off
+	 * @param pathImmagineOn percorso immagine stato on
+	 */
 	public MioBottoneSelezione(String pathImmagineOff, String pathImmagineOn) {
         super();
 	
@@ -42,6 +47,9 @@ public class MioBottoneSelezione extends JButton{
         });
 	}
 	
+	/**
+	 * Cambia l'immagine del bottone in base allo stato di selezione.
+	 */
 	private void cambioImmagine()
 	{
 		cliccato = !cliccato;
@@ -56,7 +64,10 @@ public class MioBottoneSelezione extends JButton{
 		}
 	}
 	
-	
+	/**
+	 * Imposta lo stato di selezione del bottone e aggiorna l'immagine visualizzata.
+	 * @param cliccato true se selezionato, false altrimenti
+	 */
 	public void setCliccato(boolean cliccato)
 	{
 		this.cliccato = cliccato;

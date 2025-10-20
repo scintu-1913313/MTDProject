@@ -13,6 +13,11 @@ public abstract class Pannello extends JPanel implements Observer {
 	public static final int ALTEZZA = 800;
 	public static final int LARGHEZZA = 1200;
 
+	/**
+	 * Costruttore base per tutti i pannelli dell'applicazione.
+	 * Costrusice un pannello di base con lo stile dell'app.
+	 * @param layout il LayoutManager da utilizzare per il pannello
+	 */
 	public Pannello(LayoutManager layout) {
 		super(layout);
 		setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -28,8 +33,11 @@ public abstract class Pannello extends JPanel implements Observer {
         g2.dispose();
     }
 	
+	/**
+	 * override opzionale per l'aggiornamento del pannello in base ai cambiamenti del modello.
+	 */
     @Override
 	public void update(Observable o, Object arg) {
-	    // Puoi lasciare vuoto o aggiungere logica specifica
+	    // vuoto
 	}
 }

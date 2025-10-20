@@ -11,6 +11,10 @@ public abstract class MioSpinner extends JPanel {
 	public final JButton rightButton;
 	public final MioLabel intestazione;
 
+    /**
+     * Crea uno spinner personalizzato con frecce orizzontali.
+     * @param titolo etichetta descrittiva
+     */
     public MioSpinner(String titolo){
         setLayout(new BorderLayout(5, 0));
         setBackground(new Color(0, 0, 0, 0));

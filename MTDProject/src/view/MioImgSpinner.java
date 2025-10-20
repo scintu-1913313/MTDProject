@@ -28,6 +28,11 @@ public class MioImgSpinner extends MioSpinner {
     private Image immagineCorrenteRidotta;
     private ImageIcon immagineCorrente;
     
+	/**
+	 * Crea uno spinner di immagini basato su una lista di oggetti (Carte o Avatar).
+	 * @param titolo etichetta descrittiva dello spinner
+	 * @param oggetti lista di oggetti da mostrare con le rispettive immagini
+	 */
 	public MioImgSpinner(String titolo, ArrayList<Object> oggetti){
 		super(titolo);
 		this.oggetti = oggetti;
@@ -51,6 +56,9 @@ public class MioImgSpinner extends MioSpinner {
         setMaximumSize(new Dimension(180,150));
 	}
 	
+	/**
+	 * Decrementa l'indice corrente(se possibile) e aggiorna l'immagine visualizzata.
+	 */
 	private void decrementaValore() {
 		rightButton.setEnabled(true);
 		if(indiceCorrente > 0)
@@ -65,6 +73,9 @@ public class MioImgSpinner extends MioSpinner {
 		}
 	}
 
+	/**
+	 * Incrementa l'indice corrente(se possibile) e aggiorna l'immagine visualizzata.
+	 */
 	private void incrementaValore() {
 		leftButton.setEnabled(true);
 
@@ -80,6 +91,10 @@ public class MioImgSpinner extends MioSpinner {
 		}
 	}
 	
+	/**
+	 * Naviga direttamente ad un indice specifico nello spinner, se valido, e aggiorna l'immagine visualizzata.
+	 * @param indice indice dell'oggetto da selezionare
+	 */
 	private void vaiAdIndice(int indice) {
 		
 		if(indice <= oggetti.size() - 1 && indice >= 0)
@@ -108,6 +123,9 @@ public class MioImgSpinner extends MioSpinner {
 		}
 	}
 	
+	/**
+	 * Costruisce le immagini ridotte degli oggetti (Carte o Avatar) per lo spinner.
+	 */
 	private void costruisciImmaginiCarte() {
 		
 		for(Object ogg: oggetti) {
@@ -148,10 +166,18 @@ public class MioImgSpinner extends MioSpinner {
 		}
 	}
 	
+	/**
+	 * Restituisce l'oggetto attualmente selezionato nello spinner.
+	 * @return l'oggetto corrente(Carta o Avatar)
+	 */
 	public Object getOggettoCorrente() {
 		return oggetti.get(indiceCorrente);
 	}
 	
+	/**
+	 * Visualizza uno specifico oggetto nello spinner, se presente.
+	 * @param obj oggetto da selezionare(Carta o Avatar)
+	 */
 	public void vaiAdOggettoSpecifico(Object obj)
 	{
 		if(obj.getClass() != this.type)
