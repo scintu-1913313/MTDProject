@@ -375,7 +375,10 @@ public class PannelloGioco extends Pannello {
 	        
 			if(partitaInCorso.isManoCompletata())
     		{
-    		    gestisciFineDellaMano();
+    			new javax.swing.Timer(TEMPO_ATTESA_DEFAULT, e -> {
+    	            ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
+        		    gestisciFineDellaMano();
+    	        }).start();
     		}
 			else
 			{
@@ -396,7 +399,10 @@ public class PannelloGioco extends Pannello {
 
     		if(partitaInCorso.isManoCompletata())
     		{
-    		    gestisciFineDellaMano();
+    			new javax.swing.Timer(TEMPO_ATTESA_DEFAULT, e -> {
+    	            ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
+        		    gestisciFineDellaMano();
+    	        }).start();
     		}
     		else
     		{
@@ -562,7 +568,8 @@ public class PannelloGioco extends Pannello {
 		TipoGiocatore turnoGiocatore = partitaInCorso.getTurnoGiocatore();
 		
 		System.out.println("Turno del giocatore" + turnoGiocatore);
-		new DialogoInfoGioco(view, 250, 60, "Turno" , "Turno del giocatore " + turnoGiocatore, TEMPO_ATTESA_TRA_GIOCATORI);
+		String giocatore = calcolaNomeGiocatore(partitaInCorso.getNumeroGiocatori(), turnoGiocatore);
+		new DialogoInfoGioco(view, 250, 60, "Turno" , "Turno del giocatore " + giocatore, TEMPO_ATTESA_TRA_GIOCATORI);
 		int roundAttuale = partitaInCorso.getRound();
 		aggiornaLabelRound(roundAttuale);
 		if(partitaInCorso.isAccusaAbilitata()) {
@@ -668,7 +675,13 @@ public class PannelloGioco extends Pannello {
 	        carteBanco.clear();
 	        pannelloCarteBancoInterno.removeAll();
 			aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
-	        giocaTurnoConAttesa();
+			
+			new javax.swing.Timer(TEMPO_ATTESA_DEFAULT, e -> {
+	            ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
+	            partitaInCorso.assegnaCartaDalMazzo();
+				aggiornaCarteGiocatori();
+		        giocaTurnoConAttesa();
+	        }).start();
 		}
 	}
 

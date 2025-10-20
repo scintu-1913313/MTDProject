@@ -358,7 +358,6 @@ public class PartitaTressette {
 	    		//tutte le carte assegnate
 	    		return true;
 	    	}
-	    	assegnaCartaDalMazzo();
 	    	return false;
 	    }
 	    else
@@ -373,8 +372,11 @@ public class PartitaTressette {
 	    return Integer.compare(p2, p1); // indice più basso = carta più forte
 	}
 	
-	private void assegnaCartaDalMazzo() {
-		
+	public void assegnaCartaDalMazzo() {
+		//se non sono a due giocatori o se ho finito le carte, non devo assegnare nulla
+		if(numGiocatori != 2 || mazzoInGioco.getCarte().size()==0) {
+			return;
+		}
 		//se ho assegnato gia' tutte le carte mi fermo
 		
 		if(mazzoInGioco.getCarte().size() % 2 != 0) {
