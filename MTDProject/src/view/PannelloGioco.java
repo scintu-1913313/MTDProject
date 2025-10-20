@@ -425,7 +425,6 @@ public class PannelloGioco extends Pannello {
     		cartaView.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                	//TODO
                 	if(turnoDelGiocatore)
                 	{
                 		if(partitaInCorso.verificaCartaScelta(cartaView.getCarta()))
@@ -469,6 +468,22 @@ public class PannelloGioco extends Pannello {
         
     	pannelloCarteBancoInterno.revalidate();
     	pannelloCarteBancoInterno.repaint();
+    }
+    
+    private void aggiornaCarteGiocatori() {
+		aggiornaCarteUtente(partitaInCorso.getGiocatoreVero().getCarte());
+    	if(partitaInCorso.getNumeroGiocatori() == 2)
+    	{
+    		//carte pc 1
+    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
+    	}
+    	else
+    	{
+    		//carte pc 1,2,3
+    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
+    		aggiornaCartePc2(partitaInCorso.getPc(TipoGiocatore.PC2).getCarte());
+    		aggiornaCartePc3(partitaInCorso.getPc(TipoGiocatore.PC3).getCarte());
+    	}
     }
     
     private void aggiornaCartePc1(List<Carta> carte) {
@@ -537,18 +552,7 @@ public class PannelloGioco extends Pannello {
 		resetCartePannelloGioco();
 		aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
 		aggiornaCarteUtente(partitaInCorso.getGiocatoreVero().getCarte());
-    	if(partitaInCorso.getNumeroGiocatori() == 2)
-    	{
-    		//carte pc 1
-    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
-    	}
-    	else
-    	{
-    		//carte pc 1,2,3
-    		aggiornaCartePc1(partitaInCorso.getPc(TipoGiocatore.PC1).getCarte());
-    		aggiornaCartePc2(partitaInCorso.getPc(TipoGiocatore.PC2).getCarte());
-    		aggiornaCartePc3(partitaInCorso.getPc(TipoGiocatore.PC3).getCarte());
-    	}
+		aggiornaCarteGiocatori();
 		System.out.println("Inizia il "+partitaInCorso.getTurnoGiocatore());
 
 		giocaTurnoConAttesa();
@@ -579,16 +583,22 @@ public class PannelloGioco extends Pannello {
 		}
 	}
 	
+	private String calcolaNomeGiocatore(int numGiocatori, TipoGiocatore giocatore) {
+		String risultato = giocatore.toString();
+		if(giocatore.equals(TipoGiocatore.UTENTE)) {
+			risultato = view.getPannelloAccount().getNickname();
+		}
+		if(giocatore.equals(TipoGiocatore.PC3) && numGiocatori == 3) {
+			risultato = "Morto";
+		}
+		return risultato;
+	}
+	
 	private void gestioneAccuse(TipoGiocatore giocatore) {
     	int numGiocatori = partitaInCorso.getNumeroGiocatori();
 		int roundAttuale = partitaInCorso.getRound();
-		String nomeGiocatore = giocatore.toString();
-		if(giocatore.equals(TipoGiocatore.UTENTE)) {
-			nomeGiocatore = view.getPannelloAccount().getNickname();
-		}
-		if(giocatore.equals(TipoGiocatore.PC3) && numGiocatori == 3) {
-			nomeGiocatore = "Morto";
-		}
+		String nomeGiocatore = calcolaNomeGiocatore(numGiocatori,giocatore);
+
 		if((numGiocatori==2 && roundAttuale <= 3) || 
 		   ((numGiocatori==3 || numGiocatori==4) && roundAttuale == 1)	) {
 
@@ -647,8 +657,8 @@ public class PannelloGioco extends Pannello {
 			System.out.println("Utente o Utente+pc: " + partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
 			System.out.println("Pc1 o Pc2+Pc3: " + partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());
 			
-			//TODO da inserire quale e' il giocatore che prende la mano(in teoria turnoDelGiocatore in partitaInCorso)
-			new DialogoInfoGioco(view, 250,80,"Presa" , "Franco prende la mano", TEMPO_ATTESA_TRA_GIOCATORI);
+	    	String nomeGiocatore = calcolaNomeGiocatore(partitaInCorso.getNumeroGiocatori(),partitaInCorso.getTurnoGiocatore());
+			new DialogoInfoGioco(view, 250,80,"Presa" , nomeGiocatore + " prende la mano", TEMPO_ATTESA_TRA_GIOCATORI);
 
 			String punteggio1 = formattaPunteggio(partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1());
 			String punteggio2 = formattaPunteggio(partitaInCorso.getPunteggioTotalePc1OCarteSquadra2());	
