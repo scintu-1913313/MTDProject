@@ -5,9 +5,17 @@ import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 
+/**
+ * Rappresenta una singola partita giocata e terminata con esito, punteggio ottenuto e data di fine.
+ */
 public class Partita {
+	/** Esito della partita (VINTA/PERSA/PAREGGIATA). */
 	private EsitoPartita esito;
+
+	/** Punteggio ottenuto dal giocatore locale. */
     private int punteggioOttenuto;
+	
+	/** Data e ora di fine partita. */
 	private LocalDateTime dataFine;
 	
 	/**

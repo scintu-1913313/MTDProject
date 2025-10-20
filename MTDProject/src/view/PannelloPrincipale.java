@@ -6,12 +6,27 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * Contenitore principale che raggruppa i pannelli navigabili dell'interfaccia
+ * (MENU, REGOLE, ACCOUNT) e gestisce il layout a schede.
+ */
 public class PannelloPrincipale extends Pannello {
 
+    /**
+     * Layout a schede per i pannelli navigabili.
+     */
 	private CardLayout layoutPannelloNascosto;
+
+    /** Pannello che contiene i pannelli navigabili usato per intercambiare i pannelli di MENU/REGOLE/ACCOUNT. */
 	private JPanel pannelloNascosto;
+
+    /** Pannello Menu. */
 	private PannelloMenu pannelloMenu;
+
+    /** Pannello Regole. */
     private PannelloRegole pannelloRegole;
+
+    /** Pannello Account. */
     private PannelloAccount pannelloAccount;
 
     /**

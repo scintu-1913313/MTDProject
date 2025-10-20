@@ -8,9 +8,20 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Classe astratta che estende JPanel per creare un pannello personalizzato
+ * con stile dell'applicazione. Implementa l'interfaccia Observer per
+ * aggiornamenti basati sul modello.
+ */
 public abstract class Pannello extends JPanel implements Observer {
+
+	/** Immagine di sfondo del pannello. */
 	protected BufferedImage sfondo;
+
+	/** Altezza default del pannello. */
 	public static final int ALTEZZA = 800;
+
+	/** Larghezza default del pannello. */
 	public static final int LARGHEZZA = 1200;
 
 	/**
@@ -23,6 +34,9 @@ public abstract class Pannello extends JPanel implements Observer {
 		setBorder(new EmptyBorder(20, 20, 20, 20));
 	}
 	
+	/**
+	 * Override del metodo paintComponent per disegnare lo sfondo personalizzato e i bordi arrotondati.
+	 */
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -9,9 +9,17 @@ import javax.swing.JOptionPane;
 import carte.*;
 
 @SuppressWarnings("deprecation")
+/**
+ * Modello principale dell'applicazione: coordina il gestore utente, crea le partite
+ * e notifica alle viste (observer) i cambi di stato. Espone metodi per iniziare
+ * e terminare partite, aggiornare i dati utente e comunicare eventi alle view.
+ */
 public class Model extends Observable implements Observer {
 	
+    /** Riferimento al gestore utente. */
 	private GestoreUtente gestoreUtente;
+
+    /** Riferimento alla partita corrente (null se non in corso). */
     private PartitaTressette partitaCorrente;
 
     /**

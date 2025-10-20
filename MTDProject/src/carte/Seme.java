@@ -1,11 +1,17 @@
+
 package carte;
 
+/**
+ * Enum che definisce i semi delle carte (coppe, denari, spade, bastoni)
+ * con la relativa rappresentazione testuale usata per i nomi dei file immagine.
+ */
 public enum Seme {
 	COPPE("coppe"),
 	DENARI("denari"),
 	SPADE("spade"),
 	BASTONI("bastoni");
 
+	/** Nome testuale del seme, usato per path e visualizzazione. */
 	private final String nomeSeme;
 	
 	/**

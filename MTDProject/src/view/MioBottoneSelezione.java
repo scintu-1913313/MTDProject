@@ -11,10 +11,19 @@ import javax.swing.JButton;
 
 import model.GestoreAudio;
 
+/**
+ * Classe che estende JButton per creare un bottone di selezione con due stati (on/off)
+ * rappresentati da due icone diverse e suono al click.
+ */
 public class MioBottoneSelezione extends JButton{
 	
+	/** Indica se il bottone e' selezionato (on) o no (off). */
 	private boolean cliccato = false;
+
+	/** Icona per lo stato "off" del bottone. */
 	private ImageIcon immagineOff;
+
+	/** Icona per lo stato "on" del bottone. */
 	private ImageIcon immagineOn;
 	
 	/**
@@ -81,6 +90,10 @@ public class MioBottoneSelezione extends JButton{
 		}
 	}
 	
+	/**
+	 * Restituisce lo stato di selezione del bottone.
+	 * @return true se selezionato, false altrimenti
+	 */
 	public boolean getCliccato()
 	{
 		return cliccato;

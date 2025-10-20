@@ -4,6 +4,9 @@ import controller.Controller;
 import model.Model;
 import view.View;
 
+/**
+ * Classe principale dell'applicazione JTressette: costruisce View, Model e Controller e avvia il gioco.
+ */
 public class JTressette{
 
 	/**

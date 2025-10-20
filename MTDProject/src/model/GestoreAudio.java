@@ -10,16 +10,30 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Classe che gestisce la riproduzione di effetti sonori nel gioco
+ * Classe che gestisce la riproduzione degli effetti sonori e della musica di sottofondo.
+ * Implementa un semplice singleton per centralizzare il controllo dell'audio.
  */
 public class GestoreAudio {
 	
+    /** Istanza singleton di GestoreAudio. */
     private static GestoreAudio instance;
+
+    /** Indica se la musica di sottofondo è abilitata. */
     private boolean musicaAbilitata;
+
+    /** Timer per la gestione della musica di sottofondo. */
     private Timer musicTimer;
+
+    /** Indica se la musica di sottofondo è attualmente in riproduzione. */
     private boolean musicaInRiproduzione;
+
+    /** Percorso della musica di sottofondo nelle risorse. */
     private static final String PATH_MUSICA_GIOCO = "/sounds/musicaDelGioco.wav";
+
+    /** Percorsi dell'effetto sonoro del bottone nelle risorse. */
     private static final String PATH_AUDIO_BOTTONE = "/sounds/button.wav";
+
+    /** Percorsi dell'effetto sonoro della carta nelle risorse. */
     private static final String PATH_AUDIO_CARTA = "/sounds/suonoCarta.wav";
 
     /**

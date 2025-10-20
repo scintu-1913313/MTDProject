@@ -32,59 +32,104 @@ import model.Pair;
 import model.PartitaTressette;
 import model.TipoGiocatore;
 
+/**
+ * Pannello principale di gioco che gestisce l'interfaccia utente durante una partita.
+ * Contiene i sottopannelli per i giocatori, il banco e le informazioni di gioco.
+ */
 public class PannelloGioco extends Pannello {
+
+	/** Tempo di attesa di default tra le azioni. */
 	private static int TEMPO_ATTESA_DEFAULT= 1000; //1000ms -> 1s
+
+	/** Tempo di attesa alla fine del turno. */
 	private static int TEMPO_ATTESA_FINE_TURNO= 3000; //3000ms -> 3s
+
+	/** Tempo di attesa alla fine del turno. */
 	private static int TEMPO_ATTESA_TRA_GIOCATORI= 2000; //2000ms -> 2s
 
+	/** Riferimento alla View principale. */
 	private View view;
+
+	/** Pannello principale del gioco. */
 	private JPanel pannelloPrincipaleDelGioco; 
 	
+	/** Pannello in alto con bottoni e informazioni. */
 	private JPanel pannelloInAlto;
+
+	/** Bottone per uscire dalla partita. */
 	private MioBottone bottoneExit;
+
+	/** Bottone per attivare/disattivare la musica. */
 	private MioBottoneSelezione bottoneMusica;
 
+	/** Label per mostrare il round corrente. */
 	JLabel labelRound;
 	
+	/** Label per mostrare i punti del giocatore Utente o della squadra1 (Utente + Pc1) */
 	JLabel label1Punti;
+
+	/** Label per mostrare i punti del Pc1 o della squadra2 (Pc2+Pc3) */
     JLabel label2Punti;
+
+	/** Nome del giocatore Utente o della squadra1 (Utente + Pc1). */
     String nomeGiocatori1;
+
+	/** Nome del Pc1 o della squadra2 (Pc2+Pc3). */
     String nomeGiocatori2;
 
+	/** Label per il giocatore 1 (Utente). */
     JLabel labelGiocatore1;
+
+	/** Label per il giocatore 2 (Pc1). */
     JLabel labelGiocatore2;
+
+	/** Label per il giocatore 3 (Pc2). */
     JLabel labelGiocatore3;
+
+	/** Label per il giocatore 4 (Pc3). */
     JLabel labelGiocatore4;
 
-    //sotto(Giocatore)
+	/** Pannello sotto per il Giocatore */
 	private JPanel pannelloSotto;
+	/** Pannello delle carte del giocatore sotto. */
 	private JPanel pannelloCarteGiocatoreSotto;
 	
-    //sopra
+    /**pannello sopra per il Pc1.*/
 	private JPanel pannelloSopra;
+	/** Pannello delle carte del Pc1 sopra. */
 	private JPanel pannelloCartePc1Sopra;
 	
-    //destra
+    /**pannello destra per il Pc2.*/
 	private JPanel pannelloDestra;
+	/** Pannello delle carte del Pc2 destra. */
 	private JPanel pannelloCartePc2Destra;
 	
-    //sinistra
+    /**pannello sinistra per il Pc3.*/
 	private JPanel pannelloSinistra;
+	/** Pannello delle carte del Pc3 sinistra. */
 	private JPanel pannelloCartePc3Sinistra;
 	
-	//centro
+	/** Pannello centrale per il banco. */
 	private JPanel pannelloCentrale;
+	/** Pannello delle carte del banco interno. */
 	private JPanel pannelloCarteBancoInterno;
 	
+	/** Lista delle carte del giocatore Utente ad ogni turno.*/
     private List<CartaView> carteGiocatore;
+	/** Lista delle carte del Pc1 ad ogni turno. */
     private List<CartaView> cartePc1;
+	/** Lista delle carte del Pc2 ad ogni turno. */
     private List<CartaView> cartePc2;
+	/** Lista delle carte del Pc3 ad ogni turno.*/
     private List<CartaView> cartePc3;
+	/** Lista delle carte del banco ad ogni turno.*/
     private List<CartaView> carteBanco;
 
+	/** Riferimento alla partita in corso. */
 	private PartitaTressette partitaInCorso;
-	//private boolean cartaInGioco; //viene usata per vedere se e' il turno del giocatore e se puo selezionare la carta
-	private boolean turnoDelGiocatore; //viene usata per vedere se e' il turno del giocatore e se puo selezionare la carta
+
+	/** Indica se è il turno del giocatore Utente. */
+	private boolean turnoDelGiocatore;
 
 	/**
 	 * Costruisce il pannello di gioco completo con tutti i sottopannelli e componenti.

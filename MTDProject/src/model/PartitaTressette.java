@@ -20,29 +20,71 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Implementa e gestisce la logica di una singola partita di Tressette.
+ * Contiene lo stato del mazzo, dei giocatori, del punteggio e le routine
+ * per gestire le mani, le accuse e il flusso della partita.
+ */
 public class PartitaTressette {
 
+	/** Numero di carte distribuite a ogni giocatore all'inizio della partita. */
     public static final int NUM_CARTE_PER_GIOCATORE = 10;
+
+	/** Gerarchia dei valori delle carte per il confronto. */
     private static final List<Integer> gerarchiaCarte = Arrays.asList(3, 2, 1, 10, 9, 8, 7, 6, 5, 4);
     
+	/** Riferimento al modello proprietario della partita (Model).*/
     private final Model model;
+
+	/** Riferimento al mazzo di carte usato nella partita.*/
     private final Mazzo mazzo;
 
+	/** Mazzo di carte attualmente in gioco (copia del mazzo iniziale). Usato per gestire i vari turni di gioco */
     private Mazzo mazzoInGioco;
+
+	/** Numero di giocatori partecipanti (2-4). */
     private final int numGiocatori;
+
+	/** Punteggio obiettivo per vincere la partita(11,21,31,41). */
     private final int punteggioStabilito;
+
+	/** Indica se la modalità con accuse è abilitata. */
     private final boolean accusa;
+
+	/** Tipo del giocatore il cui turno è attualmente in corso. */
     private TipoGiocatore turnoGiocatore; //0,1,2,3
+
+	/** Carta che stabilisce il palo della mano corrente. */
     private Carta cartaPalo;
+
+	/** Mappa delle carte giocate nella mano corrente presenti sul tavolo. */
     private Map<TipoGiocatore, Carta> carteManoDiGiocoOrdinate;
-    private List<Carta> carteUtenteOCarteSquadra1; //Utente o Utente+Pc1
-    private List<Carta> cartePc1OCarteSquadra2; //Pc1 o Pc2+Pc3
+
+	/** Carte vinte dall'utente o dalla squadra 1 (Utente o Utente+Pc1). */
+    private List<Carta> carteUtenteOCarteSquadra1; 
+
+	/** Carte vinte dal Pc1 o dalla squadra 2 (Pc1 o Pc2+Pc3). */
+    private List<Carta> cartePc1OCarteSquadra2;
+
+	/** Mappa dei giocatori partecipanti alla partita divisi per tipo.*/
     private HashMap<TipoGiocatore, Giocatore> giocatori;
+
+	/** Punteggio totale ottenuto dall'utente o dalla squadra 1(comprensivo dei punti d'accusa e punti bonus) */
     private double punteggioAccuseTotaleUtenteOCarteSquadra1;
+
+	/** Punteggio totale ottenuto dal Pc1 o dalla squadra 2(comprensivo dei punti d'accusa e punti bonus) */
     private double punteggioAccuseTotalePc1OCarteSquadra2;
+
+	/** Numero del turno corrente nella partita.*/
     private int numTurno;
+
+	/** Numero del round corrente nel turno.*/
     private int round;
+
+	/** Mappa dei punti ottenuti da ogni squadra in ogni turno.*/
     private Map<Integer, Pair<Double, Double>> puntiPerTurno;
+
+	/** Lista delle accuse totali fatte in un turno (Accusa e carte usate per l'accusa). */
     private List<Pair<Accusa, List<Carta>>> accuseTotaliTurno;
 
 	/**

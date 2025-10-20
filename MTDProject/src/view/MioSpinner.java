@@ -4,11 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * Classe astratta che estende JPanel per creare uno spinner personalizzato
+ * con frecce orizzontali per incremento e decremento del valore.
+ */
 public abstract class MioSpinner extends JPanel {
 
-    // Editor personalizzato con frecce orizzontali
+    /** Bottone sinistro per decrementare il valore. */
 	public final MioBottone leftButton;
+
+    /** Bottone destro per incrementare il valore. */
 	public final JButton rightButton;
+
+    /** Etichetta descrittiva dello spinner. */
 	public final MioLabel intestazione;
 
     /**

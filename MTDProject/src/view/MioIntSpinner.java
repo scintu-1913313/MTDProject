@@ -8,13 +8,25 @@ import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+/**
+ * Classe che estende MioSpinner per creare uno spinner numerico 
+ * con frecce orizzontali per incremento e decremento del valore.
+ */
 public class MioIntSpinner extends MioSpinner {
 
-	// Editor personalizzato con frecce orizzontali
+	/** Campo testo dove viene visualizzato il valore dello spinner. */
     private final JTextField textField;
+
+	/** Valore corrente dello spinner. */
     private int valoreCorrente;
+
+	/** Valore minimo dello spinner. */
     private int minimo;
+
+	/** Valore massimo dello spinner. */
     private int massimo;
+
+	/** Passo di incremento/decremento dello spinner. */
     private int step;
 
 	/**

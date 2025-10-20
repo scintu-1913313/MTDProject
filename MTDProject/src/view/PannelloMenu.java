@@ -10,14 +10,31 @@ import javax.imageio.ImageIO;
 import carte.*;
 import model.GestoreAudio;
 
+/** 
+ * Pannello che espone il menu principale del gioco: impostazioni partita,
+ * avvio partita, scelta mazzo, punteggio e opzioni di musica/accuse.
+ */
 public class PannelloMenu extends Pannello {
 
+    /** Riferimento alla View principale. */
 	private View view;
+
+    /** Bottone per avviare la partita. */
 	private MioBottone bottoneStart;
+
+    /** Spinner per selezionare il numero di giocatori. */
 	private MioIntSpinner spinnerNumeroGiocatori;
+
+    /** Spinner per selezionare il punteggio di vittoria. */
 	private MioIntSpinner spinnerPunteggio;
+
+    /** Spinner per selezionare il tipo di mazzo di carte. */
 	private MioImgSpinner spinnerTipoCarte;
+
+    /** Bottone per abilitare/disabilitare l'opzione accusa. */
 	private MioBottoneSelezione bottoneAccusa;
+
+    /** Bottone per attivare/disattivare la musica di sottofondo. */
     private MioBottone bottoneMusica;
 
     /**

@@ -15,9 +15,16 @@ import carte.Carta;
 import model.Accusa;
 import model.Pair;
 
+/**
+ * Dialogo che mostra le accuse effettuate dai giocatori e le carte coinvolte.
+ * E' utilizzato per visualizzare le carte che hanno generato un'accusa durante la partita.
+ */
 public class DialogoAccuse extends MioDialog {
 
+    /** Pannello dove verranno visualizzate le carte. */
 	private JPanel pannelloCarteCentrale;
+
+    /** Pannello centrale del dialogo. */
 	private JPanel pannelloCentrale;
 
     /**

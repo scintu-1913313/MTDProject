@@ -2,14 +2,20 @@ package model;
 
 import java.util.Map;
 
+/**
+ * Enum che rappresenta i possibili ruoli dei giocatori nella partita e relativo valore identificativo.
+ * UTENTE indica il giocatore locale, PC1, PC2, PC3 indicano i giocatori controllati dalla CPU.
+ */
 public enum TipoGiocatore {
 	UTENTE(0),
     PC1(1),
     PC2(2),
     PC3(3);
 	
+	/** Indice numerico del tipo di giocatore. */
     private final int tipo;
     
+	/** Mappa statica per convertire TipoGiocatore in stringa. */
     public static final Map<TipoGiocatore, String> mappaToString = Map.of(
     		TipoGiocatore.UTENTE, "Utente",
     		TipoGiocatore.PC1, "Pc1",

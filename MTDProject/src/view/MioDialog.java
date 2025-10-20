@@ -3,8 +3,13 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Classe astratta che estende JDialog per creare un dialogo modale(bloccante)
+ * con stile coerente e bottone di chiusura.
+ */
 public abstract class MioDialog extends JDialog {
 
+    /** Pannello dei bottoni del dialog. */
 	protected JPanel pannelloBottoni;
 
     /**

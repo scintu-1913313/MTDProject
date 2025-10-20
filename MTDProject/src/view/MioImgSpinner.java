@@ -18,14 +18,31 @@ import carte.*;
 import model.Avatar;
 import model.AvatarEnum;
 
+/**
+ * Classe che estende MioSpinner per creare uno spinner di immagini 
+ * Si basa su una lista di oggetti (Carte o Avatar).
+ */
 public class MioImgSpinner extends MioSpinner {
 
+	/** Etichetta che mostra l'immagine corrente dello spinner. */
     private JLabel labelImmagineCorrente;
+
+	/** Lista degli oggetti (Carte o Avatar) da mostrare nello spinner. */
 	private ArrayList<Object> oggetti;
+
+	/** Lista delle immagini degli oggetti per lo spinner. */
 	private ArrayList<ImageIcon> immaginiOggetti;
+
+	/** Indice dell'oggetto corrente nello spinner. */
     private int indiceCorrente;
+
+	/** Tipo di oggetto gestito dallo spinner (Carta o Avatar). */
     public final Class type;
+
+	/** Immagine ridotta corrente per la visualizzazione. */
     private Image immagineCorrenteRidotta;
+
+	/** Immagine corrente per la visualizzazione. */
     private ImageIcon immagineCorrente;
     
 	/**

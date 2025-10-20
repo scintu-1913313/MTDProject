@@ -1,12 +1,27 @@
 package model;
 
+/**
+ * Enum che rappresenta le possibili avatar disponibili per l'utente.
+ * Possibili avatar: DEFAULT (0), AVATAR1 (1), AVATAR2 (2), AVATAR3 (3), AVATAR4 (4).
+ */
 public enum AvatarEnum {
+
+	/** Avatar predefinito di default. */
 	DEFAULT(0),
+
+	/** Primo avatar selezionabile.*/
     AVATAR1(1),
+
+	/** Secondo avatar selezionabile.*/
     AVATAR2(2),
+
+	/** Terzo avatar selezionabile.*/
     AVATAR3(3),
+
+	/** Quarto avatar selezionabile.*/
     AVATAR4(4);
 	
+	/** Id numerico associato all'avatar. */
     private final int avatarId;
     
 	/**

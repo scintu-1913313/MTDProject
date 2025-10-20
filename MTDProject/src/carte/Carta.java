@@ -2,11 +2,20 @@ package carte;
 
 import model.Pair;
 
+/**
+ * Rappresenta una singola carta da gioco con seme, valore, tipo di mazzo
+ * e percorsi alle immagini fronte/retro.
+ */
 public class Carta {
+	/** Il seme della carta (coppe, denari, spade, bastoni). */
 	private final Seme seme;
+	/** Il valore della carta (asso, due, tre, ..., re). */
 	private final Valore valore;
+	/** Percorso relativo alla risorsa immagine del fronte della carta. */
 	private final String percorsoImmagine;
+	/** Percorso relativo alla risorsa immagine del retro della carta. */
 	private final String percorsoImmagineRetro;
+	/** Il tipo di mazzo a cui appartiene la carta (es. napoletane, piacentine). */
 	private final TipoMazzo tipoMazzo;
 	
 	/**
@@ -66,8 +75,10 @@ public class Carta {
 	}
 	
 	/**
-	 * Rappresentazione testuale compatta della carta.
-	 * @return stringa nel formato "<valore> di <seme>"
+	 * Restituisce una stringa che rappresenta la carta.
+	 * Il formato è: "<valore> di <seme>".
+	 *
+	 * @return la rappresentazione testuale della carta
 	 */
 	@Override
 	public String toString() {

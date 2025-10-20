@@ -6,6 +6,9 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+/**
+ * Classe che estende JLabel per creare una label con stile personalizzato dell'applicazione.
+ */
 public class MioLabel extends JLabel {
 
 	/**

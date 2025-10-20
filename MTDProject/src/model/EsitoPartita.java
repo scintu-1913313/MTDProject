@@ -1,19 +1,29 @@
 package model;
 
+/**
+ * Enum che rappresenta i possibili esiti di una partita con le loro rappresentazioni testuali.
+ * Possibili esiti: VINTA, PERSA, PAREGGIATA.
+ */
 public enum EsitoPartita {
 
+    /** Partita vinta dal giocatore */
     VINTA("Vinta"),
+
+    /** Partita persa dal giocatore */
     PERSA("Persa"),
+
+    /** Partita terminata in pareggio */
     PAREGGIATA("Pareggiata");
 
-    private final String nomeStato;
+    /** Nome rappresentativo dell'esito della partita. */
+    private final String nomeEsito;
 
     /**
      * Costruisce un esito della partita con il relativo nome.
-     * @param nomeStato Il nome dello stato della partita
+     * @param nomeEsito Il nome dell'esito della partita
      */
-    EsitoPartita(String nomeStato) {
-        this.nomeStato = nomeStato;
+    EsitoPartita(String nomeEsito) {
+        this.nomeEsito = nomeEsito;
     }
 
     /**
@@ -23,7 +33,7 @@ public enum EsitoPartita {
      */
     public static EsitoPartita fromString(String esito) {
         for (EsitoPartita s : EsitoPartita.values()) {
-            if (s.nomeStato.equalsIgnoreCase(esito)) {
+            if (s.nomeEsito.equalsIgnoreCase(esito)) {
                 return s;
             }
         }
@@ -31,20 +41,20 @@ public enum EsitoPartita {
     }
     
     /**
-     * Restituisce la stringa rappresentativa dello stato della partita.
-     * @param stato Lo stato della partita
-     * @return La stringa associata allo stato tramite toString()
+     * Restituisce la stringa rappresentativa dell'esito della partita.
+     * @param esito L'esito della partita
+     * @return La stringa associata all'esito tramite toString()
      */
-    public static String getStatoPartita(EsitoPartita stato) {
-        return stato.toString();
+    public static String getEsitoPartita(EsitoPartita esito) {
+        return esito.toString();
     }
 
     /**
-     * Restituisce la rappresentazione testuale dello stato della partita.
-     * @return La stringa associata allo stato
+     * Restituisce la rappresentazione testuale dello esito della partita.
+     * @return La stringa associata allo esito
      */
     @Override
     public String toString() {
-        return nomeStato;
+        return nomeEsito;
     }
 }

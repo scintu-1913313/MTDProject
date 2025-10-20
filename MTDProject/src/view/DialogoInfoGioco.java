@@ -3,8 +3,12 @@ package view;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * Dialogo che mostra informazioni di gioco in un pannello decorato con chiusura automatica a tempo.
+ */
 public class DialogoInfoGioco extends MioDialog {
 
+    /** Pannello centrale del dialogo. */
     private JPanel pannelloCentrale;
 
     /**

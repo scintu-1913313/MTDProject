@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/** 
+ * Pannello che mostra le regole del gioco e il bottone di ritorno al menu.
+ */
 public class PannelloRegole extends Pannello{
 	
 	/**

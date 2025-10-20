@@ -11,8 +11,13 @@ import javax.swing.JButton;
 
 import model.GestoreAudio;
 
+/**
+ * Classe che estende MioBottone per creare un bottone con icona di avatar e suono al click.
+ * Usatato nel pannello menu' per mostrare informazioni utente o profilo.
+ */
 public class MioBottoneInfo extends MioBottone{
 	
+        /** Icona dell'avatar mostrata nel bottone. */
 	private ImageIcon immagineProfilo;
 	
         /**

@@ -3,7 +3,13 @@ package carte;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Rappresenta un mazzo di carte. Incapsula la lista di carte e fornisce
+ * operazioni di base come mescolare e ottenere la lista. La creazione
+ * avviene tramite il {@link Mazzo.MazzoBuilder}.
+ */
 public class Mazzo {
+	/** Lista interna delle carte che compongono il mazzo. */
 	private final List<Carta> carte;
 	
 	/**

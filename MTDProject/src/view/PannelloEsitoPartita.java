@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import model.EsitoPartita;
 
+/**
+ * Classe che fornisce un metodo statico per mostrare l'esito della partita
+ * in una finestra di dialogo modale.
+ */
 public class PannelloEsitoPartita {
 
     /**

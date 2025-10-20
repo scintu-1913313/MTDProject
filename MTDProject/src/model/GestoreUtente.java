@@ -7,9 +7,19 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Classe che gestisce i dati dell'utente.
+ * Si occupa di gestire la serializzazione/deserializzazione e la persistenza dei dati attraverso un file JSON.
+ * Gestisce inoltre lo storico delle partite, il livello dell'utente e l'aggiornamento e cancellazione dei dati
+ */
 public class GestoreUtente {
+	/** Gestore file usato per lettura/scrittura JSON. */
 	private final GestoreFile gestoreFile = GestoreFile.getGestoreFile();
+	
+	/** Percorso del file JSON utente (relativo al progetto). */
 	private final String percorsoFileUtente = "MTDProject/utente/fileInformazioniUtente.json"; //final perche' non deve essere modificato
+	
+	/** Istanza Utente gestita. */
 	private Utente utente;
 	
 	/**

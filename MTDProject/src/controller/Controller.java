@@ -10,18 +10,32 @@ import view.PannelloAccount;
 import view.PannelloGioco;
 import view.PannelloMenu;
 
-
+/**
+ * Controller principale dell'applicazione: connette il Model con la View e
+ * instrada le azioni dell'interfaccia verso le operazioni sul modello.
+ */
 @SuppressWarnings("deprecation")
 public class Controller {
 	
+	/**	Riferimento al modello dell'applicazione.*/
 	private Model modello;
+
+	/**Riferimento alla vista dell'applicazione.*/
 	private View vista;
+
+	/**Riferimento al pannello menu.*/
 	private PannelloMenu pannelloMenu;
+
+	/**Riferimento al pannello account.*/
 	private PannelloAccount pannelloAccount;
+
+	/**Riferimento al pannello di gioco.*/
 	private PannelloGioco pannelloGioco;
 
     /**
-     * Class constructor.
+     * Costruisce il controller gestendo i riferimenti a modello e vista.
+	 * @param model riferimento al modello
+	 * @param view riferimento alla vista
      */
     public Controller(Model model, View view) {
         this.modello = model;

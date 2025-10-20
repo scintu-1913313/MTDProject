@@ -1,7 +1,15 @@
 package model;
 
+/**
+ * Utility generica che rappresenta una coppia immutabile di valori (first, second).
+ * @param <T> tipo del primo elemento
+ * @param <U> tipo del secondo elemento
+ */
 public class Pair<T, U> {
+    /** Primo elemento della coppia. */
     private final T first;
+    
+    /** Secondo elemento della coppia. */
     private final U second;
 
     /**

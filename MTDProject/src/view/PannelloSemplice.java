@@ -10,9 +10,15 @@ import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
+/** 
+ * Pannello semplice con angoli arrotondati e sfondo custom.
+ */
 public class PannelloSemplice extends JPanel {
 
+    /** Larghezza dell'arco degli angoli arrotondati. */
 	private int arcWidth = 30;
+
+    /** Altezza dell'arco degli angoli arrotondati. */
     private int arcHeight = 30;
 
     /**

@@ -1,10 +1,15 @@
+
 package carte;
 
+/**
+ * Tipi di mazzo supportati dal gioco con la relativa rappresentazione testuale.
+ */
 public enum TipoMazzo {
 
 	NAPOLETANTE("napoletane"),
 	PIACENTINE("piacentine");
 	
+	/** Stringa relativa al tipo di mazzo. */
 	private final String nomeTipoMazzo;
 	
 	/**

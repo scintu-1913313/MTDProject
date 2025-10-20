@@ -1,5 +1,9 @@
 package carte;
 
+/**
+ * Enum che rappresenta i valori delle carte e associa a ciascuno
+ * un valore numerico utile per la logica di gioco.
+ */
 public enum Valore {
 	ASSO(1),
 	DUE(2),
@@ -12,6 +16,7 @@ public enum Valore {
 	CAVALLO(9),
 	RE(10);
 
+	/** Valore numerico associato al nome enum (es. ASSO -> 1). */
 	private final int valore;
 	
 	/**

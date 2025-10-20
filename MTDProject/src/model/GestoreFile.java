@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Classe utility che fornisce operazioni di lettura e scrittura di file JSON.
+ * Implementa il pattern Singleton per centralizzare l'accesso al filesystem.
+ */
 public class GestoreFile {
-	
+	/** Istanza singleton al gestore file. */
 	private static GestoreFile obj; 
 	
 	/**

@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Classe che estende JButton per creare un bottone con stile personalizzato dell'applicazione.
+ */
 public class MioBottone extends JButton {
 	    
     static {

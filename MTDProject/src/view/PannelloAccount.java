@@ -28,14 +28,34 @@ import model.Utente;
 import model.Model;
 import model.Partita;
 
+/**
+ * Pannello che permette la gestione dell'account utente: 
+ * selezione avatar, inserimento nickname, visualizzazione livello e storico partite.
+ */
 public class PannelloAccount extends Pannello{
+
+	/** Pannello interno contenente gli elementi dell'account. */
 	private JPanel pannelloInternoAccount;
+
+	/** Spinner per la selezione dell'avatar. */
 	private MioImgSpinner spinnerTipoAvatar;
+
+	/** Campo di testo per l'inserimento del nickname. */
 	private JTextField nicknameField;
+
+	/** Indica se l'utente è registrato. */
 	private boolean utenteRegistrato = false;
+
+	/** Label che mostra il livello dell'utente. */
 	private MioLabel livello;
+
+	/** Bottone per salvare i dati dell'utente. */
 	private MioBottone bottoneSalvataggioDati;
+
+	/** Area di testo che mostra lo storico delle partite giocate. */
 	private JTextArea areaTesto;
+
+	/** Riferimento alla View principale. */
 	private View view;
 	
 	/**

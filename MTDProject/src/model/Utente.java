@@ -3,15 +3,28 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Rappresenta l'utente locale dell'applicazione. Implementa il pattern Singleton
+ * per mantenere uno stato unico condiviso dell'utente.
+ */
 public class Utente {
+	/** Avatar scelto dall'utente (enum). */
 	private AvatarEnum avatar;
+
+	/** Nickname dell'utente; vuoto se non registrato. */
 	private String nickname;
+
+    /** Livello dell'utente */
     private int livello;
+
+    /** Storico delle partite giocate dall'utente. */
     private List<Partita> storicoPartite = new ArrayList<>();
 
-    private static Utente istanza;    
+    /** Istanza singleton di Utente. */
+    private static Utente istanza;
+     
     /**
-     * Costruttore privato(Singleton Pattern) che inizializza l'utente allo stato di default.
+     * Costruttore privato (Singleton Pattern) che inizializza l'utente allo stato di default.
      */
     private Utente() {
         resetUtente();

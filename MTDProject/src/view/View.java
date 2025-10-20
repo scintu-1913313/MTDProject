@@ -13,18 +13,36 @@ import com.formdev.flatlaf.FlatLightLaf;
 import controller.Controller;
 
 
+/**
+ * Finestra principale dell'applicazione che estende il Frame. Inizializza e gestisce i pannelli
+ * principali (menu, account, gioco) e funge da punto di collegamento tra
+ * la UI e il Controller.
+ */
 @SuppressWarnings("deprecation")
 public class View extends JFrame implements Observer {
+
+    /** Colore verde del tavolo da gioco. */
 	public static final Color VERDE_TAVOLO = new Color(2, 86, 14);
+    /** Colore verde usato per l'effetto hover sui bottoni. */
     public static final Color VERDE_HOVER = new Color(70, 180, 70);
+    /** Colore chiaro usato per i bordi dei bottoni e pannelli. */
     public static final Color BORDO_CHIARO = new Color(255, 255, 255);
+    /** Colore trasparente usato per sfondi. */
     public static final Color TRASPARENTE = new Color(0, 0, 0, 0);
+    /** Colore verde chiaro usato per i pannelli. */
     public static final Color VERDE_PANNELLO = new Color(0, 128, 0);
+    /** Colore verde scuro usato per testi e dettagli. */
     public static final Color VERDE_SCURO= new Color(0, 90, 0);
+    /** Font principale usato nell'applicazione. */
     public static final Font FONT_GIOCO = new Font("Georgia", Font.BOLD, 14);
 
+    /** Riferimento al controller dell'applicazione. */
     private Controller controller;
+
+    /** Riferimento al pannello principale che raggruppa i pannelli navigabili. */
     private PannelloPrincipale pannelloPrincipale;
+
+    /** Riferimento al pannello di gioco. */
     private PannelloGioco pannelloGioco;
 
     /**

@@ -9,22 +9,52 @@ import javax.swing.*;
 import javax.swing.Timer;
 import carte.*;
 
+/**
+ * Classe che rappresenta la vista grafica per una singola carta, con supporto per hover, animazione di shaking,
+ * visualizzazione fronte/retro e rotazione.
+ */
 public class CartaView extends JPanel {
 
+    /** Riferimento alla carta da visualizzare. */
     private Carta carta;
+
+    /** Immagine della carta. */
     private Image immagine;
+
+    /** Larghezza della carta in modalità ridotta (PC). */
     private static int CARTA_LARGHEZZA_PC = 50;
+
+    /** Altezza della carta in modalità ridotta (PC). */
     private static int CARTA_ALTEZZA_PC = 90;
+
+    /** Larghezza  della carta in modalità normale (utente). */
     private static int CARTA_LARGHEZZA_UTENTE = 70;
+
+    /** Altezza della carta in modalità normale (utente). */
     private static int CARTA_ALTEZZA_UTENTE = 130;
+
+    /** Stato di hover del mouse sulla carta. */
     private boolean mouseOver = false;
+
+    /** Indica se la carta e' mostrata coperta (retro). */
     private boolean coperta;
+
+    /** Indica se la carta e' ruotata di 90 gradi. */
     private boolean ruotata;
 
+    /** Offset orizzontale per l'animazione di shaking. */
     private int shakeOffsetX = 0;
+
+    /** Timer per l'animazione di shaking. */
     private Timer shakeTimer;
+
+    /** Passo corrente dell'animazione di shaking. */
     private int shakeStep = 0;
+
+    /** Durata dell'animazione di shaking. */
     private final int SHAKE_DURATION = 10; // numero di oscillazioni
+
+    /** Ampiezza dell'animazione di shaking. */
     private final int SHAKE_AMPLITUDE = 5; // pixel di spostamento
 
     /**
