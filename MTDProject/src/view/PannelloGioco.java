@@ -367,6 +367,8 @@ public class PannelloGioco extends Pannello {
     
     private void gestisciCartaScelta(Object arg) {
     	TipoGiocatore giocatoreCheHaGiocatoLaCarta = (TipoGiocatore) arg;
+    	
+    	GestoreAudio.getInstance().playCarta();
     	if(giocatoreCheHaGiocatoLaCarta.equals(TipoGiocatore.UTENTE))
     	{
 			turnoDelGiocatore = false; //il giocatore ha giocato

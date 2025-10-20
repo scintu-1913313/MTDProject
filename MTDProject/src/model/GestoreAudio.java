@@ -20,6 +20,7 @@ public class GestoreAudio {
     private boolean musicaInRiproduzione;
     private static final String PATH_MUSICA_GIOCO = "/sounds/musicaDelGioco.wav";
     private static final String PATH_AUDIO_BOTTONE = "/sounds/button.wav";
+    private static final String PATH_AUDIO_CARTA = "/sounds/suonoCarta.wav";
 
     /**
      * Costruttore privato (pattern Singleton)
@@ -66,14 +67,21 @@ public class GestoreAudio {
     }
     
     /**
-     * Riproduce un effetto sonoro
+     * Riproduce l' effetto sonoro del bottone
      * 
-     * @param name Il nome dell'effetto sonoro da riprodurre
      */
     public void playBottone() {        
         play(PATH_AUDIO_BOTTONE);
     }
-        
+    
+    /**
+     * Riproduce l' effetto sonoro della carta
+     * 
+     */
+    public void playCarta() {        
+        play(PATH_AUDIO_CARTA);
+    }
+    
     /**
      * Avvia la riproduzione della musica di sottofondo
      */
