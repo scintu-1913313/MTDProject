@@ -42,7 +42,7 @@ public class DialogoAccuse extends MioDialog {
         List<Carta> carte = accuse.getSecond();
         int numCarte = carte.size();
     	for (int i=0; i<numCarte; i++) {
-    		CartaView cartaView = new CartaView(carte.get(i),false,false);
+    		CartaView cartaView = new CartaView(carte.get(i),false,false,false);
     		pannelloCarteCentrale.add(cartaView,cartaView.toString());
     	}
     	

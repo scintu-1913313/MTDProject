@@ -2,7 +2,10 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +25,8 @@ public class MioImgSpinner extends MioSpinner {
 	private ArrayList<ImageIcon> immaginiOggetti;
     private int indiceCorrente;
     public final Class type;
+    private Image immagineCorrenteRidotta;
+    private ImageIcon immagineCorrente;
     
 	public MioImgSpinner(String titolo, ArrayList<Object> oggetti){
 		super(titolo);
@@ -33,6 +38,9 @@ public class MioImgSpinner extends MioSpinner {
 		
 		costruisciImmaginiCarte();
         labelImmagineCorrente = new JLabel("", immaginiOggetti.get(indiceCorrente), JLabel.CENTER);
+        labelImmagineCorrente.setOpaque(false);
+        setOpaque(false);
+        
         add(labelImmagineCorrente, BorderLayout.CENTER);
         
 		leftButton.addActionListener((ActionEvent e) -> decrementaValore());
@@ -111,7 +119,7 @@ public class MioImgSpinner extends MioSpinner {
 				Carta c = (Carta) ogg;
 				path = c.getPercorsoImmagine();
 				altezza = 130;
-				larghezza = 90;
+				larghezza = 80;
 			}
 			else if(ogg.getClass() == Avatar.class)
 			{
@@ -126,8 +134,8 @@ public class MioImgSpinner extends MioSpinner {
 			}
 			try {
 
-				ImageIcon immagineCorrente = new ImageIcon(getClass().getResource(path));
-		        Image immagineCorrenteRidotta = immagineCorrente.getImage().getScaledInstance(larghezza, altezza, Image.SCALE_SMOOTH);
+				immagineCorrente = new ImageIcon(getClass().getResource(path));
+		        immagineCorrenteRidotta = immagineCorrente.getImage().getScaledInstance(larghezza, altezza, Image.SCALE_SMOOTH);
 		        immaginiOggetti.addLast(new ImageIcon(immagineCorrenteRidotta));
 			} 
 			catch 
@@ -159,4 +167,6 @@ public class MioImgSpinner extends MioSpinner {
 		    System.out.println("Oggetto non trovato.");
 		}
 	}
+
+
 }

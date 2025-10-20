@@ -4,7 +4,7 @@ import controller.Controller;
 import model.Model;
 import view.View;
 
-public class JTressette {
+public class JTressette{
 
 	public static void main(String[] args) {
 		System.out.println("MAIN");
@@ -13,6 +13,4 @@ public class JTressette {
 		view.setController(c);
 		c.start();
 	}
-	
-
 }

@@ -428,7 +428,7 @@ public class PannelloGioco extends Pannello {
         
         int numCarte = Math.min(PartitaTressette.NUM_CARTE_PER_GIOCATORE, carte.size());
     	for (int i=0; i<numCarte; i++) {
-    		CartaView cartaView = new CartaView(carte.get(i),false,false);
+    		CartaView cartaView = new CartaView(carte.get(i),false,false,false);
     		// Aggiungi un listener per il clic sulla carta
     		cartaView.addMouseListener(new MouseAdapter() {
                 @Override
@@ -469,7 +469,7 @@ public class PannelloGioco extends Pannello {
         if(carte != null) {
         	int numCarte = carte.size();
         	for (int i=0; i<numCarte; i++) {
-        		CartaView cartaView = new CartaView(carte.get(i),false,false);
+        		CartaView cartaView = new CartaView(carte.get(i),false,false,false);
         		carteBanco.add(cartaView);
         		pannelloCarteBancoInterno.add(cartaView,cartaView.toString());
         	}
@@ -501,7 +501,7 @@ public class PannelloGioco extends Pannello {
         
         int numCarte = Math.min(PartitaTressette.NUM_CARTE_PER_GIOCATORE, carte.size());
     	for (int i=0; i<numCarte; i++) {
-    		CartaView cartaView = new CartaView(carte.get(i),true,false);
+    		CartaView cartaView = new CartaView(carte.get(i),true,false,false);
     		cartePc1.add(cartaView);
     		pannelloCartePc1Sopra.add(cartaView,cartaView.toString());
     	}
@@ -518,7 +518,7 @@ public class PannelloGioco extends Pannello {
         
         int numCarte = Math.min(PartitaTressette.NUM_CARTE_PER_GIOCATORE, carte.size());
     	for (int i=0; i<numCarte; i++) {
-    		CartaView cartaView = new CartaView(carte.get(i),true,true);
+    		CartaView cartaView = new CartaView(carte.get(i),true,true,true);
     		cartePc2.add(cartaView);
     		pannelloCartePc2Destra.add(cartaView,cartaView.toString());
     	}
@@ -532,7 +532,7 @@ public class PannelloGioco extends Pannello {
         
         int numCarte = Math.min(PartitaTressette.NUM_CARTE_PER_GIOCATORE, carte.size());
     	for (int i=0; i<numCarte; i++) {
-    		CartaView cartaView = new CartaView(carte.get(i),true,true);
+    		CartaView cartaView = new CartaView(carte.get(i),true,true,true);
     		cartePc3.add(cartaView);
     		pannelloCartePc3Sinistra.add(cartaView,cartaView.toString());
     	}

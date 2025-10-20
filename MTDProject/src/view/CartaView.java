@@ -1,29 +1,21 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.RoundRectangle2D;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.Timer;
-
 import carte.*;
 
-public class CartaView extends JPanel{
-	
-	private Carta carta;
+public class CartaView extends JPanel {
+
+    private Carta carta;
     private Image immagine;
     private static int CARTA_LARGHEZZA_PC = 50;
     private static int CARTA_ALTEZZA_PC = 90;
-    private static int CARTA_LARGHEZZA_UTENTE = 80;
+    private static int CARTA_LARGHEZZA_UTENTE = 70;
     private static int CARTA_ALTEZZA_UTENTE = 130;
     private boolean mouseOver = false;
     private boolean coperta;
@@ -34,8 +26,8 @@ public class CartaView extends JPanel{
     private int shakeStep = 0;
     private final int SHAKE_DURATION = 10; // numero di oscillazioni
     private final int SHAKE_AMPLITUDE = 5; // pixel di spostamento
-    
-    public CartaView(Carta carta, boolean coperta, boolean ruotata) {
+
+    public CartaView(Carta carta, boolean coperta, boolean ruotata, boolean ridotta) {
         this.carta = carta;
         this.coperta = coperta;
         this.ruotata = ruotata;
@@ -43,80 +35,87 @@ public class CartaView extends JPanel{
         int larghezza;
         int altezza;
         String path = "";
-        //se la carta e' coperta e di un pc, non del giocatore
-    	if(coperta == true){
-    		path = carta.getPercorsoImmagineRetro();
-    		larghezza = CARTA_LARGHEZZA_PC;
+
+        if(coperta) {
+            path = carta.getPercorsoImmagineRetro();
+        }
+        else
+        {
+            path = carta.getPercorsoImmagine();
+        }
+        if (ridotta) {
+            larghezza = CARTA_LARGHEZZA_PC;
             altezza = CARTA_ALTEZZA_PC;
-    	}
-    	else {
-    		path = carta.getPercorsoImmagine();
-    		larghezza = CARTA_LARGHEZZA_UTENTE;
+        } else {
+            larghezza = CARTA_LARGHEZZA_UTENTE;
             altezza = CARTA_ALTEZZA_UTENTE;
-		}
-    	
+        }
+
         setPreferredSize(new Dimension(larghezza, altezza));
-        setOpaque(false); // Assicura che il pannello sia opaco
-        setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // top, left, bottom, right
-        
+        setOpaque(false);
 
-
-    	if (ruotata) {
+        if (ruotata) {
             setPreferredSize(new Dimension(altezza, larghezza));
         } else {
             setPreferredSize(new Dimension(larghezza, altezza));
         }
-        try {
 
-			ImageIcon immagineCorrente = new ImageIcon(getClass().getResource(path));
-	        Image immagineCorrenteRidotta = immagineCorrente.getImage().getScaledInstance(larghezza, altezza, Image.SCALE_SMOOTH);
-	        immagine = immagineCorrenteRidotta;
-		} 
-		catch 
-		(Exception e) {
-			System.out.println("Errore nella lettura del file: "+ path+"; Errore: " +e.getMessage());
-		}
-        
-        //se sono il giocatore vero do' la possibilita' di cliccare le carte
-        if(coperta == false) {
-	        addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseEntered(MouseEvent e) {
-	                mouseOver = true;
-	                setBorder(BorderFactory.createLineBorder(Color.RED, 2));
-	                repaint();
-	            }
-	            
-	            @Override
-	            public void mouseExited(MouseEvent e) {
-	                mouseOver = false;
-	                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-	                repaint();
-	            }
-	        });
+        try {
+            ImageIcon immagineCorrente = new ImageIcon(getClass().getResource(path));
+            Image immagineCorrenteRidotta = immagineCorrente.getImage()
+                    .getScaledInstance(larghezza, altezza, Image.SCALE_SMOOTH);
+            immagine = immagineCorrenteRidotta;
+        } catch (Exception e) {
+            System.out.println("Errore nella lettura del file: " + path + "; Errore: " + e.getMessage());
         }
-        
+
+        // se sono il giocatore vero do' la possibilita' di cliccare le carte
+        if (!coperta) {
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    mouseOver = true;
+                    repaint();
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    mouseOver = false;
+                    repaint();
+                }
+            });
+        }
     }
-    
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (immagine != null) {
             Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            if (ruotata) {
-                g2d.translate(getWidth() / 2 + shakeOffsetX, getHeight() / 2);
-                g2d.rotate(Math.toRadians(90));
-                g2d.drawImage(immagine, -getHeight() / 2, -getWidth() / 2, getHeight(), getWidth(), this);
-            } else {
-                g2d.translate(shakeOffsetX, 0);
-                g2d.drawImage(immagine, 0, 0, getWidth(), getHeight(), this);
+            Shape clip = new RoundRectangle2D.Double(
+                    0, 0, getWidth(), getHeight(), 20, 20);
+
+            // Clip per angoli stondati
+            g2d.setClip(clip);
+
+            // Disegna immagine
+            g2d.drawImage(immagine, shakeOffsetX, 0, getWidth(), getHeight(), this);
+
+            // Disegna bordo stondato solo se mouseOver
+            if (mouseOver) {
+                g2d.setClip(null); // reset clip per disegnare sopra
+                g2d.setColor(Color.RED);
+                g2d.setStroke(new BasicStroke(2));
+                g2d.draw(new RoundRectangle2D.Double(
+                        0, 0, getWidth() - 1, getHeight() - 1, 20, 20));
             }
 
             g2d.dispose();
         }
     }
-    
+
     public void startShakeAnimation() {
         if (shakeTimer != null && shakeTimer.isRunning()) return;
 
@@ -133,7 +132,7 @@ public class CartaView extends JPanel{
         });
         shakeTimer.start();
     }
-    
+
     public Carta getCarta() {
         return carta;
     }
