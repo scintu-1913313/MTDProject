@@ -76,7 +76,7 @@ public class Carta {
 	
 	/**
 	 * Restituisce una stringa che rappresenta la carta.
-	 * Il formato è: "<valore> di <seme>".
+	 * Il formato è: "valore di seme".
 	 *
 	 * @return la rappresentazione testuale della carta
 	 */

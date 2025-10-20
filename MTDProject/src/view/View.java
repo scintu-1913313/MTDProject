@@ -120,6 +120,7 @@ public class View extends JFrame implements Observer {
         revalidate();
         repaint();
     }
+
     /**
      * Restituisce il pannello di gioco.
      * @return pannello di gioco
@@ -127,7 +128,8 @@ public class View extends JFrame implements Observer {
     public PannelloGioco getPannelloGioco() {
     	return pannelloGioco;
     }
-    /*
+
+    /**
      * Restituisce il pannello account.
      * @return pannello account
      */

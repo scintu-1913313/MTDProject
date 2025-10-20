@@ -6,7 +6,9 @@ package carte;
  */
 public enum TipoMazzo {
 
+	/** Mazzo di tipo napoletane. */
 	NAPOLETANTE("napoletane"),
+	/** Mazzo di tipo piacentine. */
 	PIACENTINE("piacentine");
 	
 	/** Stringa relativa al tipo di mazzo. */

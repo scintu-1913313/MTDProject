@@ -6,9 +6,13 @@ package carte;
  * con la relativa rappresentazione testuale usata per i nomi dei file immagine.
  */
 public enum Seme {
+	/** Seme coppe. */
 	COPPE("coppe"),
+	/** Seme denari. */
 	DENARI("denari"),
+	/** Seme spade. */
 	SPADE("spade"),
+	/** Seme bastoni. */
 	BASTONI("bastoni");
 
 	/** Nome testuale del seme, usato per path e visualizzazione. */

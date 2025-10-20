@@ -8,7 +8,6 @@ import java.util.Optional;
 import javax.swing.JOptionPane;
 import carte.*;
 
-@SuppressWarnings("deprecation")
 /**
  * Modello principale dell'applicazione: coordina il gestore utente, crea le partite
  * e notifica alle viste (observer) i cambi di stato. Espone metodi per iniziare

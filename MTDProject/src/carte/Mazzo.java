@@ -65,6 +65,12 @@ public class Mazzo {
 		private final List<Carta> carte = new ArrayList<>();
 		
 		/**
+	     * Costruttore di default per il builder del mazzo.
+	     */
+	    public MazzoBuilder() {
+	    }
+	    
+		/**
 		 * Genera tutte le carte standard per il tipo di mazzo specificato.
 		 * Crea un mazzo completo di carte.
 		 *

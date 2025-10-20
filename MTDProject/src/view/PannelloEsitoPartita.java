@@ -12,6 +12,13 @@ import model.EsitoPartita;
  */
 public class PannelloEsitoPartita {
 
+	/**
+	 * Costruttore di default
+	 */
+	public PannelloEsitoPartita() {
+	    // default
+	}
+	
     /**
      * Mostra una finestra di dialogo modale con l'esito della partita.
      * @param parent componente padre per il posizionamento della dialog

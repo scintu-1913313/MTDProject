@@ -5,15 +5,25 @@ package carte;
  * un valore numerico utile per la logica di gioco.
  */
 public enum Valore {
+	/** Valore asso(1). */
 	ASSO(1),
+	/** Valore due(2). */
 	DUE(2),
+	/** Valore tre(3). */
 	TRE(3),
+	/** Valore quattro(4). */
 	QUATTRO(4),
+	/** Valore cinque(5). */
 	CINQUE(5),
+	/** Valore sei(6). */
 	SEI(6),
+	/** Valore sette(7). */
 	SETTE(7),
+	/** Valore fante(8). */
 	FANTE(8),
+	/** Valore cavallo(9). */
 	CAVALLO(9),
+	/** Valore re(10). */
 	RE(10);
 
 	/** Valore numerico associato al nome enum (es. ASSO -> 1). */

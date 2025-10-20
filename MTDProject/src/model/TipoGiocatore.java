@@ -7,9 +7,15 @@ import java.util.Map;
  * UTENTE indica il giocatore locale, PC1, PC2, PC3 indicano i giocatori controllati dalla CPU.
  */
 public enum TipoGiocatore {
+	/** Giocatore vero. */
 	UTENTE(0),
+	/** Giocatore IA, PC1. */
     PC1(1),
+
+	/** Giocatore IA, PC2. */
     PC2(2),
+
+	/** Giocatore IA, PC3. */
     PC3(3);
 	
 	/** Indice numerico del tipo di giocatore. */
