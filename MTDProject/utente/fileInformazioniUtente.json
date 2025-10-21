@@ -115,8 +115,18 @@
             "esito": "PERSA",
             "dataFine": "21/10/2025 15:51",
             "punteggioOttenuto": 0
+        },
+        {
+            "esito": "VINTA",
+            "dataFine": "21/10/2025 23:05",
+            "punteggioOttenuto": 12
+        },
+        {
+            "esito": "VINTA",
+            "dataFine": "21/10/2025 23:11",
+            "punteggioOttenuto": 13
         }
     ],
     "avatar": "AVATAR1",
-    "livello": 3
+    "livello": 5
 }

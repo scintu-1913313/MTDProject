@@ -36,12 +36,57 @@ public class GestoreAudio {
     /** Percorsi dell'effetto sonoro della carta nelle risorse. */
     private static final String PATH_AUDIO_CARTA = "/sounds/suonoCarta.wav";
 
+    /** La clip audio usata per riprodurre il suono del bottone. */
+    private Clip clipBottone;
+    
+    /** La clip audio usata per riprodurre il suono della carta. */
+    private Clip clipCarta;
+
     /**
      * Costruttore privato (pattern Singleton)
+     * Inizzializza le clip audio usati per i bottoni e le carte
      */
     private GestoreAudio() {
     	musicaAbilitata = false;
     	musicaInRiproduzione= false;
+    	
+    	try {
+            URL soundURL = GestoreAudio.class.getResource(PATH_AUDIO_BOTTONE);
+
+            if (soundURL!=null) {
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
+                clipBottone = AudioSystem.getClip();
+                clipBottone.open(audioStream);
+            } else {
+                System.err.println("File audio non trovato: " + PATH_AUDIO_BOTTONE);
+            }
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println("Errore nella riproduzione dell'audio: " + PATH_AUDIO_BOTTONE);
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+        	System.err.println("Errore nella riproduzione dell'audio: " + PATH_AUDIO_BOTTONE);
+            e.printStackTrace();
+		}
+    	
+    	try {
+            URL soundURL = GestoreAudio.class.getResource(PATH_AUDIO_CARTA);
+
+            if (soundURL!=null) {
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
+                clipCarta = AudioSystem.getClip();
+                clipCarta.open(audioStream);
+            } else {
+                System.err.println("File audio non trovato: " + PATH_AUDIO_CARTA);
+            }
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println("Errore nella riproduzione dell'audio: " + PATH_AUDIO_CARTA);
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+        	System.err.println("Errore nella riproduzione dell'audio: " + PATH_AUDIO_CARTA);
+            e.printStackTrace();
+		}
     }
     
     /**
@@ -55,41 +100,35 @@ public class GestoreAudio {
         }
         return instance;
     }
-        
-    /**
-     * Riproduce un file audio WAV preso dalle risorse.
-     * @param filename percorso della risorsa audio
-     */
-    private void play(String filename) {        
-        try {
-            URL soundURL = GestoreAudio.class.getResource(filename);
-
-            if (soundURL!=null) {
-                AudioInputStream audioStream = AudioSystem.getAudioInputStream(soundURL);
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioStream);
-                clip.start();
-            } else {
-                System.err.println("File audio non trovato: " + filename);
-            }
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            System.err.println("Errore nella riproduzione dell'audio: " + filename);
-            e.printStackTrace();
-        }
-    }
     
     /**
      * Riproduce l'effetto sonoro del bottone.
      */
     public void playBottone() {        
-        play(PATH_AUDIO_BOTTONE);
+    	if(clipBottone==null) {
+    		return;
+    	}
+    	if (clipBottone.isRunning()) {
+    		clipBottone.stop(); // ferma se già in riproduzione
+        }
+
+    	clipBottone.setFramePosition(0); // riavvia dall'inizio
+    	clipBottone.start();
     }
     
     /**
      * Riproduce l'effetto sonoro della carta.
      */
-    public void playCarta() {        
-        play(PATH_AUDIO_CARTA);
+    public void playCarta() { 
+    	if(clipCarta==null) {
+    		return;
+    	}
+    	if (clipCarta.isRunning()) {
+            clipCarta.stop(); // ferma se già in riproduzione
+        }
+
+        clipCarta.setFramePosition(0); // riavvia dall'inizio
+        clipCarta.start();
     }
     
     /**

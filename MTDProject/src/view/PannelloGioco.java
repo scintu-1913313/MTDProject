@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 
 import carte.Carta;
 import model.Accusa;
+import model.EsitoPartita;
 import model.GestoreAudio;
 import model.Model;
 import model.Pair;
@@ -803,7 +804,7 @@ public class PannelloGioco extends Pannello {
 			if(partitaInCorso.isPartitaTerminata())
 			{
 				aggiornaCarteBanco(null);
-				PannelloEsitoPartita.mostraEsito(this, "Franco", (int)partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1(), partitaInCorso.controlloVittoria());
+				new DialogoFinePartita(view, "Fine Partita",partitaInCorso.controlloVittoria(),(int)partitaInCorso.getPunteggioTotaleUtenteOCarteSquadra1()).setVisible(true);
 				view.terminaParita();
 			}
 			else
