@@ -9,6 +9,12 @@ import java.util.List;
  */
 public class FactoryMazzoCarteNapoletane extends MazzoFactory {
 
+	/**
+	 * Costruttore di default
+	 */
+	public FactoryMazzoCarteNapoletane() {
+	}
+	
     /** Il tipo di mazzo gestito da questa factory ovvero NAPOLETANE. */
 	private final TipoMazzo tipoMazzoNapoletane = TipoMazzo.NAPOLETANTE;
 	

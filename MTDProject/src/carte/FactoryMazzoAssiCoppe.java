@@ -10,6 +10,12 @@ import java.util.List;
 public class FactoryMazzoAssiCoppe extends MazzoFactory {
 
 	/**
+	 * Costruttore di default
+	 */
+	public FactoryMazzoAssiCoppe() {
+	}
+	
+	/**
      * Crea e restituisce un mazzo di soli ASSI DI COPPE per ogni tipo di mazzo disponibile
      * @return un'istanza di Mazzo contenente tutti gli assi.
      */

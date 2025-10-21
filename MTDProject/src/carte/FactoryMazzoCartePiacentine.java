@@ -9,6 +9,12 @@ import java.util.List;
  */
 public class FactoryMazzoCartePiacentine extends MazzoFactory {
 
+	/**
+	 * Costruttore di default
+	 */
+	public FactoryMazzoCartePiacentine() {
+	}
+	
     /** Il tipo di mazzo gestito da questa factory ovvero PIACENTINE. */
 	private final TipoMazzo tipoMazzoPiacentine = TipoMazzo.PIACENTINE;
 	

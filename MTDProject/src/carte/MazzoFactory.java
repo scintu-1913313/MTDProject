@@ -10,6 +10,12 @@ package carte;
 public abstract class MazzoFactory {
 	
 	/**
+	 * Costruttore di default
+	 */
+	public MazzoFactory() {
+	}
+	
+	/**
      * Crea e restituisce un mazzo di carte.
      * L'implementazione concreta nelle varie factory deve definire la logica di costruzione.
      *
