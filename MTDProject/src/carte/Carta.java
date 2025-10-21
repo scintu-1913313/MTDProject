@@ -1,7 +1,5 @@
 package carte;
 
-import model.Pair;
-
 /**
  * Rappresenta una singola carta da gioco con seme, valore, tipo di mazzo
  * e percorsi alle immagini fronte/retro.

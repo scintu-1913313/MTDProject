@@ -111,7 +111,9 @@ public class PannelloMenu extends Pannello {
 
         pannelloInternoMenu.add(Box.createVerticalStrut(15));
         
-        Mazzo mazzo = new Mazzo.MazzoBuilder().generaAssoDeiMazzi().build();
+        MazzoFactory factory = new FactoryMazzoAssiCoppe();
+        
+        Mazzo mazzo = factory.creaMazzo();
         ArrayList<Object> arrayListCarte = new ArrayList<>(mazzo.getCarte());
         
         spinnerTipoCarte = new MioImgSpinner("Tipo Carte",arrayListCarte);

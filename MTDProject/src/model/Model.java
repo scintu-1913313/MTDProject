@@ -68,7 +68,22 @@ public class Model extends Observable implements Observer {
      */
     public void iniziaGioco(int numGiocatori, int punteggio, TipoMazzo tipoMazzo, boolean accusa) {
     	//costruisco una nuova partita e lo notifico alla vista per far aggiornare i pannelli delle carte
-        Mazzo mazzo = new Mazzo.MazzoBuilder().generaCarte(tipoMazzo).mescola().build();
+    	Mazzo mazzo = null;
+    	if(tipoMazzo.equals(TipoMazzo.NAPOLETANTE))
+    	{
+    		MazzoFactory factory = new FactoryMazzoCarteNapoletane();
+    		mazzo = factory.creaMazzo();
+    	}
+    	else if(tipoMazzo.equals(TipoMazzo.PIACENTINE))
+    	{
+    		MazzoFactory factory = new FactoryMazzoCartePiacentine();
+    		mazzo = factory.creaMazzo();
+    	}
+    	if(mazzo == null) {
+    		System.out.println("Errore nella creazione del mazzo");
+    		return;
+    	}
+		mazzo.mischiaCarte();
         partitaCorrente = new PartitaTressette(this, mazzo,numGiocatori,punteggio,accusa);
         notificaAgliObserver(partitaCorrente);
     }
