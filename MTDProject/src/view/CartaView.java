@@ -21,11 +21,11 @@ public class CartaView extends JPanel {
     /** Immagine della carta. */
     private Image immagine;
 
-    /** Larghezza della carta in modalità ridotta (PC). */
-    private static int CARTA_LARGHEZZA_PC = 50;
+    /** Larghezza della carta in modalità ridotta. */
+    private static int CARTA_LARGHEZZA_RIDOTTA = 50;
 
-    /** Altezza della carta in modalità ridotta (PC). */
-    private static int CARTA_ALTEZZA_PC = 90;
+    /** Altezza della carta in modalità ridotta. */
+    private static int CARTA_ALTEZZA_RIDOTTA =100;
 
     /** Larghezza  della carta in modalità normale (utente). */
     private static int CARTA_LARGHEZZA_UTENTE = 70;
@@ -44,6 +44,9 @@ public class CartaView extends JPanel {
 
     /** Offset orizzontale per l'animazione di shaking. */
     private int shakeOffsetX = 0;
+
+    /** Dimensione preferita fissata per questa vista. */
+    private Dimension dimensionePreferita;
 
     /** Timer per l'animazione di shaking. */
     private Timer shakeTimer;
@@ -81,30 +84,73 @@ public class CartaView extends JPanel {
             path = carta.getPercorsoImmagine();
         }
         if (ridotta) {
-            larghezza = CARTA_LARGHEZZA_PC;
-            altezza = CARTA_ALTEZZA_PC;
+            larghezza = CARTA_LARGHEZZA_RIDOTTA;
+            altezza = CARTA_ALTEZZA_RIDOTTA;
         } else {
             larghezza = CARTA_LARGHEZZA_UTENTE;
             altezza = CARTA_ALTEZZA_UTENTE;
         }
 
-        setPreferredSize(new Dimension(larghezza, altezza));
+        // Impostiamo una dimensione fissa per evitare che la layout manager la ridimensioni
+        Dimension dim;
+        if (ruotata) {
+            dim = new Dimension(altezza, larghezza);
+        } else {
+            dim = new Dimension(larghezza, altezza);
+        }
+        this.dimensionePreferita = dim;
+        setPreferredSize(dim);
+        setMinimumSize(dim);
+        setMaximumSize(dim);
         setOpaque(false);
 
-        if (ruotata) {
-            setPreferredSize(new Dimension(altezza, larghezza));
-        } else {
-            setPreferredSize(new Dimension(larghezza, altezza));
-        }
+        // Con BoxLayout è utile centrare l'allineamento per evitare stretch orizzontali
+        setAlignmentX(Component.CENTER_ALIGNMENT);
+        setAlignmentY(Component.CENTER_ALIGNMENT);
 
         try {
             ImageIcon immagineCorrente = new ImageIcon(getClass().getResource(path));
-            Image immagineCorrenteRidotta = immagineCorrente.getImage()
-                    .getScaledInstance(larghezza, altezza, Image.SCALE_SMOOTH);
-            immagine = immagineCorrenteRidotta;
+            Image src = immagineCorrente.getImage();
+
+            // Creiamo un BufferedImage di destinazione con qualità elevata
+            int targetW = dim.width;
+            int targetH = dim.height;
+            java.awt.image.BufferedImage dest = new java.awt.image.BufferedImage(targetW, targetH, java.awt.image.BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2 = dest.createGraphics();
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            if (ruotata) {
+                // Ruota il contesto di 90 gradi e disegna l'immagine scalata
+                g2.translate(targetW / 2.0, targetH / 2.0);
+                g2.rotate(Math.toRadians(90));
+                g2.translate(-targetH / 2.0, -targetW / 2.0);
+                g2.drawImage(src, 0, 0, targetH, targetW, null);
+            } else {
+                g2.drawImage(src, 0, 0, targetW, targetH, null);
+            }
+
+            g2.dispose();
+            immagine = dest;
         } catch (Exception e) {
             System.out.println("Errore nella lettura del file: " + path + "; Errore: " + e.getMessage());
         }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return dimensionePreferita != null ? new Dimension(dimensionePreferita) : super.getPreferredSize();
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return dimensionePreferita != null ? new Dimension(dimensionePreferita) : super.getMinimumSize();
+    }
+
+    @Override
+    public Dimension getMaximumSize() {
+        return dimensionePreferita != null ? new Dimension(dimensionePreferita) : super.getMaximumSize();
     }
 
     /**
@@ -135,6 +181,13 @@ public class CartaView extends JPanel {
             // Disegna immagine
             g2d.drawImage(immagine, shakeOffsetX, 0, getWidth(), getHeight(), this);
 
+            //di default il bordo e' diegnato grigio
+            g2d.setClip(null); // reset clip per disegnare sopra
+            g2d.setColor(Color.GRAY);
+            g2d.setStroke(new BasicStroke(2));
+            g2d.draw(new RoundRectangle2D.Double(
+                    0, 0, getWidth() - 1, getHeight() - 1, 20, 20));
+            
             // Disegna bordo stondato solo se mouseOver
             if (mouseOver) {
                 g2d.setClip(null); // reset clip per disegnare sopra

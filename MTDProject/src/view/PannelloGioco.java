@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Observable;
 
 import javax.imageio.ImageIO;
+import javax.swing.SwingUtilities;
+import java.awt.Window;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -565,10 +567,20 @@ public class PannelloGioco extends Pannello {
     		pannelloCarteGiocatoreSotto.add(cartaView,cartaView.toString());
     	}
     	
+		// Forza un repaint completo del contenitore principale per ripulire cose vecchie
     	pannelloCarteGiocatoreSotto.revalidate();
     	pannelloCarteGiocatoreSotto.repaint();
     	pannelloSotto.revalidate();
     	pannelloSotto.repaint();
+		pannelloPrincipaleDelGioco.revalidate();
+		pannelloPrincipaleDelGioco.repaint();
+		//questo serve per ottenere la finestra che contiene questo pannello
+		//faccio questa cosa per forzare il repaint del pannello dopo che ho aggiornato le carte nel pannello
+		Window windowAncestor = SwingUtilities.getWindowAncestor(this);
+		if (windowAncestor != null) {
+			windowAncestor.validate();
+			windowAncestor.repaint();
+		}
     }
     
 	/**
@@ -588,8 +600,17 @@ public class PannelloGioco extends Pannello {
         	}
         }
         
+		// Forza un repaint completo del contenitore principale per ripulire cose vecchie
     	pannelloCarteBancoInterno.revalidate();
     	pannelloCarteBancoInterno.repaint();
+		// Forza repaint dell'area centrale
+		pannelloCentrale.revalidate();
+		pannelloCentrale.repaint();
+		Window w2 = SwingUtilities.getWindowAncestor(this);
+		if (w2 != null) {
+			w2.validate();
+			w2.repaint();
+		}
     }
     
 	/**
@@ -618,18 +639,29 @@ public class PannelloGioco extends Pannello {
     private void aggiornaCartePc1(List<Carta> carte) {
         cartePc1.clear();
         pannelloCartePc1Sopra.removeAll();
-        
+        boolean ridotta = true;
+        if(partitaInCorso.getNumeroGiocatori()==2) {
+        	ridotta = false;
+        }
         int numCarte = Math.min(PartitaTressette.NUM_CARTE_PER_GIOCATORE, carte.size());
     	for (int i=0; i<numCarte; i++) {
-    		CartaView cartaView = new CartaView(carte.get(i),true,false,false);
+    		CartaView cartaView = new CartaView(carte.get(i),true,false,ridotta);
     		cartePc1.add(cartaView);
     		pannelloCartePc1Sopra.add(cartaView,cartaView.toString());
     	}
     	
+		// Forza un repaint completo del contenitore principale per ripulire cose vecchie
     	pannelloCartePc1Sopra.revalidate();
     	pannelloCartePc1Sopra.repaint();
     	pannelloSopra.revalidate();
     	pannelloSopra.repaint();
+    	//questo serve per ottenere la finestra che contiene questo pannello
+		//faccio questa cosa per forzare il repaint del pannello dopo che ho aggiornato le carte nel pannello
+		Window windowAncestor = SwingUtilities.getWindowAncestor(this);
+		if (windowAncestor != null) {
+			windowAncestor.validate();
+			windowAncestor.repaint();
+		}
     }
     
 	/**
@@ -645,9 +677,21 @@ public class PannelloGioco extends Pannello {
     		CartaView cartaView = new CartaView(carte.get(i),true,true,true);
     		cartePc2.add(cartaView);
     		pannelloCartePc2Destra.add(cartaView,cartaView.toString());
+			pannelloCartePc2Destra.add(Box.createVerticalStrut(5));
     	}
+    	
+		// Forza un repaint completo del contenitore principale per ripulire cose vecchie
     	pannelloCartePc2Destra.revalidate();
     	pannelloCartePc2Destra.repaint();
+		pannelloDestra.revalidate();
+		pannelloDestra.repaint();
+		//questo serve per ottenere la finestra che contiene questo pannello
+		//faccio questa cosa per forzare il repaint del pannello dopo che ho aggiornato le carte nel pannello
+		Window windowAncestor = SwingUtilities.getWindowAncestor(this);
+		if (windowAncestor != null) {
+			windowAncestor.validate();
+			windowAncestor.repaint();
+		}
     }
     
 	/**
@@ -663,9 +707,22 @@ public class PannelloGioco extends Pannello {
     		CartaView cartaView = new CartaView(carte.get(i),true,true,true);
     		cartePc3.add(cartaView);
     		pannelloCartePc3Sinistra.add(cartaView,cartaView.toString());
+			pannelloCartePc3Sinistra.add(Box.createVerticalStrut(5));
     	}
-    	pannelloCartePc2Destra.revalidate();
-    	pannelloCartePc2Destra.repaint();
+    	
+		// Forza un repaint completo del contenitore principale per ripulire cose vecchie
+		pannelloCartePc3Sinistra.revalidate();
+		pannelloCartePc3Sinistra.repaint();
+		pannelloSinistra.revalidate();
+		pannelloSinistra.repaint();
+		
+		//questo serve per ottenere la finestra che contiene questo pannello
+		//faccio questa cosa per forzare il repaint del pannello dopo che ho aggiornato le carte nel pannello
+		Window windowAncestor = SwingUtilities.getWindowAncestor(this);
+		if (windowAncestor != null) {
+			windowAncestor.validate();
+			windowAncestor.repaint();
+		}
     }
     
 	/**
@@ -686,6 +743,17 @@ public class PannelloGioco extends Pannello {
         
         carteBanco.clear();
         pannelloCarteBancoInterno.removeAll();
+
+        pannelloPrincipaleDelGioco.revalidate();
+		pannelloPrincipaleDelGioco.repaint();
+		
+		//questo serve per ottenere la finestra che contiene questo pannello
+		//faccio questa cosa per forzare il repaint del pannello dopo che ho aggiornato le carte nel pannello
+		Window windowAncestor = SwingUtilities.getWindowAncestor(this);
+		if (windowAncestor != null) {
+			windowAncestor.validate();
+			windowAncestor.repaint();
+		}
     }
     
 	/**
