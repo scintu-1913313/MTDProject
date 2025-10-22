@@ -92,7 +92,7 @@ public class PannelloMenu extends Pannello {
 
         pannelloInternoMenu.add(pannelloInAlto, BorderLayout.CENTER);
                    
-        //dopo il primo bottone aggiunge 40px
+        //dopo il primo bottone aggiunge 10px
         pannelloInternoMenu.add(Box.createVerticalStrut(10));
 
         spinnerNumeroGiocatori = new MioIntSpinner("Giocatori",2,2,4,1);
@@ -101,7 +101,7 @@ public class PannelloMenu extends Pannello {
         spinnerNumeroGiocatori.setMaximumSize(new Dimension(140, 40));     
         pannelloInternoMenu.add(spinnerNumeroGiocatori);
 
-        pannelloInternoMenu.add(Box.createVerticalStrut(15));
+        pannelloInternoMenu.add(Box.createVerticalStrut(10));
         
         spinnerPunteggio = new MioIntSpinner("Punteggio",11,11,41,10);
         spinnerPunteggio.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -109,7 +109,7 @@ public class PannelloMenu extends Pannello {
         spinnerPunteggio.setMaximumSize(new Dimension(140, 40));
         pannelloInternoMenu.add(spinnerPunteggio);
 
-        pannelloInternoMenu.add(Box.createVerticalStrut(15));
+        pannelloInternoMenu.add(Box.createVerticalStrut(10));
         
         MazzoFactory factory = new FactoryMazzoAssiCoppe();
         
@@ -121,7 +121,7 @@ public class PannelloMenu extends Pannello {
         
         pannelloInternoMenu.add(spinnerTipoCarte);
 
-        pannelloInternoMenu.add(Box.createVerticalStrut(15));
+        pannelloInternoMenu.add(Box.createVerticalStrut(10));
 
         MioLabel intestazioneBottoneAccusa = new MioLabel("Accusa");
         intestazioneBottoneAccusa.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -170,7 +170,7 @@ public class PannelloMenu extends Pannello {
         
         pannelloInternoMenu.setVisible(true);
 
-        pannelloInternoMenu.add(Box.createVerticalStrut(15));        
+        pannelloInternoMenu.add(Box.createVerticalStrut(10));        
     }
     
     /**

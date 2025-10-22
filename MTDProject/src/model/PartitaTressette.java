@@ -12,6 +12,7 @@ import carte.*;
 
 import java.util.Random;
 import java.util.Set;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -151,21 +152,17 @@ public class PartitaTressette {
 	 * @return il tipo di giocatore che inizia la partita.
 	 */
     private TipoGiocatore determinaPrimoGiocatore() {
-    	TipoGiocatore result = TipoGiocatore.UTENTE;
+    	// Cerca il giocatore che ha il 4 di denari
+    	Optional<TipoGiocatore> found = giocatori.entrySet().stream()
+    	    .filter(e -> e.getValue().getCarte().stream()
+    	        .anyMatch(c -> c.getSeme() == Seme.DENARI && c.getValore() == Valore.QUATTRO))
+    	    .map(Map.Entry::getKey)
+    	    .findFirst();
 
-    	for(TipoGiocatore giocatore: giocatori.keySet())
-    	{
-    		List<Carta> carteGiocatore = giocatori.get(giocatore).getCarte();
-    		for(int i=0; i < NUM_CARTE_PER_GIOCATORE;i++)
-    		{
-    			Carta carta = carteGiocatore.get(i);
-    			if (carta.getSeme() == Seme.DENARI && carta.getValore() == Valore.QUATTRO) {
-    				result = giocatore;
-    				return result;
-    			}
-    		}
+    	if (found.isPresent()) {
+    		return found.get();
     	}
-    	
+
     	Random rand = new Random();
         int scelta = rand.nextInt(2); // 0 o 1
         return scelta == 0 ? TipoGiocatore.UTENTE : TipoGiocatore.PC1;
@@ -176,13 +173,14 @@ public class PartitaTressette {
 	 * @return Giocatore vero(Utente) o null
 	 */
 	public Giocatore getGiocatoreVero() {
-    	for(TipoGiocatore giocatore: giocatori.keySet()){
-    		if(giocatori.get(giocatore).getIsIA()!=true) {
-    			return giocatori.get(giocatore);
-    		}
-    	}
-    	System.out.println("Giocatore vero inesistente");
-    	return null;
+    	return giocatori.entrySet().stream()
+    	    .map(Map.Entry::getValue)
+    	    .filter(g -> !g.getIsIA())
+    	    .findFirst()
+    	    .orElseGet(() -> {
+    	        System.out.println("Giocatore vero inesistente");
+    	        return null;
+    	    });
     }
     
 	/**
@@ -191,13 +189,10 @@ public class PartitaTressette {
 	 * @return Giocatore PC corrispondente o null.
 	 */
 	public Giocatore getPc(TipoGiocatore giocatorePc) {
-    	for(TipoGiocatore giocatore: giocatori.keySet()){
-    		if(giocatore.equals(giocatorePc)) {
-    			return giocatori.get(giocatore);
-    		}
-    	}
-    	System.out.println("Giocatore " +giocatorePc + " inesistente");
-    	return null;
+    	return Optional.ofNullable(giocatori.get(giocatorePc)).orElseGet(() -> {
+    	    System.out.println("Giocatore " + giocatorePc + " inesistente");
+    	    return null;
+    	});
     }
     
 	/**
@@ -223,16 +218,11 @@ public class PartitaTressette {
             return true;
         }
         
-        // Caso 3: il seme è diverso -> va bene solo se il giocatore non ha carte del seme del palo
-        List<Carta> carteDelGiocatore = giocatori.get(TipoGiocatore.UTENTE).getCarte();
-
-        for (Carta c : carteDelGiocatore) {
-            if (c.getSeme() == cartaPalo.getSeme()) {
-                return false; // ha almeno una carta del seme richiesto → scelta non valida
-            }
-        }
-        
-        return true; // non ha carte del seme del palo -> scelta valida
+		// Caso 3: il seme è diverso -> va bene solo se il giocatore non ha carte del seme del palo
+		List<Carta> carteDelGiocatore = giocatori.get(TipoGiocatore.UTENTE).getCarte();
+		boolean hasSeme = carteDelGiocatore.stream()
+			.anyMatch(c -> c.getSeme() == cartaPalo.getSeme());
+		return !hasSeme;
     }
     
 	/**
@@ -287,45 +277,40 @@ public class PartitaTressette {
     	}
     	else //ho gia' il palo, prendo la carta del seme piu' alto o altrimenti una a caso
     	{
-	        // Filtra le carte con il seme desiderato
-	        List<Carta> carteDelSeme = new ArrayList<>();
-	        for (Carta c : carteDelPc) {
-	            if (c.getSeme() == cartaPalo.getSeme()) {
-	                carteDelSeme.add(c);
-	            }
-	        }
+		// Filtra le carte con il seme desiderato
+        	List<Carta> carteDelSeme = carteDelPc.stream()
+        	    .filter(c -> c.getSeme() == cartaPalo.getSeme())
+        	    .collect(Collectors.toList());
 
 	        // Se non ci sono carte di quel seme, restituisci una a caso
-	        if (carteDelSeme.isEmpty()) {
-	        	int idxCartaRandom = new Random().nextInt(carteDelPc.size());
-
-	        	cartaScelta = carteDelPc.isEmpty() ? null : carteDelPc.get(idxCartaRandom);
-	        }
-	        else
-	        {
-		        // Trova la carta con il valore massimo
-		        Carta cartaMassima = carteDelSeme.get(0);
-		        for (Carta c : carteDelSeme) {
-		            if (c.getValore().ordinal() > cartaMassima.getValore().ordinal()) {
-		                cartaMassima = c;
-		            }
-		        }
-		        cartaScelta = cartaMassima;
-	        }
+        	if (carteDelSeme.isEmpty()) {
+        		int idxCartaRandom = new Random().nextInt(carteDelPc.size());
+        		cartaScelta = carteDelPc.get(idxCartaRandom);
+        	} 
+		else 
+		{
+			// Trova la carta con il valore massimo
+        		cartaScelta = carteDelSeme.stream()
+        		    .max((a, b) -> Integer.compare(a.getValore().ordinal(), b.getValore().ordinal()))
+        		    .orElse(carteDelSeme.get(0));
+        	}
     	}
         System.out.println("Carta giocata dal giocatore pc: " + cartaScelta);
-        switch (turnoPc) {
-	    	case PC1 -> {
-	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC1, cartaScelta);
-	    				}
-	    	case PC2 -> {
-	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC2, cartaScelta);
-	    				}
-	    	case PC3 -> {
-	    					this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC3, cartaScelta);
-	    				}
-	    	
-	    	default -> throw new IllegalArgumentException("Tipo non gestito: " + turnoPc);
+		switch (turnoPc) {
+			case PC1: {
+				this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC1, cartaScelta);
+				break;
+			}
+			case PC2: {
+				this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC2, cartaScelta);
+				break;
+			}
+			case PC3: {
+				this.carteManoDiGiocoOrdinate.put(TipoGiocatore.PC3, cartaScelta);
+				break;
+			}
+			default:
+				throw new IllegalArgumentException("Tipo non gestito: " + turnoPc);
 		}
         carteDelPc.remove(cartaScelta);
         
@@ -352,13 +337,22 @@ public class PartitaTressette {
     	}
     	else if (numGiocatori == 3 || numGiocatori == 4)
     	{
-    		switch (turnoGiocatore) {
-		    	case UTENTE -> turnoGiocatore =  TipoGiocatore.PC2;
-		    	case PC1 -> turnoGiocatore =  TipoGiocatore.PC3;
-		    	case PC2 -> turnoGiocatore =  TipoGiocatore.PC1;
-		    	case PC3 -> turnoGiocatore =  TipoGiocatore.UTENTE;
-		    	default -> throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
-    		}
+			switch (turnoGiocatore) {
+				case UTENTE:
+					turnoGiocatore = TipoGiocatore.PC2;
+					break;
+				case PC1:
+					turnoGiocatore = TipoGiocatore.PC3;
+					break;
+				case PC2:
+					turnoGiocatore = TipoGiocatore.PC1;
+					break;
+				case PC3:
+					turnoGiocatore = TipoGiocatore.UTENTE;
+					break;
+				default:
+					throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
+			}
     	}
     }
     
@@ -403,39 +397,53 @@ public class PartitaTressette {
             throw new IllegalArgumentException("Numero di carte non valido per i giocatori");
         }
 		
-		Iterator<Map.Entry<TipoGiocatore, Carta>> iterator = carteManoDiGiocoOrdinate.entrySet().iterator();
-	    Map.Entry<TipoGiocatore, Carta> prima = iterator.next();
-	    Carta semeComandante = prima.getValue();
-	    TipoGiocatore vincitore = prima.getKey();
-	    Carta cartaVincente = semeComandante;
+    	Iterator<Map.Entry<TipoGiocatore, Carta>> iterator = carteManoDiGiocoOrdinate.entrySet().iterator();
+    	Map.Entry<TipoGiocatore, Carta> prima = iterator.next();
+    	Carta semeComandante = prima.getValue();
+    	TipoGiocatore vincitore = prima.getKey();
+    	Carta cartaVincente = semeComandante;
 
-	    while (iterator.hasNext()) {
-	        Map.Entry<TipoGiocatore, Carta> entry = iterator.next();
-	        Carta carta = entry.getValue();
-	        if (carta.getSeme() == semeComandante.getSeme()) {
-	            if (confrontaCarte(carta, cartaVincente) > 0) {
-	                cartaVincente = carta;
-	                vincitore = entry.getKey();
-	            }
-	        }
-	    }
+    	while (iterator.hasNext()) {
+    	    Map.Entry<TipoGiocatore, Carta> entry = iterator.next();
+    	    Carta carta = entry.getValue();
+    	    if (carta.getSeme() == semeComandante.getSeme()) {
+    	        if (confrontaCarte(carta, cartaVincente) > 0) {
+    	            cartaVincente = carta;
+    	            vincitore = entry.getKey();
+    	        }
+    	    }
+    	}
 	    System.out.println("Ha vinto il giocatore "+vincitore);
 	    if(this.numGiocatori == 2)
 	    {
-	    	switch (vincitore) {
-		    	case UTENTE -> carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
-		    	case PC1 -> cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
-		    	default -> throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
+			switch (vincitore) {
+				case UTENTE:
+					carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
+					break;
+				case PC1:
+					cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
+					break;
+				default:
+					throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
 			}
 	    }
 	    else
 	    {
-	    	switch (vincitore) {
-		    	case UTENTE -> carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
-		    	case PC1 -> carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
-		    	case PC2 -> cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
-		    	case PC3 -> cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
-		    	default -> throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
+			switch (vincitore) {
+				case UTENTE:
+					carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
+					break;
+				case PC1:
+					carteUtenteOCarteSquadra1.addAll(carteManoDiGiocoOrdinate.values());
+					break;
+				case PC2:
+					cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
+					break;
+				case PC3:
+					cartePc1OCarteSquadra2.addAll(carteManoDiGiocoOrdinate.values());
+					break;
+				default:
+					throw new IllegalArgumentException("Tipo non gestito: " + turnoGiocatore);
 			}
 	    }
 	    

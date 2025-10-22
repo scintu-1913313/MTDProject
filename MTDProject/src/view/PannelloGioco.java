@@ -482,11 +482,18 @@ public class PannelloGioco extends Pannello {
     	{
     		List<Carta> carte = partitaInCorso.getPc(giocatoreCheHaGiocatoLaCarta).getCarte();
     		System.out.println("aggiorno le carte del "+ giocatoreCheHaGiocatoLaCarta);
-    		switch (giocatoreCheHaGiocatoLaCarta) {
-	        	case PC1 -> aggiornaCartePc1(carte);
-	        	case PC2 -> aggiornaCartePc2(carte);
-	        	case PC3 -> aggiornaCartePc3(carte);
-	        	default -> throw new IllegalArgumentException("Tipo non gestito: " + giocatoreCheHaGiocatoLaCarta);
+			switch (giocatoreCheHaGiocatoLaCarta) {
+				case PC1:
+					aggiornaCartePc1(carte);
+					break;
+				case PC2:
+					aggiornaCartePc2(carte);
+					break;
+				case PC3:
+					aggiornaCartePc3(carte);
+					break;
+				default:
+					throw new IllegalArgumentException("Tipo non gestito: " + giocatoreCheHaGiocatoLaCarta);
 			}
 			aggiornaCarteBanco(partitaInCorso.getCarteNelBanco());
 
