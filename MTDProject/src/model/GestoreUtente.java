@@ -3,7 +3,6 @@ package model;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 

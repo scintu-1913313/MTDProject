@@ -4,7 +4,6 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

@@ -2,8 +2,6 @@ package model;
 
 import java.util.Map;
 
-import model.AvatarEnum;
-
 /**
  * Rappresenta un avatar dell'utente, mappando un enum ad un percorso immagine.
  */

@@ -1,15 +1,11 @@
 package view;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import view.Pannello;
-import com.formdev.flatlaf.FlatLightLaf;
-
 import controller.Controller;
 
 

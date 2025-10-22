@@ -6,12 +6,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="MTDProject/src"/>
-	<classpathentry kind="lib" path="/home/emanuele/eclipse-workspace/MTDProject/MTDProject/lib/org.json-1.6-20240205.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/home/emanuele/eclipse-workspace/MTDProject/MTDProject/lib/flatlaf-3.6.1.jar">
+	<classpathentry kind="lib" path="MTDProject/lib/org.json-1.6-20240205.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

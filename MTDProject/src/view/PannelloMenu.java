@@ -2,11 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Observable;
-import javax.imageio.ImageIO;
 import carte.*;
 import model.GestoreAudio;
 

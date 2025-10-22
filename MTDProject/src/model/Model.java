@@ -1,11 +1,8 @@
 package model;
+
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Optional;
-
-import javax.swing.JOptionPane;
 import carte.*;
 
 /**

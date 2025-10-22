@@ -1,14 +1,7 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.Insets;
-
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
 import model.GestoreAudio;
 
 /**

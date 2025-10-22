@@ -7,14 +7,12 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import carte.*;
-
 import java.util.Random;
 import java.util.Set;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import carte.*;
 
 /**
  * Implementa e gestisce la logica di una singola partita di Tressette.

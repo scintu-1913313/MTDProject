@@ -1,8 +1,6 @@
 package controller;
 
-
 import java.util.Observer;
-
 import carte.TipoMazzo;
 import model.Model;
 import view.View;

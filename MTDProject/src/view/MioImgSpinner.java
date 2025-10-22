@@ -2,21 +2,13 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
 import carte.*;
 import model.Avatar;
-import model.AvatarEnum;
 
 /**
  * Classe che estende MioSpinner per creare uno spinner di immagini 

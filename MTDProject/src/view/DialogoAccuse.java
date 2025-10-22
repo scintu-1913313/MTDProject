@@ -6,11 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import carte.Carta;
 import model.Accusa;
 import model.Pair;

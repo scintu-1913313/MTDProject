@@ -1,8 +1,6 @@
 package model;
 
 import org.json.JSONObject;
-
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;

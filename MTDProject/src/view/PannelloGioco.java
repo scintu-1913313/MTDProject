@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,24 +16,12 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
 import java.awt.Window;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
+import javax.swing.*;
 import carte.Carta;
-import model.Accusa;
-import model.EsitoPartita;
-import model.GestoreAudio;
-import model.Model;
-import model.Pair;
-import model.PartitaTressette;
-import model.TipoGiocatore;
+import model.*;
 
 /**
  * Pannello principale di gioco che gestisce l'interfaccia utente durante una partita.

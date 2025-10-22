@@ -1,10 +1,7 @@
 package view;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
-
 import javax.swing.*;
 import javax.swing.Timer;
 import carte.*;

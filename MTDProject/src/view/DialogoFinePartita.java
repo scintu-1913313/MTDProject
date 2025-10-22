@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -16,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
-
 import model.EsitoPartita;
 
 /**
