@@ -138,16 +138,28 @@ public class CartaView extends JPanel {
         }
     }
 
+    /**
+     * Ritorna la dimensione preferita impostata nella carta, che corrisponde alla dimensione fissata per costruire la carta.
+     * @return la dimensione preferia.
+     */
     @Override
     public Dimension getPreferredSize() {
         return dimensionePreferita != null ? new Dimension(dimensionePreferita) : super.getPreferredSize();
     }
 
+    /**
+     * Ritorna la dimensione minima impostata nella carta, che corrisponde alla dimensione fissata per costruire la carta.
+     * @return la dimensione minima.
+     */
     @Override
     public Dimension getMinimumSize() {
         return dimensionePreferita != null ? new Dimension(dimensionePreferita) : super.getMinimumSize();
     }
 
+    /**
+     * Ritorna la dimensione massima impostata nella carta, che corrisponde alla dimensione fissata per costruire la carta.
+     * @return la dimensione massima.
+     */
     @Override
     public Dimension getMaximumSize() {
         return dimensionePreferita != null ? new Dimension(dimensionePreferita) : super.getMaximumSize();
