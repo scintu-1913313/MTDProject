@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /** 
@@ -52,7 +51,7 @@ public class PannelloRegole extends Pannello{
         areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità
         
         //areaTesto.setForeground(Color.WHITE);
-        areaTesto.setFont(new Font("SansSerif", Font.BOLD, 14));
+        areaTesto.setFont(view.FONT_GIOCO);
 
         // ScrollPane con solo scrollbar verticale visibile
         JScrollPane scrollPane = new JScrollPane(areaTesto);

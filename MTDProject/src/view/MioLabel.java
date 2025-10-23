@@ -16,7 +16,7 @@ public class MioLabel extends JLabel {
 	 */
 	public MioLabel(String titolo){
 		super(titolo, SwingConstants.CENTER);
-		setFont(new Font("SansSerif", Font.BOLD, 14));
+		setFont(View.FONT_GIOCO);
         setForeground(Color.BLACK);
         setOpaque(true);
         setBackground(View.VERDE_PANNELLO);

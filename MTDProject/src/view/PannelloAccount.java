@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Observable;
 import javax.swing.BorderFactory;
@@ -19,9 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import model.Avatar;
 import model.AvatarEnum;
-import model.Utente;
 import model.Model;
 import model.Partita;
+import model.Utente;
 
 /**
  * Pannello che permette la gestione dell'account utente: 
@@ -88,7 +87,7 @@ public class PannelloAccount extends Pannello{
         nicknameField.setPreferredSize(new Dimension(140, 40));
         nicknameField.setMaximumSize(new Dimension(140, 40));
         nicknameField.setMinimumSize(new Dimension(140, 40));
-        nicknameField.setFont(new Font("SansSerif", Font.BOLD, 14));
+        nicknameField.setFont(view.FONT_GIOCO);
 
         pannelloInternoAccount.add(nicknameField);
 
@@ -111,7 +110,7 @@ public class PannelloAccount extends Pannello{
         areaTesto.setOpaque(true);
         areaTesto.setBackground(View.VERDE_SCURO);
         areaTesto.setForeground(Color.BLACK); // testo nero per leggibilità        
-        areaTesto.setFont(new Font("SansSerif", Font.BOLD, 14));
+        areaTesto.setFont(View.FONT_GIOCO);
         // ScrollPane con solo scrollbar verticale visibile
         JScrollPane scrollPane = new JScrollPane(areaTesto);
         scrollPane.setOpaque(false);

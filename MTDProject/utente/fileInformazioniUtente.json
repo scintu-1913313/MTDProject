@@ -125,6 +125,11 @@
             "esito": "VINTA",
             "dataFine": "21/10/2025 23:11",
             "punteggioOttenuto": 13
+        },
+        {
+            "esito": "PERSA",
+            "dataFine": "23/10/2025 22:03",
+            "punteggioOttenuto": 0
         }
     ],
     "avatar": "AVATAR1",

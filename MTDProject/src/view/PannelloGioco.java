@@ -1,13 +1,7 @@
 package view;
 
+import carte.Carta;
 import java.awt.*;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -17,10 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import javax.imageio.ImageIO;
-import javax.swing.SwingUtilities;
-import java.awt.Window;
 import javax.swing.*;
-import carte.Carta;
 import model.*;
 
 /**
@@ -54,31 +45,31 @@ public class PannelloGioco extends Pannello {
 	private MioBottoneSelezione bottoneMusica;
 
 	/** Label per mostrare il round corrente. */
-	JLabel labelRound;
+	private MioLabel labelRound;
 	
 	/** Label per mostrare i punti del giocatore Utente o della squadra1 (Utente + Pc1) */
-	JLabel label1Punti;
+	private MioLabel label1Punti;
 
 	/** Label per mostrare i punti del Pc1 o della squadra2 (Pc2+Pc3) */
-    JLabel label2Punti;
+    private MioLabel label2Punti;
 
 	/** Nome del giocatore Utente o della squadra1 (Utente + Pc1). */
-    String nomeGiocatori1;
+    private String nomeGiocatori1;
 
 	/** Nome del Pc1 o della squadra2 (Pc2+Pc3). */
-    String nomeGiocatori2;
+    private String nomeGiocatori2;
 
 	/** Label per il giocatore 1 (Utente). */
-    JLabel labelGiocatore1;
+    private MioLabel labelGiocatore1;
 
 	/** Label per il giocatore 2 (Pc1). */
-    JLabel labelGiocatore2;
+    private MioLabel labelGiocatore2;
 
 	/** Label per il giocatore 3 (Pc2). */
-    JLabel labelGiocatore3;
+    private MioLabel labelGiocatore3;
 
 	/** Label per il giocatore 4 (Pc3). */
-    JLabel labelGiocatore4;
+    private MioLabel labelGiocatore4;
 
 	/** Pannello sotto per il Giocatore */
 	private JPanel pannelloSotto;
@@ -160,19 +151,13 @@ public class PannelloGioco extends Pannello {
         pannelloInAltroCentrale.setOpaque(false);
         nomeGiocatori1="";
         nomeGiocatori2="";
-        label1Punti = new JLabel("0");
-        label2Punti = new JLabel("0");
-        label1Punti.setFont(View.FONT_GIOCO);
-        label1Punti.setForeground(Color.BLACK);
-        label2Punti.setFont(View.FONT_GIOCO);
-        label2Punti.setForeground(Color.BLACK);
+        label1Punti = new MioLabel("0");
+        label2Punti = new MioLabel("0");
         pannelloInAltroCentrale.add(label1Punti);
         pannelloInAltroCentrale.add(Box.createHorizontalStrut(30)); // Spazio tra le label
         pannelloInAltroCentrale.add(label2Punti);
         pannelloInAltroCentrale.add(Box.createHorizontalStrut(30)); // Spazio tra le label
-        labelRound = new JLabel("Round: 1");
-        labelRound.setFont(View.FONT_GIOCO);
-        labelRound.setForeground(Color.BLACK);
+        labelRound = new MioLabel("Round: 1");
         pannelloInAltroCentrale.add(labelRound);
 
         
@@ -212,9 +197,7 @@ public class PannelloGioco extends Pannello {
         pannelloSopra = new JPanel();
         pannelloSopra.setOpaque(false);
         pannelloSopra.setLayout(new GridBagLayout());
-        labelGiocatore2 = new JLabel(TipoGiocatore.PC1.toString());
-        labelGiocatore2.setFont(View.FONT_GIOCO);
-        labelGiocatore2.setForeground(Color.BLACK);
+        labelGiocatore2 = new MioLabel(TipoGiocatore.PC1.toString());
         pannelloCartePc1Sopra = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannelloCartePc1Sopra.setOpaque(false);
         GridBagConstraints gbcSopra = new GridBagConstraints();
@@ -237,9 +220,7 @@ public class PannelloGioco extends Pannello {
         pannelloCartePc2Destra.setOpaque(false);
         pannelloDestra.add(pannelloCartePc2Destra);
         pannelloDestra.add(Box.createHorizontalStrut(5));
-        labelGiocatore3 = new JLabel(TipoGiocatore.PC2.toString());
-        labelGiocatore3.setFont(View.FONT_GIOCO);
-        labelGiocatore3.setForeground(Color.BLACK);
+        labelGiocatore3 = new MioLabel(TipoGiocatore.PC2.toString());
         pannelloDestra.add(labelGiocatore3);
         pannelloPrincipaleDelGioco.add(pannelloDestra, BorderLayout.EAST);
 
@@ -249,9 +230,7 @@ public class PannelloGioco extends Pannello {
         pannelloSinistra.setOpaque(false);
         pannelloSinistra.setLayout(new BoxLayout(pannelloSinistra, BoxLayout.X_AXIS));
         
-        labelGiocatore4 = new JLabel(TipoGiocatore.PC3.toString());
-        labelGiocatore4.setFont(View.FONT_GIOCO);
-        labelGiocatore4.setForeground(Color.BLACK);
+        labelGiocatore4 = new MioLabel(TipoGiocatore.PC3.toString());
         pannelloSinistra.add(labelGiocatore4);
         pannelloSinistra.add(Box.createHorizontalStrut(5));
         pannelloCartePc3Sinistra = new JPanel();
@@ -267,9 +246,7 @@ public class PannelloGioco extends Pannello {
         pannelloSotto.setLayout(new GridBagLayout());
         pannelloCarteGiocatoreSotto = new JPanel(new FlowLayout(FlowLayout.CENTER));
         pannelloCarteGiocatoreSotto.setOpaque(false);
-        labelGiocatore1 = new JLabel("");
-        labelGiocatore1.setFont(View.FONT_GIOCO);
-        labelGiocatore1.setForeground(Color.BLACK);
+        labelGiocatore1 = new MioLabel("");
         pannelloPrincipaleDelGioco.add(pannelloSotto, BorderLayout.SOUTH);  
         GridBagConstraints gbcsotto = new GridBagConstraints();
         gbcsotto.gridx = 0;

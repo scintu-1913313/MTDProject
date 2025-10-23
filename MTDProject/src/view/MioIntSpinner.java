@@ -44,7 +44,7 @@ public class MioIntSpinner extends MioSpinner {
 
         textField = new JTextField(String.valueOf(this.valoreCorrente));
         textField.setHorizontalAlignment(JTextField.CENTER);
-        textField.setFont(new Font("SansSerif", Font.BOLD, 14));
+        textField.setFont(View.FONT_GIOCO);
         textField.setBackground(new Color(240, 240, 255));
         textField.setBorder(null);
         textField.setEditable(false);

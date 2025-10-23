@@ -1,7 +1,7 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * Classe astratta che estende JPanel per creare uno spinner personalizzato
@@ -13,7 +13,7 @@ public abstract class MioSpinner extends JPanel {
 	public final MioBottone leftButton;
 
     /** Bottone destro per incrementare il valore. */
-	public final JButton rightButton;
+	public final MioBottone rightButton;
 
     /** Etichetta descrittiva dello spinner. */
 	public final MioLabel intestazione;
