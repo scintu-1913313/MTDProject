@@ -475,36 +475,47 @@ public class PartitaTressette {
 	
 	/**
 	 * Assegna carte dal mazzo ai giocatori nei match a 2 giocatori quando necessario.
+	 * @return l'insieme delle carte pescate dai 2 giocatori
 	 */
-	public void assegnaCartaDalMazzo() {
+	public LinkedHashMap<TipoGiocatore, Carta> assegnaCartaDalMazzo() {
+		
+		LinkedHashMap<TipoGiocatore, Carta> carteSelezionate = new LinkedHashMap<>();
 		//se non sono a due giocatori o se ho finito le carte, non devo assegnare nulla
 		if(numGiocatori != 2 || mazzoInGioco.getCarte().size()==0) {
-			return;
+			return carteSelezionate;
 		}
+		
 		//se ho assegnato gia' tutte le carte mi fermo
 		
 		if(mazzoInGioco.getCarte().size() % 2 != 0) {
 			System.out.println("Errore: nel mazzo c'e' un numero di carte dispari");
-			return;
+			return carteSelezionate;
 		}
 		
     	List<Carta> carte= mazzoInGioco.getCarte();
     	List<Carta> carteUtente = new ArrayList<>();
     	List<Carta> cartePc = new ArrayList<>();
+    	Carta cartaUtente;
+    	Carta cartaPc;
     	if(turnoGiocatore.equals(TipoGiocatore.UTENTE)) {
-        	carteUtente.add(carte.remove(0));
-        	cartePc.add(carte.remove(0));
+    		cartaUtente = carte.remove(0);
+    		carteSelezionate.put(TipoGiocatore.UTENTE, cartaUtente);
+    		cartaPc = carte.remove(0);
+    		carteSelezionate.put(TipoGiocatore.PC1, cartaPc);
     	}
     	else
     	{
-        	cartePc.add(carte.remove(0));
-        	carteUtente.add(carte.remove(0));
+    		cartaPc = carte.remove(0);
+    		carteSelezionate.put(TipoGiocatore.PC1, cartaPc);
+    		cartaUtente = carte.remove(0);
+    		carteSelezionate.put(TipoGiocatore.UTENTE, cartaUtente);
     	}
 
-
+    	carteUtente.add(cartaUtente);
+    	cartePc.add(cartaPc);
 		giocatori.get(TipoGiocatore.UTENTE).aggiungiCarte(carteUtente);
 		giocatori.get(TipoGiocatore.PC1).aggiungiCarte(cartePc);
-		
+		return carteSelezionate;
 	}
 	
 	/**

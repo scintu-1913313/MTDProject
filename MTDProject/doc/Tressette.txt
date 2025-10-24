@@ -33,7 +33,8 @@ Tutti i giocatori giocano in modo alternato con gli avversari.
 
 
 4. DISTRIBUZIONE:
-- 2 giocatori: 10 carte ciascuno. Il restante delle carte va messo sul tavolo di gioco.
+- 2 giocatori: 10 carte ciascuno. Il restante delle carte va messo sul tavolo di gioco. Ad ogni mano, fino al termine delle carte, chi ha effettuato la presa
+               pesca la carta in cima al mazzo, la mostra all'avversario e l'aggiunge alle proprie carte. La stessa cosa fa' l'altro giocatore.
 - 3 giocatori: 10 carte ciascuno, compreso il "morto". Non restano carte da distribuire.
 - 4 giocatori: 10 carte ciascuno. Non restano carte da distribuire.
 Il mazziere distribuisce le carte in senso antiorario. 

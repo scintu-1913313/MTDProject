@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Observable;
 import javax.imageio.ImageIO;
@@ -878,13 +879,33 @@ public class PannelloGioco extends Pannello {
 			
 			new javax.swing.Timer(TEMPO_ATTESA_DEFAULT, e -> {
 	            ((javax.swing.Timer) e.getSource()).stop(); // ferma il timer dopo l'esecuzione
-	            partitaInCorso.assegnaCartaDalMazzo();
-				aggiornaCarteGiocatori();
-		        giocaTurnoConAttesa();
+	            configuraManoSuccessiva();
 	        }).start();
 		}
 	}
 
+	/**
+	 * Gestisce l'inizializzazione per la mano successiva. 
+	 * Se la partita e' a 2 giocatori, gestisce anche le carte da pescare.
+	 */
+	private void configuraManoSuccessiva() {
+    	int numGiocatori = partitaInCorso.getNumeroGiocatori();
+		if(numGiocatori == 2) {
+			LinkedHashMap<TipoGiocatore, Carta> cartePescate = partitaInCorso.assegnaCartaDalMazzo();
+			if(cartePescate.size() == 2) 
+			{
+				for(TipoGiocatore giocatoreCheHaPescato: cartePescate.keySet())
+				{
+					String nomeGiocatore = calcolaNomeGiocatore(numGiocatori,giocatoreCheHaPescato);
+					Carta c = cartePescate.get(giocatoreCheHaPescato);
+					new DialogoCartaPescata(view, "Carta pescata", nomeGiocatore,c,TEMPO_ATTESA_TRA_GIOCATORI).setVisible(true);
+				}
+			}
+		}
+		aggiornaCarteGiocatori();
+        giocaTurnoConAttesa();
+	}
+	
 	/**
 	 * Formatta il punteggio in modo che abbia al massimo una cifra decimale.
 	 * @param valore il valore del punteggio da formattare.
