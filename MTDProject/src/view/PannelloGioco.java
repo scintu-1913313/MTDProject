@@ -779,7 +779,7 @@ public class PannelloGioco extends Pannello {
 	 * Calcola il nome del giocatore in base al tipo di giocatore e al numero di giocatori nella partita.
 	 * @param numGiocatori numero di giocatori nella partita
 	 * @param giocatore tipo di giocatore da calcolare(TipoGiocatore)
-	 * @return
+	 * @return il nome del giocatore
 	 */
 	private String calcolaNomeGiocatore(int numGiocatori, TipoGiocatore giocatore) {
 		String risultato = giocatore.toString();

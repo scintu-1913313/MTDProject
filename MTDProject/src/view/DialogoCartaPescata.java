@@ -25,7 +25,7 @@ public class DialogoCartaPescata extends MioDialog {
      * @param owner finestra proprietaria
      * @param titolo titolo del dialog
      * @param giocatore il giocatore che ha pescato la carta
-     * @param carta la carta da mostrare
+     * @param cartaPescata la carta da mostrare
      * @param durataMillis durata in ms prima della chiusura automatica
      */
     public DialogoCartaPescata(Frame owner, String titolo, String giocatore, Carta cartaPescata, int durataMillis) {
