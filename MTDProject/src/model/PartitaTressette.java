@@ -171,14 +171,7 @@ public class PartitaTressette {
 	 * @return Giocatore vero(Utente) o null
 	 */
 	public Giocatore getGiocatoreVero() {
-    	return giocatori.entrySet().stream()
-    	    .map(Map.Entry::getValue)
-    	    .filter(g -> !g.getIsIA())
-    	    .findFirst()
-    	    .orElseGet(() -> {
-    	        System.out.println("Giocatore vero inesistente");
-    	        return null;
-    	    });
+    	return giocatori.get(TipoGiocatore.UTENTE);
     }
     
 	/**
@@ -275,7 +268,7 @@ public class PartitaTressette {
     	}
     	else //ho gia' il palo, prendo la carta del seme piu' alto o altrimenti una a caso
     	{
-		// Filtra le carte con il seme desiderato
+    		// Filtra le carte con il seme desiderato
         	List<Carta> carteDelSeme = carteDelPc.stream()
         	    .filter(c -> c.getSeme() == cartaPalo.getSeme())
         	    .collect(Collectors.toList());
@@ -285,9 +278,9 @@ public class PartitaTressette {
         		int idxCartaRandom = new Random().nextInt(carteDelPc.size());
         		cartaScelta = carteDelPc.get(idxCartaRandom);
         	} 
-		else 
-		{
-			// Trova la carta con il valore massimo
+			else 
+			{
+				// Trova la carta con il valore massimo
         		cartaScelta = carteDelSeme.stream()
         		    .max((a, b) -> Integer.compare(a.getValore().ordinal(), b.getValore().ordinal()))
         		    .orElse(carteDelSeme.get(0));
