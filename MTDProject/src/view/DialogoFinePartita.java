@@ -258,15 +258,15 @@ class PannelloFuocoArtificio extends JPanel {
         });
         timer.start();
 
-        // Ferma l’animazione dopo 3 secondi
-        new Timer(3000, e -> timer.stop()).start();
+        // Ferma l’animazione dopo 10 secondi
+        new Timer(10000, e -> timer.stop()).start();
     }
 
     /**
      * Genera un insieme di fuochi d'artificio in posizioni casuali all'interno del pannello.
      */
     private void generateFireworks() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 30; i++) {
         	fuochiArtificio.add(new FuocoArtificio(getWidth(), getHeight()));
         }
     }

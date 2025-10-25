@@ -1,5 +1,5 @@
 {
-    "nickname": "Luca",
+    "nickname": "Gaia",
     "storicoPartite": [
         {
             "esito": "PERSA",
@@ -130,8 +130,33 @@
             "esito": "PERSA",
             "dataFine": "23/10/2025 22:03",
             "punteggioOttenuto": 0
+        },
+        {
+            "esito": "PERSA",
+            "dataFine": "25/10/2025 16:54",
+            "punteggioOttenuto": 9
+        },
+        {
+            "esito": "PAREGGIATA",
+            "dataFine": "25/10/2025 17:02",
+            "punteggioOttenuto": 11
+        },
+        {
+            "esito": "PERSA",
+            "dataFine": "25/10/2025 17:07",
+            "punteggioOttenuto": 0
+        },
+        {
+            "esito": "VINTA",
+            "dataFine": "25/10/2025 17:13",
+            "punteggioOttenuto": 11
+        },
+        {
+            "esito": "VINTA",
+            "dataFine": "25/10/2025 17:49",
+            "punteggioOttenuto": 14
         }
     ],
-    "avatar": "AVATAR1",
-    "livello": 5
+    "avatar": "AVATAR2",
+    "livello": 7
 }

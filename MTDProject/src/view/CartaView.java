@@ -19,16 +19,16 @@ public class CartaView extends JPanel {
     private Image immagine;
 
     /** Larghezza della carta in modalità ridotta. */
-    private static int CARTA_LARGHEZZA_RIDOTTA = 50;
+    private static int CARTA_LARGHEZZA_RIDOTTA = 30;
 
     /** Altezza della carta in modalità ridotta. */
-    private static int CARTA_ALTEZZA_RIDOTTA =100;
+    private static int CARTA_ALTEZZA_RIDOTTA =80;
 
     /** Larghezza  della carta in modalità normale (utente). */
-    private static int CARTA_LARGHEZZA_UTENTE = 70;
+    private static int CARTA_LARGHEZZA_UTENTE = 60;
 
     /** Altezza della carta in modalità normale (utente). */
-    private static int CARTA_ALTEZZA_UTENTE = 130;
+    private static int CARTA_ALTEZZA_UTENTE = 90;
 
     /** Stato di hover del mouse sulla carta. */
     private boolean mouseOver = false;
