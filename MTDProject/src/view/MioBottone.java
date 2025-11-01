@@ -49,6 +49,7 @@ public class MioBottone extends JButton {
         setPreferredSize(new Dimension(30, 30));
         setMargin(new Insets(5,5,5,5));
         
+        
         resetToDefault();
         
         // Effetto hover

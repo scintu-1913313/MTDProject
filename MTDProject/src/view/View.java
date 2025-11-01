@@ -50,10 +50,14 @@ public class View extends JFrame implements Observer {
 
         try {
             Image image = ImageIO.read(getClass().getResource("/img/logo.png"));
-            setIconImage(image);
+            if (Taskbar.isTaskbarSupported()) {
+                Taskbar taskbar = Taskbar.getTaskbar();
+                taskbar.setIconImage(image);
+            }
         } catch (IOException | IllegalArgumentException e) {
             System.err.println("Errore nel caricamento dell'immagine: " + e.getMessage());
         }
+
 		setLocationRelativeTo(null);
         setLayout(new CardLayout());
         setSize(Pannello.LARGHEZZA, Pannello.ALTEZZA);

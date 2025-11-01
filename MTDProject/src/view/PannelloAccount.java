@@ -127,7 +127,8 @@ public class PannelloAccount extends Pannello{
 		// Bottone in basso a destra
 		JPanel downPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		downPanel.setBackground(View.TRASPARENTE);
-		
+		downPanel.setOpaque(false);
+
 		bottoneSalvataggioDati = new MioBottone("Salva");
 		bottoneSalvataggioDati.setPreferredSize(new Dimension(100, 40));
 		bottoneSalvataggioDati.setMaximumSize(new Dimension(100, 40));

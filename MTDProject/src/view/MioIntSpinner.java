@@ -54,6 +54,8 @@ public class MioIntSpinner extends MioSpinner {
         
         leftButton.setEnabled(false);
         add(textField, BorderLayout.CENTER);
+        setOpaque(false);
+
     }
 
 	/**
